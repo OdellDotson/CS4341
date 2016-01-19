@@ -15,6 +15,7 @@ public class Board {
 	int numOfDiscsInColumn[];
 	int emptyCell=9;
 	int N;
+	long heuristic;
 	int PLAYER1=1;
 	int PLAYER2=2;
 	int NOCONNECTION=-1;
@@ -28,10 +29,9 @@ public class Board {
 			for(int j=0;j<width;j++){
 				board[i][j]=this.emptyCell;
 			}
-		numOfDiscsInColumn=new int[this.width];
-//		for(int j=0;j<width;j++)
-//			numOfDiscsInColumn[j]=0;
+		numOfDiscsInColumn = new int[this.width];
 		this.N=N;
+		heuristic = makeHeuristic();
 	 }
 	 
 	 public void printBoard(){
@@ -295,190 +295,207 @@ public class Board {
 		 return this.NOCONNECTION;
    }
 
-   	 public int CountNInARow(n, player)
-   	 {
-	 	return countHorizontally(n,player) + countVertically(n,player) + countDiagonally1(n,player) + countDiagonally2(n,player)
-	 }
-	 
-  public int countHorizontally(n,player){
-	 int max1=0;
-	 int max2=0;
-	 boolean player1_win=false;
-	 boolean player2_win=false;
-	 //check each row, horizontally
-	 for(int i=0;i<this.height;i++){
-		 max1=0;
-		 max2=0;
-		for(int j=0;j<this.width;j++){
-			if(board[i][j]==PLAYER1){
-				max1++;
-				max2=0;
-				if(max1==N)
-					 player1_win=true;
+	public long makeHeuristic()
+	{
+		if (isConnectN == 1)
+			return 2147483647; // max value for a long
+		else if (isConnectN == 2)
+			return -2147483648; // min value for long
+		else
+		{
+			heuristic = 0;
+			for(int i=N-1; i>0; i--)
+			{
+				heuristic = heuristic + (1<<i-1 * countNInARow(i,1)) - (1<<i-1 * countNInARow(i,2));
 			}
-			else if(board[i][j]==PLAYER2){
-				max1=0;
-				max2++;
-				if(max2==N)
-					 player2_win=true;
-			}
-			else{
-				max1=0;
-				max2=0;
+			return heuristic;
+		}
+	}
+
+	public int countNInARow(n, player)
+   	{
+		return countHorizontally(n,player) + countVertically(n,player) + countDiagonally1(n,player) + countDiagonally2(n,player);
+	}
+
+	public int countHorizontally(n,player)
+	{
+	// this method counts the number of times a specific player has "n" tokens
+	// in a row with nothing blocking the player from adding another colinear token
+		int inARow = 0; // tracks the number of pieces found in a row at any given time
+		int totalCount = 0; // tracks the number of "n" tokens in a row with nothing blocking the player from adding another colinear token found
+		for(int i=0;i<this.height;i++) // itterates through all the rows
+		{
+			inARow = 0;
+			for(int j=0;j<this.width;j++) // iterates through each space in a row
+			{
+				if(board[i][j] == player) // if the piece in a space belongs to the given player
+				{
+					inARow++;
+					if(inARow == n) // if we have found an instance of "n" tokens in a row
+					{
+						if ((j + 1 < width) && (j - n > 0) && (board[i][j + 1] != emptyCell) && (board[i][j - n] != emptyCell)) // check if the player cannot add a colinear piece
+						{
+							inARow = 1; // reset the count of InARow if we cannot add a piece
+						}
+						else if ((j + 1 < width) && (board[i][j + 1] == emptyCell)) // if we have found an opportunity to expand colinearly in one direction
+						{
+							totalCount++; //  add to the total count
+							inARow = 1;
+						}
+						else if ((j - n > 0) && board[i][j - n] == emptyCell)  // if we have found an opportunity to expand colinearly in the other direction
+						{
+							totalCount++;
+							inARow = 1;
+						}
+					}
+				}
+				else
+				{
+					inARow = 0; // if the space doen't have a piece belinging to the given player then reset the count of InARow
+				}
 			}
 		}
-	 } 
-	 if (player1_win && player2_win)
-		 return this.TIE;
-	 if (player1_win)
-		 return this.PLAYER1;
-	 if (player2_win)
-		 return this.PLAYER2;
-	 
-	 return this.NOCONNECTION;
-  }
+		return totalCount;
+	}
 
-  public int countVertically(){
-	  //check each column, vertically
-	  int max1=0;
-	  int max2=0;
-	  boolean player1_win=false;
-	  boolean player2_win=false;
-		 
-		 for(int j=0;j<this.width;j++){
-			 max1=0;
-			 max2=0;
-			for(int i=0;i<this.height;i++){
-				if(board[i][j]==PLAYER1){
-					max1++;
-					max2=0;
-					if(max1==N)
-						 player1_win=true;
+	public int countVertically(n,player)
+	{
+	// this method counts the number of times a specific player has "n" tokens
+	// in a row with nothing blocking the player from adding another colinear token
+		int inARow = 0; // tracks the number of pieces found in a row at any given time
+		int totalCount = 0; // tracks the number of "n" tokens in a row with nothing blocking the player from adding another colinear token found
+		for(int j=0;j<this.width;j++) // itterates through all the columns
+		{
+			inARow = 0;
+			for(int i=0;i<this.height;i++) // iterates through each space in a column
+			{
+				if(board[i][j] == player) // if the piece in a space belongs to the given player
+				{
+					inARow++;
+					if(inARow == n) // if we have found an instance of "n" tokens in a row
+					{
+						if ((i + 1 < width) && (i - n > 0) && (board[i + 1][j] != emptyCell) && (board[i - n][j] != emptyCell)) // check if the player cannot add a colinear piece
+						{
+							inARow = 1; // reset the count of InARow if we cannot add a piece
+						}
+						else if ((i + 1 < width) && (board[i + 1][j] == emptyCell)) // if we have found an opportunity to expand colinearly in one direction
+						{
+							totalCount++; //  add to the total count
+							inARow = 1;
+						}
+						else if ((i - n > 0) && board[i - n][j] == emptyCell)  // if we have found an opportunity to expand colinearly in the other direction
+						{
+							totalCount++;
+							inARow = 1;
+						}
+						
+					}
 				}
-				else if(board[i][j]==PLAYER2){
-					max1=0;
-					max2++;
-					if(max2==N)
-						player2_win=true;
-				}
-				else{
-					max1=0;
-					max2=0;
+				else
+				{
+					inARow = 0; // if the space doen't have a piece belinging to the given player then reset the count of InARow
 				}
 			}
-		 } 
-		 if (player1_win && player2_win)
-			 return this.TIE;
-		 if (player1_win)
-			 return this.PLAYER1;
-		 if (player2_win)
-			 return this.PLAYER2;
-		 
-		 return this.NOCONNECTION;
-  }
-  
-   public int countDiagonally1(){
-	 //check diagonally y=-x+k
-	   int max1=0;
-	   int max2=0;
-	   boolean player1_win=false;
-	   boolean player2_win=false;
-	   int upper_bound=height-1+width-1-(N-1);
-	   
-		 for(int k=N-1;k<=upper_bound;k++){			
-			 max1=0;
-			 max2=0;
-			 int x,y;
-			 if(k<width) 
-				 x=k;
-			 else
-				 x=width-1;
-			 y=-x+k;
-			 
-			while(x>=0  && y<height){
-				// System.out.println("k: "+k+", x: "+x+", y: "+y);
-				if(board[height-1-y][x]==PLAYER1){
-					max1++;
-					max2=0;
-					if(max1==N)
-						 player1_win=true;
+		}
+		return totalCount;
+	}
+ 
+  	public int countDiagonally1()
+  	{
+		int inARow = 0; // tracks the number of pieces found in a row at any given time
+		int totalCount = 0; // tracks the number of "n" tokens in a row with nothing blocking the player from adding another colinear token found
+		int upper_bound=height-1+width-1-(N-1);
+		for(int k=N-1;k<=upper_bound;k++)
+		{			
+			inARow = 0
+			int x,y;
+			if(k < width) 
+				x = k;
+			else
+				x = width - 1;
+			y = -x + k; 
+			while(x >= 0 && y < height)
+			{
+				if(board[height - 1 - y][x] == player)
+				{
+					inARow++;
+					if(inARow == n)
+					{
+						if ((height - y < height) && (x - 1 > 0) && (height - 1 - y - n > 0) && (x + n < width) && (board[height - y][x - 1] != emptyCell) && (board[height - 1 - y - n][x + n] != emptyCell)) // check if the player cannot add a colinear piece
+						{
+							inARow = 1; // reset the count of InARow if we cannot add a piece
+						}
+						else if ((height - y < height) && (x - 1 > 0) && (board[height - y][x - 1] == emptyCell)) // if we have found an opportunity to expand colinearly in one direction
+						{
+							totalCount++; //  add to the total count
+							inARow = 1;
+						}
+						else if ((height - 1 - y - n > 0) && (x + n < width) && (board[height - 1 - y - n][x + n] == emptyCell))  // if we have found an opportunity to expand colinearly in the other direction
+						{
+							totalCount++;
+							inARow = 1;
+						}
+					}
 				}
-				else if(board[height-1-y][x]==PLAYER2){
-					max1=0;
-					max2++;
-					if(max2==N)
-						player2_win=true;
-				}
-				else{
-					max1=0;
-					max2=0;
+				else
+				{
+					inARow = 0;
 				}
 				x--;
 				y++;
 			}	 
-			 
-		 }
-		 if (player1_win && player2_win)
-			 return this.TIE;
-		 if (player1_win)
-			 return this.PLAYER1;
-		 if (player2_win)
-			 return this.PLAYER2;
-		 
-		 return this.NOCONNECTION;
-   }
-	 
-   public int countDiagonally2(){
-	 //check diagonally y=x-k
-	   int max1=0;
-	   int max2=0;
-	   boolean player1_win=false;
-	   boolean player2_win=false;
-	   int upper_bound=width-1-(N-1);
-	   int  lower_bound=-(height-1-(N-1));
-	  // System.out.println("lower: "+lower_bound+", upper_bound: "+upper_bound);
-		 for(int k=lower_bound;k<=upper_bound;k++){			
-			 max1=0;
-			 max2=0;
-			 int x,y;
-			 if(k>=0) 
-				 x=k;
-			 else
-				 x=0;
-			 y=x-k;
-			while(x>=0 && x<width && y<height){
-				// System.out.println("k: "+k+", x: "+x+", y: "+y);
-				if(board[height-1-y][x]==PLAYER1){
-					max1++;
-					max2=0;
-					if(max1==N)
-						 player1_win=true;
+		}
+		return totalCount;
+	}
+
+	public int countDiagonally2()
+  	{
+		int inARow = 0; // tracks the number of pieces found in a row at any given time
+		int totalCount = 0; // tracks the number of "n" tokens in a row with nothing blocking the player from adding another colinear token found
+		int upper_bound=width-1-(N-1);
+		int lower_bound=-(height-1-(N-1));
+		for(int k=lower_bound;k<=upper_bound;k++)
+		{			
+			inARow = 0
+			int x,y;
+			if(k>=0) 
+				x = k;
+			else
+				x = 0;
+			y= x - k;
+			while(x>=0 && x<width && y<height)
+			{
+				if(board[height - 1 - y][x] == player)
+				{
+					inARow++;
+					if(inARow == n)
+					{
+						if ((height - y < height) && (x + 1 > 0) && (height - 1 - y - n > 0) && (x - n < width) && (board[height - y][x + 1] != emptyCell) && (board[height - 1 - y - n][x - n] != emptyCell)) // check if the player cannot add a colinear piece
+						{
+							inARow = 1; // reset the count of InARow if we cannot add a piece
+						}
+						else if ((height - y < height) && (x + 1 > 0) && (board[height - y][x + 1] == emptyCell)) // if we have found an opportunity to expand colinearly in one direction
+						{
+							totalCount++; //  add to the total count
+							inARow = 1;
+						}
+						else if ((height - 1 - y - n > 0) && (x - n < width) && (board[height - 1 - y - n][x - n] == emptyCell))  // if we have found an opportunity to expand colinearly in the other direction
+						{
+							totalCount++;
+							inARow = 1;
+						}
+					}
 				}
-				else if(board[height-1-y][x]==PLAYER2){
-					max1=0;
-					max2++;
-					if(max2==N)
-						player2_win=true;
-				}
-				else{
-					max1=0;
-					max2=0;
+				else
+				{
+					inARow = 0;
 				}
 				x++;
 				y++;
 			}	 
-			 
-		 }	 //end for y=x-k
-		 
-		 if (player1_win && player2_win)
-			 return this.TIE;
-		 if (player1_win)
-			 return this.PLAYER1;
-		 if (player2_win)
-			 return this.PLAYER2;
-		 
-		 return this.NOCONNECTION;
-   }
+		}
+		return totalCount;
+	}
    
 	public boolean isFull(){
 		for(int i=0;i<height;i++)
