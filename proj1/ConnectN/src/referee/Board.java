@@ -299,83 +299,87 @@ public class Board {
    	 {
 	 	return countHorizontally(n,player) + countVertically(n,player) + countDiagonally1(n,player) + countDiagonally2(n,player)
 	 }
-	 
-  public int countHorizontally(n,player){
-	 int max1=0;
-	 int max2=0;
-	 boolean player1_win=false;
-	 boolean player2_win=false;
-	 //check each row, horizontally
-	 for(int i=0;i<this.height;i++){
-		 max1=0;
-		 max2=0;
-		for(int j=0;j<this.width;j++){
-			if(board[i][j]==PLAYER1){
-				max1++;
-				max2=0;
-				if(max1==N)
-					 player1_win=true;
-			}
-			else if(board[i][j]==PLAYER2){
-				max1=0;
-				max2++;
-				if(max2==N)
-					 player2_win=true;
-			}
-			else{
-				max1=0;
-				max2=0;
+
+	public int countHorizontally(n,player)
+	{
+	// this method counts the number of times a specific player has "n" tokens
+	// in a row with nothing blocking the player from adding another colinear token
+		int inARow = 0; // tracks the number of pieces found in a row at any given time
+		int totalCount = 0; // tracks the number of "n" tokens in a row with nothing blocking the player from adding another colinear token found
+		for(int i=0;i<this.height;i++) // itterates through all the rows
+		{
+			inARow = 0;
+			for(int j=0;j<this.width;j++) // iterates through each space in a row
+			{
+				if(board[i][j] == player) // if the piece in a space belongs to the given player
+				{
+					inARow++;
+					if(inARow == n) // if we have found an instance of "n" tokens in a row
+						if (board[i][j + 1] != emptyCell && board[i][j - n] != emptyCell) // check if the player cannot add a colinear piece
+						{
+							inARow = 1; // reset the count of InARow if we cannot add a piece
+						}
+						else if (board[i][j + 1] == emptyCell) // if we have found an opportunity to expand colinearly in one direction
+						{
+							totalCount++; //  add to the total count
+							inARow = 1;
+						}
+						else if (board[i][j - n] == emptyCell)  // if we have found an opportunity to expand colinearly in the other direction
+						{
+							totalCount++;
+							inARow = 1;
+						}
+						
+					}
+				}
+				else
+				{
+					inARow = 0; // if the space doen't have a piece belinging to the given player then reset the count of InARow
+				}
 			}
 		}
-	 } 
-	 if (player1_win && player2_win)
-		 return this.TIE;
-	 if (player1_win)
-		 return this.PLAYER1;
-	 if (player2_win)
-		 return this.PLAYER2;
-	 
-	 return this.NOCONNECTION;
-  }
+	}
 
-  public int countVertically(){
-	  //check each column, vertically
-	  int max1=0;
-	  int max2=0;
-	  boolean player1_win=false;
-	  boolean player2_win=false;
-		 
-		 for(int j=0;j<this.width;j++){
-			 max1=0;
-			 max2=0;
-			for(int i=0;i<this.height;i++){
-				if(board[i][j]==PLAYER1){
-					max1++;
-					max2=0;
-					if(max1==N)
-						 player1_win=true;
+	public int countVertically(n,player)
+	{
+	// this method counts the number of times a specific player has "n" tokens
+	// in a row with nothing blocking the player from adding another colinear token
+		int inARow = 0; // tracks the number of pieces found in a row at any given time
+		int totalCount = 0; // tracks the number of "n" tokens in a row with nothing blocking the player from adding another colinear token found
+		for(int j=0;j<this.width;j++) // itterates through all the rows
+		{
+			inARow = 0;
+			for(int i=0;i<this.height;i++) // iterates through each space in a row
+			{
+				if(board[i][j] == player) // if the piece in a space belongs to the given player
+				{
+					inARow++;
+					if(inARow == n) // if we have found an instance of "n" tokens in a row
+						if (board[i][j + 1] != emptyCell && board[i][j - n] != emptyCell) // check if the player cannot add a colinear piece
+						{
+							inARow = 1; // reset the count of InARow if we cannot add a piece
+						}
+						else if (board[i][j + 1] == emptyCell) // if we have found an opportunity to expand colinearly in one direction
+						{
+							totalCount++; //  add to the total count
+							inARow = 1;
+						}
+						else if (board[i][j - n] == emptyCell)  // if we have found an opportunity to expand colinearly in the other direction
+						{
+							totalCount++;
+							inARow = 1;
+						}
+						
+					}
 				}
-				else if(board[i][j]==PLAYER2){
-					max1=0;
-					max2++;
-					if(max2==N)
-						player2_win=true;
-				}
-				else{
-					max1=0;
-					max2=0;
+				else
+				{
+					inARow = 0; // if the space doen't have a piece belinging to the given player then reset the count of InARow
 				}
 			}
-		 } 
-		 if (player1_win && player2_win)
-			 return this.TIE;
-		 if (player1_win)
-			 return this.PLAYER1;
-		 if (player2_win)
-			 return this.PLAYER2;
-		 
-		 return this.NOCONNECTION;
-  }
+		}
+	}
+ 
   
    public int countDiagonally1(){
 	 //check diagonally y=-x+k
