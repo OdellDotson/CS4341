@@ -23,20 +23,34 @@ public class Player
 		this.first_move = first_move;
 	}
 	
+	/**
+	 * This function sends the name of the player to system out where the referee with pick it up.
+	 */
 	public void sendName()
 	{
 		System.out.print(this.playerName);
 	}
 	
+	/**
+	 * This function reads the output from the refree when it tells us how the game is configured.
+	 * This function also updates the playerBoard in player to use the given game configuration.
+	 * 
+	 * TODO: Test reading in from the buffer.
+	 * TODO: Make it actually create the new board correctly from those inputs.
+	 */
 	public void readConfig()
 	{
 		BufferedReader inputData = this.input;
 		this.playerBoard = new Board(inputData);
 	}
 	
+	/**
+	 * Reads in a move touple from the refree of the form [move_operation move_location].
+	 * Updates the playerBoard with that information.
+	 */
 	public void readMove()
 	{
-		moveRead; 
+		BufferedReader inputData = this.input;
 		//Read input from the referee about the oponent's move
 		
 		//Apply that information to our version of the board
@@ -44,49 +58,36 @@ public class Player
 		this.playerBoard.update(moveRead); //Updates the board based on the move that was read.
 	}
 	
-	public void writeMove()
-	{
-		int[] move = {this.moveOperation, this.moveLocation};
- 		System.out.print(move);
-	}
-	
-	///////////////////////////
-	//////////// TODO: This function goes in the constructor for boardTree, not in Player.
-	public boardTree generateTree()
-	{
-		boardTree tree = new boardTree;
-		
-		//while not is connect n:
-			//go through tree and create more nodes, more children, etc. 
-		//Creates a tree of boards stemming from the current board.
-		return tree;
-	}
-	//TODO: Move this function to the boardTree class.
-	public boardTree minimaxTree(boardTree tree)
-	//Given a tree, this function will run through it using Minimax and change the heuristic values of nonterminal nodes to the minimax value.
-	{
-		//In here is the alpha beta pruning
-		return tree;
-	}
-	
-	//TODO: Moe this to the boardTree class.
-	public int[] findDesiredMove()
-	{
-		int[] move;
-		move[0]
-		return move;
-	}
-	
+	/**
+	 * Based on the player's current board, this function does the following:
+	 * 		1. Creates a BoardTree with some ammount of possible steps forward, calculaing the heuristic for each board.
+	 * 		2. Runs minimax on that tree replacing the heuristic values with the minimax values. TODO: With alpha beta pruning?
+	 * 		3. From that tree, it decides which move to make.
+	 * 
+	 * @return move: The desired move we want to make in order to get to the desired next boardstate. 
+	 */
 	public void getNextMove()
 	{
 		int[] move;//Create an array that will be populated by the move operation and move location.
 		
-		boardTree tree = new boardTree(playerBoard);//Creates the tree
+		BoardTree tree = new BoardTree(playerBoard);//Creates the tree
 		tree = tree.minimaxTree(tree); //Runs minimax on the generated tree, changing heuristic values into minimax values
 		move = tree.findDesiredMove();
-		
 	}
 	
+	/**
+	 * Tells the referee what our next move will be.
+	 * NOTE that this function is also where we actually update the internal board, too. We do this before we tell the referee our move.
+	 */
+	public void writeMove()
+	{
+		playerBoard.update(this.moveOperation, this.moveLocation);
+		int[] move = {this.moveOperation, this.moveLocation};
+ 		System.out.print(move);
+	}
+	
+	
+
 	public void processInput() throws IOException
 	{	
     	String s=input.readLine();	
