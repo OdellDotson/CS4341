@@ -6,10 +6,10 @@ public class BoardTree
 	BoardTree parent;
 	List<BoardTree> children;
 	int turn;
-	String move;
+	int[] move;
 	boolean pop;
 
-	public BoardTree(Board currentState, BoardTree parent, int turn, String move, boolean pop)
+	public BoardTree(Board board, BoardTree parent, int turn, int[] move, boolean pop)
 	{
 		this.board = board;
 		this.parent = parent;
@@ -19,13 +19,21 @@ public class BoardTree
 		this.pop = pop;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	public List<BoardTree> makeChildren()
+	public void makeChildren()
 	{
 		for(int i=0; i++; i<board.width)
+		{
+			if(board.canDropADiscFromTop(i,turn))
+			{
+				int[] childMove = {}
+				children.add(new BoardTree(board.update()))
+			}
+		}
+	}
+
+	public void update(int location, int opperation)
+	{
+		board.update(location, opperation, turn);
 	}
 
 	/**

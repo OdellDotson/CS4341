@@ -48,7 +48,7 @@ public class Board {
 	{
 		if(opperation == 1)
 		{
-			dropADiscFromTop(location,player);
+			dropADiscFromTop(location, player);
 		}
 		else
 		{
