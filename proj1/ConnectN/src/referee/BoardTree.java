@@ -2,7 +2,7 @@ package referee;
 
 public class BoardTree
 {
-	Board currentState;
+	Board board;
 	BoardTree parent;
 	List<BoardTree> children;
 	int turn;
@@ -11,24 +11,21 @@ public class BoardTree
 
 	public BoardTree(Board currentState, BoardTree parent, int turn, String move, boolean pop)
 	{
-		this.currentState = currentState;
+		this.board = board;
 		this.parent = parent;
 		children = new ArrayList<BoardTree>();
 		this.turn = turn;
 		this.move = move;
-		this.pop = pop;	
+		this.pop = pop;
 	}
 
 	/**
 	 * 
 	 * @return
 	 */
-	public void makeChildren()
+	public List<BoardTree> makeChildren()
 	{
-		//while not is connect n:
-		//go through tree and create more nodes, more children, etc. 
-		//Creates a tree of boards stemming from the current board.
-		return tree;
+		for(int i=0; i++; i<board.width)
 	}
 
 	/**
