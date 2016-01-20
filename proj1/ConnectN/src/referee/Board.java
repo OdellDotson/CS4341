@@ -66,7 +66,7 @@ public class Board {
 		{
 			removeADiscFromBottom(location);
 		}
-		heruistic = makeHeruistic();
+		heuristic = makeHeuristic();
 	}
 	 
 	 public boolean canRemoveADiscFromBottom(int col, int currentPlayer){

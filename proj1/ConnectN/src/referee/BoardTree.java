@@ -23,7 +23,7 @@ public class BoardTree
 	public void makeChildren()
 	{
 		int nextTurn = turn == 1 ? 2 : 1;
-		for(int i=0; i++; i<board.width)
+		for(int i=0;  i<board.width; i++)
 		{
 			if(board.canDropADiscFromTop(i,turn))
 			{
@@ -44,26 +44,7 @@ public class BoardTree
 		children = new ArrayList<BoardTree>();
 	}
 
-	/**
-	 * Given a tree, this function will run through it using Minimax and change the heuristic values of nonterminal nodes to the minimax value.
-	 * 
-	 * @param tree: The BoardTree that we will run minimax on.
-	 * @return tree: Return the tree with minimax performed on it.
-	 */
-	public BoardTree minimaxTree(BoardTree tree)
-	{
-		//In here is the alpha beta pruning
-		return tree;
-	}
+
 	
-	/**
-	 * 
-	 * @return
-	 */
-	public int[] findDesiredMove()
-	{
-		int[] move;
-		move[0]
-		return move;
-	}
+
 }
