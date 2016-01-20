@@ -44,7 +44,7 @@ public class Board {
 		 }
 	 }
 
-	public void update(location, opperation, player)
+	public void update(int location, int opperation, int player)
 	{
 		if(opperation == 1)
 		{
@@ -309,9 +309,9 @@ public class Board {
 
 	public long makeHeuristic()
 	{
-		if (isConnectN == 1)
+		if (isConnectN() == 1)
 			return 2147483647; // max value for a long
-		else if (isConnectN == 2)
+		else if (isConnectN() == 2)
 			return -2147483648; // min value for long
 		else
 		{
