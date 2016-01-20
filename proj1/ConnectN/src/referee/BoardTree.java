@@ -44,7 +44,34 @@ public class BoardTree
 		children = new ArrayList<BoardTree>();
 	}
 
+	public void pickFavoriteChild()
+	{
+		int bestHeuristic = children.get(0).board.heuristic;
+		for(BoardTree i: children)
+		{
+			if(turn == 1 && i.board.heuristic > bestHeuristic) // player 1 is maximizing
+				bestHeuristic == i.board.heuristic;
+			else if(i.board.heuristic < bestHeuristic) // player 2 is minimizing
+			{
+				bestHeuristic == i.board.heuristic;
+			}
+		}
+		board.heruistic = bestHeuristic;
+	}
 
+	public int[] minimax()
+	{
+		if(parent == null)
+		{
+			pickFavoriteChild();
+			for(BoardTree i: children)
+			{
+				if(i.board.heuristic == board.heuristic)
+					return i.move;
+			}
+
+		}
+	}
 	
 
 }
