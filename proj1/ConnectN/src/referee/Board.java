@@ -21,7 +21,8 @@ public class Board {
 	int NOCONNECTION=-1;
 	int TIE=0;
 	
-	 Board(int height, int width, int N){
+	 Board(int height, int width, int N)
+	 {
 		this.width=width;
 		this.height=height;
 		board =new int[height][width];
@@ -33,6 +34,17 @@ public class Board {
 		this.N=N;
 		heuristic = makeHeuristic();
 	 }
+
+	//contructor that makes a copy of a board and updates it too.
+	Board(Board old, int location, int opperation, int player)
+	{
+		this.width = old.width;
+		this.height = old.height;
+		this.board = old.board;
+		this.numOfDiscsInColumn = old.numOfDiscsInColumn;
+		this.update(location, opperation, player);
+
+	}
 	 
 	 public void printBoard(){
 		 System.out.println("Board: ");
@@ -54,6 +66,7 @@ public class Board {
 		{
 			removeADiscFromBottom(location);
 		}
+		heruistic = makeHeruistic();
 	}
 	 
 	 public boolean canRemoveADiscFromBottom(int col, int currentPlayer){
