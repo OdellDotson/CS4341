@@ -1,19 +1,29 @@
 package referee;
 
-public class BoardTree {
-		
-	Board rootNode;
-	
-	public BoardTree(Board playerBoard) {
-		// TODO Auto-generated constructor stub
-		this.rootNode = playerBoard;
+public class BoardTree
+{
+	Board currentState;
+	BoardTree parent;
+	List<BoardTree> children;
+	int turn;
+	String move;
+	boolean pop;
+
+	public BoardTree(Board currentState, BoardTree parent, int turn, String move, boolean pop)
+	{
+		this.currentState = currentState;
+		this.parent = parent;
+		children = new ArrayList<BoardTree>();
+		this.turn = turn;
+		this.move = move;
+		this.pop = pop;	
 	}
 
 	/**
 	 * 
 	 * @return
 	 */
-	public BoardTree generateTree()
+	public void makeChildren()
 	{
 		//while not is connect n:
 		//go through tree and create more nodes, more children, etc. 
@@ -43,5 +53,4 @@ public class BoardTree {
 		move[0]
 		return move;
 	}
-
 }

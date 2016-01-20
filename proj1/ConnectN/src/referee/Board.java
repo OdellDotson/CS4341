@@ -43,6 +43,18 @@ public class Board {
 				System.out.println();
 		 }
 	 }
+
+	public void update(location, opperation, player)
+	{
+		if(opperation == 1)
+		{
+			dropADiscFromTop(location,player);
+		}
+		else
+		{
+			removeADiscFromBottom(location);
+		}
+	}
 	 
 	 public boolean canRemoveADiscFromBottom(int col, int currentPlayer){
 		 if(col<0 || col>=this.width) {
@@ -312,12 +324,12 @@ public class Board {
 		}
 	}
 
-	public int countNInARow(n, player)
+	public int countNInARow(int n, int player)
    	{
 		return countHorizontally(n,player) + countVertically(n,player) + countDiagonally1(n,player) + countDiagonally2(n,player);
 	}
 
-	public int countHorizontally(n,player)
+	public int countHorizontally(int n,int player)
 	{
 	// this method counts the number of times a specific player has "n" tokens
 	// in a row with nothing blocking the player from adding another colinear token
@@ -358,7 +370,7 @@ public class Board {
 		return totalCount;
 	}
 
-	public int countVertically(n,player)
+	public int countVertically(int n,int player)
 	{
 	// this method counts the number of times a specific player has "n" tokens
 	// in a row with nothing blocking the player from adding another colinear token
@@ -400,14 +412,14 @@ public class Board {
 		return totalCount;
 	}
  
-  	public int countDiagonally1()
+  	public int countDiagonally1(int n,int player)
   	{
 		int inARow = 0; // tracks the number of pieces found in a row at any given time
 		int totalCount = 0; // tracks the number of "n" tokens in a row with nothing blocking the player from adding another colinear token found
 		int upper_bound=height-1+width-1-(N-1);
 		for(int k=N-1;k<=upper_bound;k++)
 		{			
-			inARow = 0
+			inARow = 0;
 			int x,y;
 			if(k < width) 
 				x = k;
@@ -448,7 +460,7 @@ public class Board {
 		return totalCount;
 	}
 
-	public int countDiagonally2()
+	public int countDiagonally2(int n,int player)
   	{
 		int inARow = 0; // tracks the number of pieces found in a row at any given time
 		int totalCount = 0; // tracks the number of "n" tokens in a row with nothing blocking the player from adding another colinear token found
@@ -456,7 +468,7 @@ public class Board {
 		int lower_bound=-(height-1-(N-1));
 		for(int k=lower_bound;k<=upper_bound;k++)
 		{			
-			inARow = 0
+			inARow = 0;
 			int x,y;
 			if(k>=0) 
 				x = k;
