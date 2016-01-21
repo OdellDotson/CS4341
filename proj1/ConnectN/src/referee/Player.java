@@ -131,7 +131,7 @@ public class Player
 			//rp.processInput();
 			if(rp.playerBoard.turn == rp.playerTurn)
 			{
-				int[] move = rp.playerBoard.minimax();
+				int[] move = rp.playerBoard.minimax(3);
 				rp.writeMove(move[0], move[1]);
 			}
 			else

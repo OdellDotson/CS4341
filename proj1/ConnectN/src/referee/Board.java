@@ -15,7 +15,7 @@ public class Board {
 	int numOfDiscsInColumn[];
 	int emptyCell=9;
 	int N;
-	long heuristic;
+	long heuristic = 2147483646;
 	int PLAYER1=1;
 	int PLAYER2=2;
 	int NOCONNECTION=-1;

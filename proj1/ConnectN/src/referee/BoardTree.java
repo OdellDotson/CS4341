@@ -8,18 +8,18 @@ public class BoardTree
 	ArrayList<BoardTree> children;
 	int turn;
 	int[] move;
-	boolean 1CanPop;
-	boolean 2CanPop;
+	boolean oneCanPop;
+	boolean twoCanPop;
 
-	public BoardTree(Board board, BoardTree parent, int turn, int[] move, boolean 1CanPop, boolean 2CanPop)
+	public BoardTree(Board board, BoardTree parent, int turn, int[] move, boolean oneCanPop, boolean twoCanPop)
 	{
 		this.board = board;
 		this.parent = parent;
 		children = new ArrayList<BoardTree>();
 		this.turn = turn;
 		this.move = move;
-		this.1CanPop = 1CanPop;
-		this.2CanPop = 2CanPop;
+		this.oneCanPop = oneCanPop;
+		this.twoCanPop = twoCanPop;
 	}
 
 
@@ -40,17 +40,17 @@ public class BoardTree
 					if(board.canDropADiscFromTop(i,turn))
 					{
 						int[] childMove = {i, 1};
-						children.add(new BoardTree(new Board(board, i, 1, turn), this, nextTurn, childMove, 1canPop, 2CanPop));
+						children.add(new BoardTree(new Board(board, i, 1, turn), this, nextTurn, childMove, oneCanPop, twoCanPop));
 					}
-					if(turn == 1 && 1CanPop && board.canRemoveADiscFromBottom(i, 0))
+					if(turn == 1 && oneCanPop && board.canRemoveADiscFromBottom(i, 0))
 					{
 						int[] childMove = {i, 0};
-						children.add(new BoardTree(new Board(board, i, 0, turn), this, nextTurn, childMove, false, 2CanPop));
+						children.add(new BoardTree(new Board(board, i, 0, turn), this, nextTurn, childMove, false, twoCanPop));
 					}
-					else if(turn == 2 && 2CanPop && board.canRemoveADiscFromBottom(i, 0))
+					else if(turn == 2 && twoCanPop && board.canRemoveADiscFromBottom(i, 0))
 					{
 						int[] childMove = {i, 0};
-						children.add(new BoardTree(new Board(board, i, 0, turn), this, nextTurn, childMove, 1CanPop, false));
+						children.add(new BoardTree(new Board(board, i, 0, turn), this, nextTurn, childMove, oneCanPop, false));
 					}
 				}
 			}
@@ -67,23 +67,26 @@ public class BoardTree
 	public void update(int location, int opperation)
 	{
 		board.update(location, opperation, turn);
-		turn = (turn == 1) ? 2 : 1;
 		if(opperation == 0)
 		{
-			canPop = false;
+			if(turn == 1)
+				oneCanPop = false;
+			if(turn == 2)
+				twoCanPop = false;
 		}
+		turn = (turn == 1) ? 2 : 1;
 		move = null;
 		children = new ArrayList<BoardTree>();
 	}
 
-	public void pickFavoriteChild()
+	public void pickFavoriteChild(int depth)
 	{
 		long bestHeuristic = children.get(0).board.heuristic;
 		for(BoardTree child: children)
 		{
-			if(child.board.heuristic == null)
+			if(child.board.heuristic == 2147483646)
 			{
-				child.minimax();
+				child.minimax(depth);
 			}
 			if(turn == 1 && child.board.heuristic > bestHeuristic) // player 1 is maximizing
 			{
@@ -120,33 +123,31 @@ public class BoardTree
 		}
 	}
 
-	public int[] minimax()
+	public int[] minimax(int depth)
 	{
-		makeTree();
+		makeTree(depth);
 		makeHeuristic();
-		if(board.heruistic != null)
+		if(board.heuristic == 2147483646)
 		{
-			parent.pickFavoriteChild();
+			parent.pickFavoriteChild(depth);
 		}
 		else
 		{
 			for(BoardTree child: children)
 			{
-				child.minimax();
+				child.minimax(depth);
 			}
 		}
 		for(BoardTree child: children)
 		{
-			if(this.board.heruistic == child.board.heuristic)
+			if(this.board.heuristic == child.board.heuristic)
 			{
 				return child.move;
 			}
-			else
-			{
-				System.out.println("PROBLEM");
-				return {0,0};
-			}
 		}
+		System.out.println("PROBLEM");
+		int[] BADBADBAD = {0,0};
+		return BADBADBAD;
 	}
 
 }
