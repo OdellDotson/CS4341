@@ -8,16 +8,18 @@ public class BoardTree
 	ArrayList<BoardTree> children;
 	int turn;
 	int[] move;
-	boolean canPop;
+	boolean 1CanPop;
+	boolean 2CanPop;
 
-	public BoardTree(Board board, BoardTree parent, int turn, int[] move, boolean canPop)
+	public BoardTree(Board board, BoardTree parent, int turn, int[] move, boolean 1CanPop, boolean 2CanPop)
 	{
 		this.board = board;
 		this.parent = parent;
 		children = new ArrayList<BoardTree>();
 		this.turn = turn;
 		this.move = move;
-		this.canPop = canPop;
+		this.1CanPop = 1CanPop;
+		this.2CanPop = 2CanPop;
 	}
 
 
@@ -38,12 +40,17 @@ public class BoardTree
 					if(board.canDropADiscFromTop(i,turn))
 					{
 						int[] childMove = {i, 1};
-						children.add(new BoardTree(new Board(board, i, 1, turn), this, nextTurn, childMove, canPop));
+						children.add(new BoardTree(new Board(board, i, 1, turn), this, nextTurn, childMove, 1canPop, 2CanPop));
 					}
-					if(canPop && board.canRemoveADiscFromBottom(i, 0))
+					if(turn == 1 && 1CanPop && board.canRemoveADiscFromBottom(i, 0))
 					{
 						int[] childMove = {i, 0};
-						children.add(new BoardTree(new Board(board, i, 0, turn), this, nextTurn, childMove, false));
+						children.add(new BoardTree(new Board(board, i, 0, turn), this, nextTurn, childMove, false, 2CanPop));
+					}
+					else if(turn == 2 && 2CanPop && board.canRemoveADiscFromBottom(i, 0))
+					{
+						int[] childMove = {i, 0};
+						children.add(new BoardTree(new Board(board, i, 0, turn), this, nextTurn, childMove, 1CanPop, false));
 					}
 				}
 			}
@@ -63,7 +70,7 @@ public class BoardTree
 		turn = (turn == 1) ? 2 : 1;
 		if(opperation == 0)
 		{
-			capPop = false;
+			canPop = false;
 		}
 		move = null;
 		children = new ArrayList<BoardTree>();
