@@ -22,18 +22,31 @@ public class BoardTree
 
 	public void makeChildren()
 	{
-		int nextTurn = turn == 1 ? 2 : 1;
-		for(int i=0;  i<board.width; i++)
+		if(children.isEmpty())
 		{
-			if(board.canDropADiscFromTop(i,turn))
+			if(board.isConnectN() == -1)
 			{
-				int[] childMove = {i, 1};
-				children.add(new BoardTree(new Board(board, i, 1, turn), this, nextTurn, childMove, canPop));
+				int nextTurn = turn == 1 ? 2 : 1;
+				for(int i=0;  i<board.width; i++)
+				{
+					if(board.canDropADiscFromTop(i,turn))
+					{
+						int[] childMove = {i, 1};
+						children.add(new BoardTree(new Board(board, i, 1, turn), this, nextTurn, childMove, canPop));
+					}
+					if(canPop && board.canRemoveADiscFromBottom(i, 0))
+					{
+						int[] childMove = {i, 0};
+						children.add(new BoardTree(new Board(board, i, 0, turn), this, nextTurn, childMove, false));
+					}
+				}
 			}
-			if(canPop && board.canRemoveADiscFromBottom(i, 0))
+		}
+		else
+		{
+			for(BoardTree child: children)
 			{
-				int[] childMove = {i, 0};
-				children.add(new BoardTree(new Board(board, i, 0, turn), this, nextTurn, childMove, false));
+				child.makeChildren;
 			}
 		}
 	}
@@ -59,19 +72,27 @@ public class BoardTree
 		board.heruistic = bestHeuristic;
 	}
 
-	public int[] minimax()
+	public void makeTree(int depth)
 	{
-		if(parent == null)
+		for(int i=0; i<depth; i++)
 		{
-			pickFavoriteChild();
-			for(BoardTree i: children)
-			{
-				if(i.board.heuristic == board.heuristic)
-					return i.move;
-			}
-
+			makeChildren();
 		}
 	}
-	
+
+	public void makeHeuristic()
+	{
+		if(children.isEmpty())
+		{
+			board.makeHeuristic();
+		}
+		else
+		{
+			for(BoardTree child: children)
+			{
+				child.makeHeuristic();
+			}
+		}
+	}
 
 }

@@ -32,7 +32,6 @@ public class Board {
 			}
 		numOfDiscsInColumn = new int[this.width];
 		this.N=N;
-		heuristic = makeHeuristic();
 	 }
 
 	//contructor that makes a copy of a board and updates it too.
@@ -43,7 +42,6 @@ public class Board {
 		this.board = old.board;
 		this.numOfDiscsInColumn = old.numOfDiscsInColumn;
 		this.update(location, opperation, player);
-
 	}
 	 
 	 public void printBoard(){
@@ -66,7 +64,6 @@ public class Board {
 		{
 			removeADiscFromBottom(location);
 		}
-		heuristic = makeHeuristic();
 	}
 	 
 	 public boolean canRemoveADiscFromBottom(int col, int currentPlayer){
@@ -320,20 +317,19 @@ public class Board {
 		 return this.NOCONNECTION;
    }
 
-	public long makeHeuristic()
+	public void makeHeuristic()
 	{
 		if (isConnectN() == 1)
-			return 2147483647; // max value for a long
+			this.heuristic = 2147483647; // max value for a long
 		else if (isConnectN() == 2)
-			return -2147483648; // min value for long
+			this.heuristic = -2147483648; // min value for long
 		else
 		{
-			heuristic = 0;
+			this.heuristic = 0;
 			for(int i=N-1; i>0; i--)
 			{
-				heuristic = heuristic + (1<<i-1 * countNInARow(i,1)) - (1<<i-1 * countNInARow(i,2));
+				this.heuristic = heuristic + (1<<i-1 * countNInARow(i,1)) - (1<<i-1 * countNInARow(i,2));
 			}
-			return heuristic;
 		}
 	}
 
