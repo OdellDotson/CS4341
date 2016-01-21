@@ -20,6 +20,8 @@ public class BoardTree
 		this.canPop = canPop;
 	}
 
+
+
 	/**
 	* This function will create children for any element in a tree that doent have children
 	* and isn't and end condition
@@ -30,7 +32,7 @@ public class BoardTree
 		{
 			if(board.isConnectN() == -1)
 			{
-				int nextTurn = turn == 1 ? 2 : 1;
+				int nextTurn = (turn == 1) ? 2 : 1;
 				for(int i=0;  i<board.width; i++)
 				{
 					if(board.canDropADiscFromTop(i,turn))
@@ -58,6 +60,12 @@ public class BoardTree
 	public void update(int location, int opperation)
 	{
 		board.update(location, opperation, turn);
+		turn = (turn == 1) ? 2 : 1;
+		if(opperation == 0)
+		{
+			capPop = false;
+		}
+		move = null;
 		children = new ArrayList<BoardTree>();
 	}
 
@@ -107,6 +115,8 @@ public class BoardTree
 
 	public int[] minimax()
 	{
+		makeTree();
+		makeHeuristic();
 		if(board.heruistic != null)
 		{
 			parent.pickFavoriteChild();
