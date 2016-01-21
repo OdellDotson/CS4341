@@ -46,7 +46,7 @@ public class BoardTree
 		{
 			for(BoardTree child: children)
 			{
-				child.makeChildren;
+				child.makeChildren();
 			}
 		}
 	}
@@ -59,17 +59,17 @@ public class BoardTree
 
 	public void pickFavoriteChild()
 	{
-		int bestHeuristic = children.get(0).board.heuristic;
+		long bestHeuristic = children.get(0).board.heuristic;
 		for(BoardTree i: children)
 		{
 			if(turn == 1 && i.board.heuristic > bestHeuristic) // player 1 is maximizing
-				bestHeuristic == i.board.heuristic;
+				bestHeuristic = i.board.heuristic;
 			else if(i.board.heuristic < bestHeuristic) // player 2 is minimizing
 			{
-				bestHeuristic == i.board.heuristic;
+				bestHeuristic = i.board.heuristic;
 			}
 		}
-		board.heruistic = bestHeuristic;
+		board.heuristic = bestHeuristic;
 	}
 
 	public void makeTree(int depth)
