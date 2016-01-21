@@ -10,14 +10,15 @@ import java.util.List;
 public class Player
 {
 
-	String playerName="Bulbasaur";
+	String playerName;
 	BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 	BoardTree playerBoard;
 	int playerTurn; //Either a 1 or a 2, depending on if this player goes first or second respectively.
 	int timeLimit; //The time limit for making a given move, in seconds.
+	int currentTurn = 1; // Player 1 alwaus is going first.
 
 	
-	Player(String playerName, boolean first_move)
+	public Player(String playerName)
 	{
 		this.playerName = playerName;
 	}
@@ -54,7 +55,7 @@ public class Player
 		this.playerTurn = turn;//Update the player to know who goes first based on config.
 		this.timeLimit=timeLimit;//update the player's knowledge of the time limit.
 		
-		this.playerBoard = new BoardTree(new Board(height, width, N), null, turn, null, true);//Create the board with the given data from config.
+		this.playerBoard = new BoardTree(new Board(height, width, N), null, 1, null, true);//Create the board with the given data from config.
 	}
 	
 	
@@ -66,30 +67,14 @@ public class Player
 	{
 		String inputData=input.readLine();	//These are sent as a one line separated with spaces.
 		List<String> ls=Arrays.asList(inputData.split(" "));
-
-		int location = Integer.parseInt(ls.get(0));
-		int operation = Integer.parseInt(ls.get(1));
-		this.playerBoard.update(location, operation); //Updates the board at the top of boardtree based on the move that was read.
-	}
-	
-	
-	/**
-	 * Based on the player's current board, this function does the following:
-	 * 		1. Creates a BoardTree with some ammount of possible steps forward, calculaing the heuristic for each board.
-	 * 		2. Runs minimax on that tree replacing the heuristic values with the minimax values. TODO: With alpha beta pruning?
-	 * 		3. From that tree, it decides which move to make.
-	 * 
-	 * @return move: The desired move we want to make in order to get to the desired next boardstate. 
-	 */
-	public void getNextMove()
-	{
-		//while we still have time,
+		if(ls.size() == 2) //read in moves.
 		{
-			playerBoard.makeChildren();
+			int location = Integer.parseInt(ls.get(0));
+			int operation = Integer.parseInt(ls.get(1));
+			this.playerBoard.update(location, operation); //Updates the board at the top of boardtree based on the move that was read.
 		}
-		
-		writeMove();
 	}
+	
 	
 	
 	/**
@@ -97,10 +82,10 @@ public class Player
 	 * NOTE that this function is also where we actually update the internal board, too. 
 	 * We do this before we tell the referee our move to prevent getting yelled at.
 	 */
-	public void writeMove()
+	public void writeMove(int location, int operation)
 	{
-		int location = this.playerBoard.move[0]; //TODO Is this the right move to access? Is this just null move?
-		int operation = this.playerBoard.move[1];
+		//int location = this.playerBoard.move[0]; //TODO Is this the right move to access? Is this just null move?
+		//int operation = this.playerBoard.move[1];
 		this.playerBoard.update(location, operation);
 		String moveToWrite = "";
 		moveToWrite.concat(Integer.toString(location));
@@ -137,10 +122,22 @@ public class Player
 	
 	public static void main(String[] args) throws IOException
 	{
-		Player rp = new Player(playerName, false);
-		System.out.println(rp.playerName);
+		Player rp = new Player("playerName");
+		//System.out.println(rp.playerName);
+		rp.sendName();
+		rp.readConfig();
+		
 		while (true){
-			rp.processInput();
+			//rp.processInput();
+			if(rp.playerBoard.turn == rp.playerTurn)
+			{
+				int[] move = rp.playerBoard.minimax();
+				rp.writeMove(move[0], move[1]);
+			}
+			else
+			{
+				rp.readMove();
+			}
 		}
 
 	}
