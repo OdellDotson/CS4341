@@ -20,6 +20,10 @@ public class BoardTree
 		this.canPop = canPop;
 	}
 
+	/**
+	* This function will create children for any element in a tree that doent have children
+	* and isn't and end condition
+	*/
 	public void makeChildren()
 	{
 		if(children.isEmpty())
@@ -60,13 +64,19 @@ public class BoardTree
 	public void pickFavoriteChild()
 	{
 		long bestHeuristic = children.get(0).board.heuristic;
-		for(BoardTree i: children)
+		for(BoardTree child: children)
 		{
-			if(turn == 1 && i.board.heuristic > bestHeuristic) // player 1 is maximizing
-				bestHeuristic = i.board.heuristic;
-			else if(i.board.heuristic < bestHeuristic) // player 2 is minimizing
+			if(child.board.heuristic == null)
 			{
-				bestHeuristic = i.board.heuristic;
+				child.minimax();
+			}
+			if(turn == 1 && child.board.heuristic > bestHeuristic) // player 1 is maximizing
+			{
+				bestHeuristic = child.board.heuristic;
+			}
+			else if(child.board.heuristic < bestHeuristic) // player 2 is minimizing
+			{
+				bestHeuristic = child.board.heuristic;
 			}
 		}
 		board.heuristic = bestHeuristic;
@@ -91,6 +101,33 @@ public class BoardTree
 			for(BoardTree child: children)
 			{
 				child.makeHeuristic();
+			}
+		}
+	}
+
+	public int[] minimax()
+	{
+		if(board.heruistic != null)
+		{
+			parent.pickFavoriteChild();
+		}
+		else
+		{
+			for(BoardTree child: children)
+			{
+				child.minimax();
+			}
+		}
+		for(BoardTree child: children)
+		{
+			if(this.board.heruistic == child.board.heuristic)
+			{
+				return child.move;
+			}
+			else
+			{
+				System.out.println("PROBLEM");
+				return {0,0};
 			}
 		}
 	}
