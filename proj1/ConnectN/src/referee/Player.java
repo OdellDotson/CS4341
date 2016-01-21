@@ -55,7 +55,7 @@ public class Player
 		this.playerTurn = turn;//Update the player to know who goes first based on config.
 		this.timeLimit=timeLimit;//update the player's knowledge of the time limit.
 		
-		this.playerBoard = new BoardTree(new Board(height, width, N), null, 1, null);//Create the board with the given data from config.
+		this.playerBoard = new BoardTree(new Board(height, width, N), null, 1, null, true, true);//Create the board with the given data from config.
 	}
 	
 	
