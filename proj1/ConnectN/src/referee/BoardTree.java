@@ -79,14 +79,14 @@ public class BoardTree
 		children = new ArrayList<BoardTree>();
 	}
 
-	public void pickFavoriteChild(int depth)
+	public void pickFavoriteChild()
 	{
 		long bestHeuristic = children.get(0).board.heuristic;
 		for(BoardTree child: children)
 		{
 			if(child.board.heuristic == 2147483646)
 			{
-				child.minimax(depth);
+				child.minimax();
 			}
 			if(turn == 1 && child.board.heuristic > bestHeuristic) // player 1 is maximizing
 			{
@@ -123,22 +123,20 @@ public class BoardTree
 		}
 	}
 
-	public int[] minimax(int depth)
+	public int[] minimax()
 	{
-		makeTree(depth);
-		makeHeuristic();
-		if(board.heuristic == 2147483646)
+		if(children.isEmpty())
 		{
-			parent.pickFavoriteChild(depth);
+			parent.pickFavoriteChild();
 		}
 		else
 		{
 			for(BoardTree child: children)
 			{
-				child.minimax(depth);
+				child.minimax();
 			}
 		}
-		for(BoardTree child: children)
+		for(BoardTree child: children) // this finds the move to the best option
 		{
 			if(this.board.heuristic == child.board.heuristic)
 			{
