@@ -39,8 +39,14 @@ public class Board {
 	{
 		this.width = old.width;
 		this.height = old.height;
-		this.board = old.board;
-		this.numOfDiscsInColumn = old.numOfDiscsInColumn;
+		board =new int[height][width];
+		for(int i=0; i<old.board.length; i++)
+			for(int j=0; j<old.board[i].length; j++)
+			    this.board[i][j] = old.board[i][j];
+		this.N = old.N;
+		this.numOfDiscsInColumn = new int[this.width];
+		for(int i=0; i<old.numOfDiscsInColumn.length; i++)
+			this.numOfDiscsInColumn[i] = old.numOfDiscsInColumn[i];
 		this.update(location, opperation, player);
 	}
 	 
@@ -68,11 +74,11 @@ public class Board {
 	 
 	 public boolean canRemoveADiscFromBottom(int col, int currentPlayer){
 		 if(col<0 || col>=this.width) {
-			 System.out.println("Illegal column!");
+			 //System.out.println("Illegal column!");
 			 return false;
 			 }
 		 else if(board[height-1][col]!=currentPlayer){
-			 System.out.println("You don't have a checker in column "+col+" to pop out!");
+			 //System.out.println("You don't have a checker in column "+col+" to pop out!");
 			 return false;
 		 }
 		 else 
@@ -93,11 +99,11 @@ public class Board {
 	 
 	 public boolean canDropADiscFromTop(int col, int currentPlayer){
 		 if(col<0 || col>=this.width) {
-			 System.out.println("Illegal column!");
+			 //System.out.println("Illegal column!");
 			 return false;
 			 }
 		 else if(this.numOfDiscsInColumn[col]==this.height){
-			 System.out.println("Column is already full. Cannot drop more disc in it.");
+			 //System.out.println("Column is already full. Cannot drop more disc in it.");
 			 return false;
 		 }
 		 else
@@ -137,29 +143,35 @@ public class Board {
 		 
 	 }
 	 
-  public int checkHorizontally(){
-	  int max1=0;
+	 public int checkHorizontally()
+	 {
+		 int max1=0;
 		 int max2=0;
 		 boolean player1_win=false;
 		 boolean player2_win=false;
 		 //check each row, horizontally
-		 for(int i=0;i<this.height;i++){
+		 for(int i=0;i<this.height;i++)
+		 {
 			 max1=0;
 			 max2=0;
-			for(int j=0;j<this.width;j++){
-				if(board[i][j]==PLAYER1){
+			for(int j=0;j<this.width;j++)
+			{
+				if(board[i][j]==PLAYER1)
+				{
 					max1++;
 					max2=0;
 					if(max1==N)
 						 player1_win=true;
 				}
-				else if(board[i][j]==PLAYER2){
+				else if(board[i][j]==PLAYER2)
+				{
 					max1=0;
 					max2++;
 					if(max2==N)
 						 player2_win=true;
 				}
-				else{
+				else
+				{
 					max1=0;
 					max2=0;
 				}
@@ -173,7 +185,7 @@ public class Board {
 			 return this.PLAYER2;
 		 
 		 return this.NOCONNECTION;
-  }
+	 }
 
   public int checkVertically(){
 	  //check each column, vertically
@@ -328,7 +340,8 @@ public class Board {
 			this.heuristic = 0;
 			for(int i=N-1; i>0; i--)
 			{
-				this.heuristic = heuristic + (1<<i-1 * countNInARow(i,1)) - (1<<i-1 * countNInARow(i,2));
+				this.heuristic = heuristic + (countNInARow(i,1)) - (countNInARow(i,2));
+				//TODO Make different amounts of in a row pieces be weighted differently
 			}
 		}
 	}
@@ -395,11 +408,11 @@ public class Board {
 					inARow++;
 					if(inARow == n) // if we have found an instance of "n" tokens in a row
 					{
-						if ((i + 1 < width) && (i - n > 0) && (board[i + 1][j] != emptyCell) && (board[i - n][j] != emptyCell)) // check if the player cannot add a colinear piece
+						if ((i + 1 < height) && (i - n > 0) && (board[i + 1][j] != emptyCell) && (board[i - n][j] != emptyCell)) // check if the player cannot add a colinear piece
 						{
 							inARow = 1; // reset the count of InARow if we cannot add a piece
 						}
-						else if ((i + 1 < width) && (board[i + 1][j] == emptyCell)) // if we have found an opportunity to expand colinearly in one direction
+						else if ((i + 1 < height) && (board[i + 1][j] == emptyCell)) // if we have found an opportunity to expand colinearly in one direction
 						{
 							totalCount++; //  add to the total count
 							inARow = 1;
@@ -500,7 +513,7 @@ public class Board {
 							totalCount++; //  add to the total count
 							inARow = 1;
 						}
-						else if ((height - 1 - y - n > 0) && (x - n < width) && (board[height - 1 - y - n][x - n] == emptyCell))  // if we have found an opportunity to expand colinearly in the other direction
+						else if ((height - 1 - y - n > 0) && ((x - n < width) && (x - n > 0)) && (board[height - 1 - y - n][x - n] == emptyCell))  // if we have found an opportunity to expand colinearly in the other direction
 						{
 							totalCount++;
 							inARow = 1;

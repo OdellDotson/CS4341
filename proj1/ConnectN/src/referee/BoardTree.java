@@ -113,6 +113,8 @@ public class BoardTree
 		if(children.isEmpty())
 		{
 			board.makeHeuristic();
+			//board.printBoard();
+			//System.out.println(board.heuristic);
 		}
 		else
 		{
@@ -125,7 +127,7 @@ public class BoardTree
 
 	public int[] minimax()
 	{
-		if(children.isEmpty())
+		if(children.isEmpty() || board.heuristic != 2147483646) // bottom row
 		{
 			parent.pickFavoriteChild();
 		}
@@ -136,6 +138,10 @@ public class BoardTree
 				child.minimax();
 			}
 		}
+		if(parent == null)
+		{
+			pickFavoriteChild();
+		}
 		for(BoardTree child: children) // this finds the move to the best option
 		{
 			if(this.board.heuristic == child.board.heuristic)
@@ -143,8 +149,7 @@ public class BoardTree
 				return child.move;
 			}
 		}
-		System.out.println("PROBLEM");
-		int[] BADBADBAD = {0,0};
+		int[] BADBADBAD = {100,100};
 		return BADBADBAD;
 	}
 

@@ -15,7 +15,6 @@ public class Player
 	BoardTree playerBoard;
 	int playerTurn; //Either a 1 or a 2, depending on if this player goes first or second respectively.
 	int timeLimit; //The time limit for making a given move, in seconds.
-	int currentTurn = 1; // Player 1 alwaus is going first.
 
 	
 	public Player(String playerName)
@@ -29,7 +28,7 @@ public class Player
 	 */
 	public void sendName()
 	{
-		System.out.print(this.playerName);
+		System.out.println(this.playerName);
 	}
 	
 	
@@ -39,12 +38,14 @@ public class Player
 	 * 
 	 * 
 	 */
-	public void readConfig() throws IOException
+	public void readConfig(List<String> ls) throws IOException
 	{
-		String inputData=input.readLine();	//These are sent as a one line separated with spaces.
-		List<String> ls=Arrays.asList(inputData.split(" "));
+		//String inputData=input.readLine();	//These are sent as a one line separated with spaces.
+		//System.out.println("I got a config at it was: " + inputData);
+		//List<String> ls=Arrays.asList(inputData.split(" "));
 		
 		//Game information consists of 5 numbers [in this order]: 
+		
 		int height = Integer.parseInt(ls.get(0));//	 * board height (#rows), 
 		int width = Integer.parseInt(ls.get(1));//	 * board width (#columns), 
 		int N = Integer.parseInt(ls.get(2));//	 * number of pieces to win (the N in Connect-N), 
@@ -52,10 +53,9 @@ public class Player
 		int timeLimit = Integer.parseInt(ls.get(4));//	 * and the time limit to make a move in seconds
 		//	 * Once the players receive these information, the game starts immediately. 
 		
-		this.playerTurn = turn;//Update the player to know who goes first based on config.
 		this.timeLimit=timeLimit;//update the player's knowledge of the time limit.
 		
-		this.playerBoard = new BoardTree(new Board(height, width, N), null, 1, null, true, true);//Create the board with the given data from config.
+		this.playerBoard = new BoardTree(new Board(height, width, N), null, turn, null, true, true);//Create the board with the given data from config.
 	}
 	
 	
@@ -63,16 +63,11 @@ public class Player
 	 * Reads in a move touple from the refree of the form [move_operation move_location].
 	 * Updates the playerBoard with that information.
 	 */
-	public void readMove() throws IOException
+	public void readMove(List<String> ls) throws IOException
 	{
-		String inputData=input.readLine();	//These are sent as a one line separated with spaces.
-		List<String> ls=Arrays.asList(inputData.split(" "));
-		if(ls.size() == 2) //read in moves.
-		{
-			int location = Integer.parseInt(ls.get(0));
-			int operation = Integer.parseInt(ls.get(1));
-			this.playerBoard.update(location, operation); //Updates the board at the top of boardtree based on the move that was read.
-		}
+		int location = Integer.parseInt(ls.get(0));
+		int operation = Integer.parseInt(ls.get(1));
+		playerBoard.update(location, operation); //Updates the board at the top of boardtree based on the move that was read.
 	}
 	
 	
@@ -84,13 +79,8 @@ public class Player
 	 */
 	public void writeMove(int location, int operation)
 	{
-		//int location = this.playerBoard.move[0]; //TODO Is this the right move to access? Is this just null move?
-		//int operation = this.playerBoard.move[1];
 		this.playerBoard.update(location, operation);
-		String moveToWrite = "";
-		moveToWrite.concat(Integer.toString(location));
-		moveToWrite.concat(Integer.toString(operation));
- 		System.out.print(moveToWrite);
+ 		System.out.println("" + location + " " + operation);
 	}
 	
 	
@@ -100,46 +90,66 @@ public class Player
 		List<String> ls=Arrays.asList(s.split(" "));
 		if(ls.size()==2)
 		{
-			System.out.println(ls.get(0)+" "+ls.get(1));
+			readMove(ls);
+			if(playerBoard.turn == playerTurn)
+			{
+				play();
+			}
 		}
 		else if(ls.size() == 1)
 		{
 			System.out.println("game over!!!");
 			System.exit(0);
 		}
-		else if(ls.size() == 5) //ls contains game info
+		else if(ls.size()==4)
 		{
-			System.out.println("0 1");  //first move
-		}
-		else if(ls.size() == 4) //player1: aa player2: bb
-		{		
-			//TODO combine this information with game information to decide who is the first player
-		}
-		else
-			System.out.println("not what I want");
-	}
-	
-	
-	public static void main(String[] args) throws IOException
-	{
-		Player rp = new Player("playerName");
-		//System.out.println(rp.playerName);
-		rp.sendName();
-		rp.readConfig();
-		
-		while (true){
-			//rp.processInput();
-			if(rp.playerBoard.turn == rp.playerTurn)
+			if(ls.get(1).equals(playerName))
 			{
-				int[] move = rp.playerBoard.minimax(3);
-				rp.writeMove(move[0], move[1]);
+				playerTurn = 1;
 			}
 			else
 			{
-				rp.readMove();
+				playerTurn = 2;
 			}
 		}
-
+		else if(ls.size() == 5) //ls contains game info
+		{
+			readConfig(ls);
+			if(playerBoard.turn == playerTurn)
+			{
+				play();
+			}
+		}
+	}
+	
+	public void play()
+	{
+		if(playerBoard.turn == playerTurn)
+		{
+			playerBoard.makeTree(5);
+			playerBoard.makeHeuristic();
+			int[] move = playerBoard.minimax();
+			writeMove(move[0], move[1]);
+		}
+	}
+	
+	public static void main(String[] args) throws IOException
+	{
+		Player rp = new Player("playerName1");
+		rp.sendName();
+		while (true)
+		{
+			rp.processInput();
+		}
+		
+		/* TESTING STUFF
+		rp.playerBoard = new BoardTree(new Board(6, 7, 3), null, 2, null, true, true);
+		rp.playerBoard.makeTree(2);
+		rp.playerBoard.makeHeuristic();
+		int[] move = rp.playerBoard.minimax();
+		System.out.println("" + move[0] + " " + move[1]);
+		System.out.println(rp.playerBoard.board.heuristic);
+		*/
 	}
 
 }
