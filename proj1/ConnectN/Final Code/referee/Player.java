@@ -1,3 +1,8 @@
+/**
+ * This code is created for cs 4341 AI 2013a at WPI. All rights are reserved. 
+ * Code was provided by course staff and modified by Odell Dotson and Ethan Prihar
+ * ocdotson@wpi.edu && ebprihar@wpi.edu
+ */
 package referee;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,13 +15,15 @@ import java.util.List;
 public class Player
 {
 
-	String playerName;
+	String playerName;//The string that is given as player name to the refree when asked.
 	BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 	BoardTree playerBoard;
 	int playerTurn; //Either a 1 or a 2, depending on if this player goes first or second respectively.
 	int timeLimit; //The time limit for making a given move, in seconds.
 
-	
+	/**
+	 * Simple constructor for the player class, only requiring a name.
+	 */
 	public Player(String playerName)
 	{
 		this.playerName = playerName;
@@ -36,16 +43,11 @@ public class Player
 	 * This function reads the output from the refree when it tells us how the game is configured.
 	 * This function also updates the playerBoard in player to use the given game configuration.
 	 * 
-	 * 
+	 * @params ls: ls is the list of strings, in List form, given by the refree about the config.
 	 */
 	public void readConfig(List<String> ls) throws IOException
 	{
-		//String inputData=input.readLine();	//These are sent as a one line separated with spaces.
-		//System.out.println("I got a config at it was: " + inputData);
-		//List<String> ls=Arrays.asList(inputData.split(" "));
-		
 		//Game information consists of 5 numbers [in this order]: 
-		
 		int height = Integer.parseInt(ls.get(0));//	 * board height (#rows), 
 		int width = Integer.parseInt(ls.get(1));//	 * board width (#columns), 
 		int N = Integer.parseInt(ls.get(2));//	 * number of pieces to win (the N in Connect-N), 
@@ -83,7 +85,9 @@ public class Player
  		System.out.println("" + location + " " + operation);
 	}
 	
-	
+	/**
+	 * 
+	 */
 	public void processInput() throws IOException
 	{	
     	String s=input.readLine();	
