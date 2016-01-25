@@ -10,6 +10,8 @@ public class BoardTree
 	int[] move;
 	boolean oneCanPop;
 	boolean twoCanPop;
+	double cutoff;
+	boolean pass;
 
 	public BoardTree(Board board, BoardTree parent, int turn, int[] move, boolean oneCanPop, boolean twoCanPop)
 	{
@@ -20,9 +22,12 @@ public class BoardTree
 		this.move = move;
 		this.oneCanPop = oneCanPop;
 		this.twoCanPop = twoCanPop;
+		if(turn == 1)
+			cutoff = -2147483648;
+		else
+			cutoff = 2147483647;
+		pass = true;
 	}
-
-
 
 	/**
 	* This function will create children for any element in a tree that doent have children
@@ -76,28 +81,8 @@ public class BoardTree
 		}
 		turn = (turn == 1) ? 2 : 1;
 		move = null;
-		children = new ArrayList<BoardTree>();
-	}
-
-	public void pickFavoriteChild()
-	{
-		long bestHeuristic = children.get(0).board.heuristic;
-		for(BoardTree child: children)
-		{
-			if(child.board.heuristic == 2147483646)
-			{
-				child.minimax();
-			}
-			if(turn == 1 && child.board.heuristic > bestHeuristic) // player 1 is maximizing
-			{
-				bestHeuristic = child.board.heuristic;
-			}
-			else if(child.board.heuristic < bestHeuristic) // player 2 is minimizing
-			{
-				bestHeuristic = child.board.heuristic;
-			}
-		}
-		board.heuristic = bestHeuristic;
+		children.clear();
+		board.heuristic = 0.1;
 	}
 
 	public void makeTree(int depth)
@@ -113,8 +98,6 @@ public class BoardTree
 		if(children.isEmpty())
 		{
 			board.makeHeuristic();
-			//board.printBoard();
-			//System.out.println(board.heuristic);
 		}
 		else
 		{
@@ -124,22 +107,12 @@ public class BoardTree
 			}
 		}
 	}
-
+	
 	public int[] minimax()
 	{
-		if(children.isEmpty() || board.heuristic != 2147483646) // bottom row
+		if(board.heuristic == 0.1) // dont have a heuristic and you have kids
 		{
-			parent.pickFavoriteChild();
-		}
-		else
-		{
-			for(BoardTree child: children)
-			{
-				child.minimax();
-			}
-		}
-		if(parent == null)
-		{
+			//System.out.println("Minimax is called");
 			pickFavoriteChild();
 		}
 		for(BoardTree child: children) // this finds the move to the best option
@@ -151,6 +124,80 @@ public class BoardTree
 		}
 		int[] BADBADBAD = {100,100};
 		return BADBADBAD;
+	}
+	
+	public void pickFavoriteChild()
+	{	
+		if(turn == 1)
+		{
+			board.heuristic = -10000000;
+			//System.out.println("Its player ones turn");
+		}
+		else
+			board.heuristic = 10000000;
+		for(BoardTree child: children)
+		{
+			//System.out.println("this should be called three times");
+			if(child.board.heuristic == 0.1)
+			{
+				child.minimax();
+				//System.out.println("this shouldnt be called at all");
+			}
+			if(pass && turn == 1 && child.board.heuristic > board.heuristic) // player 1 is maximizing
+			{
+				updateCutoff(child.board.heuristic);
+				board.heuristic = child.board.heuristic;
+				//System.out.println("this should happen once");
+			}
+			else if(pass && turn == 2 && child.board.heuristic < board.heuristic) // player 2 is minimizing
+			{
+				updateCutoff(child.board.heuristic);
+				board.heuristic = child.board.heuristic;
+				//System.out.println("this shouldnt be called at all");
+			}
+		}
+	}
+	
+	public void updateCutoff(double value)
+	{
+		if(turn == 1) // alpha beta pruning for max
+		{
+			if(value > cutoff)
+			{
+				cutoff = value;
+			}
+			else if(!(children.isEmpty()))
+			{
+				for(BoardTree child: children)
+				{
+					if(child.cutoff == value)
+					{
+						child.pass = false;
+					}
+				}
+			}
+		}
+		else // alpha beta pruning for min
+		{
+			if(value < cutoff)
+			{
+				cutoff = value;
+			}
+			else if(!(children.isEmpty()))
+			{
+				for(BoardTree child: children)
+				{
+					if(child.cutoff == value)
+					{
+						child.pass = false;
+					}
+				}
+			}
+		}
+		if(parent != null)
+		{
+			parent.updateCutoff(value);
+		}
 	}
 
 }

@@ -126,30 +126,45 @@ public class Player
 	{
 		if(playerBoard.turn == playerTurn)
 		{
-			playerBoard.makeTree(5);
-			playerBoard.makeHeuristic();
-			int[] move = playerBoard.minimax();
-			writeMove(move[0], move[1]);
+			if(playerBoard.board.isConnectN() == -1)
+			{
+				playerBoard.makeTree(3);
+				playerBoard.makeHeuristic();
+				int[] move = playerBoard.minimax();
+				writeMove(move[0], move[1]);
+			}
+			else
+				System.exit(0);
 		}
 	}
 	
 	public static void main(String[] args) throws IOException
 	{
-		Player rp = new Player("playerName1");
-		rp.sendName();
+		Player rp = new Player("playerName2");
+		/*rp.sendName();
 		while (true)
 		{
 			rp.processInput();
-		}
+		}*/
 		
-		/* TESTING STUFF
-		rp.playerBoard = new BoardTree(new Board(6, 7, 3), null, 2, null, true, true);
-		rp.playerBoard.makeTree(2);
-		rp.playerBoard.makeHeuristic();
-		int[] move = rp.playerBoard.minimax();
-		System.out.println("" + move[0] + " " + move[1]);
-		System.out.println(rp.playerBoard.board.heuristic);
-		*/
+		//TESTING STUFF
+		rp.playerBoard = new BoardTree(new Board(6, 7, 4), null, 2, null, true, true);
+		
+		for(int i = 0; i < 30; i++)
+		{
+			if(rp.playerBoard.board.isConnectN() == -1)
+			{	
+				rp.playerBoard.makeTree(5);
+				rp.playerBoard.makeHeuristic();
+				int[] move = rp.playerBoard.minimax();
+				System.out.println("" + move[0] + " " + move[1]);
+				System.out.println(rp.playerBoard.board.heuristic);
+				rp.playerBoard.update(move[0],move[1]);
+				rp.playerBoard.board.printBoard();
+			}
+			else
+				System.exit(0);
+		}
 	}
 
 }

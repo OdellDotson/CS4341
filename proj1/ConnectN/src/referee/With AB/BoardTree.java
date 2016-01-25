@@ -10,6 +10,8 @@ public class BoardTree
 	int[] move;
 	boolean oneCanPop;
 	boolean twoCanPop;
+	double cutoff;
+	boolean pass;
 
 	public BoardTree(Board board, BoardTree parent, int turn, int[] move, boolean oneCanPop, boolean twoCanPop)
 	{
@@ -20,6 +22,11 @@ public class BoardTree
 		this.move = move;
 		this.oneCanPop = oneCanPop;
 		this.twoCanPop = twoCanPop;
+		if(turn == 1)
+			cutoff = -2147483648;
+		else
+			cutoff = 2147483647;
+		pass = true;
 	}
 
 
@@ -81,12 +88,15 @@ public class BoardTree
 
 	public void pickFavoriteChild()
 	{
-		long bestHeuristic = children.get(0).board.heuristic;
+		double bestHeuristic = children.get(0).board.heuristic;
 		for(BoardTree child: children)
 		{
-			if(child.board.heuristic == 2147483646)
+			if(child.board.heuristic == 0.1)
 			{
-				child.minimax();
+				if(child.pass)
+					child.minimax();
+				else
+					child.board.heuristic = cutoff;
 			}
 			if(turn == 1 && child.board.heuristic > bestHeuristic) // player 1 is maximizing
 			{
@@ -113,8 +123,6 @@ public class BoardTree
 		if(children.isEmpty())
 		{
 			board.makeHeuristic();
-			//board.printBoard();
-			//System.out.println(board.heuristic);
 		}
 		else
 		{
@@ -124,27 +132,76 @@ public class BoardTree
 			}
 		}
 	}
+	
+	public void updateCutoff(double value)
+	{
+		if(turn == 1) // alpha beta pruning for max
+		{
+			if(value > cutoff)
+			{
+				cutoff = value;
+			}
+			else if(!(children.isEmpty()))
+			{
+				for(BoardTree child: children)
+				{
+					if(child.cutoff == value)
+					{
+						child.pass = false;
+					}
+				}
+			}
+		}
+		else // alpha beta pruning for min
+		{
+			if(value < cutoff)
+			{
+				cutoff = value;
+			}
+			else if(!(children.isEmpty()))
+			{
+				for(BoardTree child: children)
+				{
+					if(child.cutoff == value)
+					{
+						child.pass = false;
+					}
+				}
+			}
+		}
+		if(parent != null)
+		{
+			parent.updateCutoff(value);
+		}
+	}
 
 	public int[] minimax()
 	{
-		if(children.isEmpty() || board.heuristic != 2147483646) // bottom row
+		if(board.heuristic != 0.1) // has a heuristic
 		{
-			parent.pickFavoriteChild();
+			if(parent != null) // has a parent
+			{
+				parent.updateCutoff(board.heuristic);
+				parent.pickFavoriteChild();
+			}
 		}
 		else
 		{
 			for(BoardTree child: children)
 			{
-				child.minimax();
+				if(child.pass)
+					child.minimax();
+				else
+					child.board.heuristic = cutoff;
 			}
 		}
-		if(parent == null)
+		if((parent == null) && (children != null))
 		{
 			pickFavoriteChild();
 		}
 		for(BoardTree child: children) // this finds the move to the best option
 		{
-			if(this.board.heuristic == child.board.heuristic)
+			if((this.board.heuristic == child.board.heuristic) || (this.cutoff == child.board.heuristic))
 			{
 				return child.move;
 			}

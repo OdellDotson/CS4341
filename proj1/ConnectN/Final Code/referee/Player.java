@@ -126,29 +126,85 @@ public class Player
 	{
 		if(playerBoard.turn == playerTurn)
 		{
-			playerBoard.makeTree(5);
-			playerBoard.makeHeuristic();
-			int[] move = playerBoard.minimax();
-			writeMove(move[0], move[1]);
+			if(timeLimit <= 2) // taking into account how many seconds we have
+				playerBoard.makeTree(4);
+			else if(timeLimit <= 10)
+				playerBoard.makeTree(6);
+			else
+				playerBoard.makeTree(7);
+			playerBoard.makeHeuristic(); // makes the heuristics
+			int[] move = playerBoard.minimax(); // determines the best move
+			writeMove(move[0], move[1]); // publishes the move
 		}
 	}
 	
 	public static void main(String[] args) throws IOException
 	{
-		Player rp = new Player("playerName1");
+		Player rp = new Player("SHSHHWHWHHWHW");
 		rp.sendName();
 		while (true)
 		{
 			rp.processInput();
 		}
 		
-		/* TESTING STUFF
-		rp.playerBoard = new BoardTree(new Board(6, 7, 3), null, 2, null, true, true);
-		rp.playerBoard.makeTree(2);
-		rp.playerBoard.makeHeuristic();
-		int[] move = rp.playerBoard.minimax();
-		System.out.println("" + move[0] + " " + move[1]);
-		System.out.println(rp.playerBoard.board.heuristic);
+		//TESTING STUFF
+		/*
+		rp.playerBoard = new BoardTree(new Board(6, 7, 4), null, 1, null, true, true);
+		for(int i = 0; i < 50; i++)
+		{
+			if(rp.playerBoard.board.isConnectN() == -1)
+			{	
+				rp.playerBoard.makeTree(2);
+				rp.playerBoard.makeHeuristic();
+				System.out.println("TOP TREE");
+				rp.playerBoard.board.printBoard();
+				System.out.println(rp.playerBoard.board.heuristic);
+				System.out.println("NEXT LAYER");
+				for(BoardTree child: rp.playerBoard.children)
+				{
+					child.board.printBoard();
+					System.out.println(child.board.heuristic);
+					System.out.println("" + child.move[0] + " " + child.move[1]);
+				}
+				System.out.println("NEXT LAYER");
+				for(BoardTree child: rp.playerBoard.children)
+				{
+					for(BoardTree child2: child.children)
+					{
+						child2.board.printBoard();
+						System.out.println(child2.board.heuristic);
+						System.out.println("" + child2.move[0] + " " + child2.move[1]);
+					}
+				}
+				int[] move = rp.playerBoard.minimax();
+				System.out.println("AFTER MINMAX");
+				System.out.println("TOP TREE");
+				rp.playerBoard.board.printBoard();
+				System.out.println(rp.playerBoard.board.heuristic);
+				System.out.println("NEXT LAYER");
+				for(BoardTree child: rp.playerBoard.children)
+				{
+					child.board.printBoard();
+					System.out.println(child.board.heuristic);
+					System.out.println("" + child.move[0] + " " + child.move[1]);
+				}
+				System.out.println("NEXT LAYER");
+				for(BoardTree child: rp.playerBoard.children)
+				{
+					for(BoardTree child2: child.children)
+					{
+						child2.board.printBoard();
+						System.out.println(child2.board.heuristic);
+						System.out.println("" + child2.move[0] + " " + child2.move[1]);
+					}
+				}
+				rp.playerBoard.update(move[0],move[1]);
+				System.out.println("THE MOVE TO MAKE IS: ");
+				System.out.println("" + move[0] + " " + move[1]);
+			}
+			else
+				System.exit(0);
+		}
 		*/
 	}
 

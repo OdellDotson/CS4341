@@ -1,6 +1,7 @@
 /**
  * This code is created for cs 4341 AI 2013a at WPI. All rights are reserved. 
  */
+
 package referee;
 
 /**
@@ -15,7 +16,7 @@ public class Board {
 	int numOfDiscsInColumn[];
 	int emptyCell=9;
 	int N;
-	long heuristic = 2147483646;
+	double heuristic = 0.1;
 	int PLAYER1=1;
 	int PLAYER2=2;
 	int NOCONNECTION=-1;
@@ -329,21 +330,24 @@ public class Board {
 		 return this.NOCONNECTION;
    }
 
-	public void makeHeuristic()
+   public void makeHeuristic()
 	{
-		if (isConnectN() == 1)
-			this.heuristic = 2147483647; // max value for a long
-		else if (isConnectN() == 2)
-			this.heuristic = -2147483648; // min value for long
+		if(isConnectN() == 1)
+			heuristic = 10000000; // max value for a long
+		else if(isConnectN() == 2)
+			heuristic = -10000000; // min value for long
+		else if(isConnectN() == 0)
+			heuristic = 0;
 		else
 		{
-			this.heuristic = 0;
-			for(int i=N-1; i>0; i--)
+			heuristic = 0;
+			for(int i = 1; i < N; i++)
 			{
-				this.heuristic = heuristic + (countNInARow(i,1)) - (countNInARow(i,2));
-				//TODO Make different amounts of in a row pieces be weighted differently
+				heuristic = heuristic + (countNInARow(i,1)*i*i) - (countNInARow(i,2)*i*i);
 			}
 		}
+		//printBoard();
+		//System.out.println(heuristic);
 	}
 
 	public int countNInARow(int n, int player)
@@ -367,7 +371,7 @@ public class Board {
 					inARow++;
 					if(inARow == n) // if we have found an instance of "n" tokens in a row
 					{
-						if ((j + 1 < width) && (j - n > 0) && (board[i][j + 1] != emptyCell) && (board[i][j - n] != emptyCell)) // check if the player cannot add a colinear piece
+						if ((j + 1 < width) && (j - n >= 0) && (board[i][j + 1] != emptyCell) && (board[i][j - n] != emptyCell)) // check if the player cannot add a colinear piece
 						{
 							inARow = 1; // reset the count of InARow if we cannot add a piece
 						}
@@ -376,7 +380,7 @@ public class Board {
 							totalCount++; //  add to the total count
 							inARow = 1;
 						}
-						else if ((j - n > 0) && board[i][j - n] == emptyCell)  // if we have found an opportunity to expand colinearly in the other direction
+						else if ((j - n >= 0) && board[i][j - n] == emptyCell)  // if we have found an opportunity to expand colinearly in the other direction
 						{
 							totalCount++;
 							inARow = 1;
@@ -408,7 +412,7 @@ public class Board {
 					inARow++;
 					if(inARow == n) // if we have found an instance of "n" tokens in a row
 					{
-						if ((i + 1 < height) && (i - n > 0) && (board[i + 1][j] != emptyCell) && (board[i - n][j] != emptyCell)) // check if the player cannot add a colinear piece
+						if ((i + 1 < height) && (i - n >= 0) && (board[i + 1][j] != emptyCell) && (board[i - n][j] != emptyCell)) // check if the player cannot add a colinear piece
 						{
 							inARow = 1; // reset the count of InARow if we cannot add a piece
 						}
@@ -417,7 +421,7 @@ public class Board {
 							totalCount++; //  add to the total count
 							inARow = 1;
 						}
-						else if ((i - n > 0) && board[i - n][j] == emptyCell)  // if we have found an opportunity to expand colinearly in the other direction
+						else if ((i - n >= 0) && board[i - n][j] == emptyCell)  // if we have found an opportunity to expand colinearly in the other direction
 						{
 							totalCount++;
 							inARow = 1;
@@ -455,16 +459,16 @@ public class Board {
 					inARow++;
 					if(inARow == n)
 					{
-						if ((height - y < height) && (x - 1 > 0) && (height - 1 - y - n > 0) && (x + n < width) && (board[height - y][x - 1] != emptyCell) && (board[height - 1 - y - n][x + n] != emptyCell)) // check if the player cannot add a colinear piece
+						if ((height - y < height) && (x - 1 >= 0) && (height - 1 - y - n >= 0) && (x + n < width) && (board[height - y][x - 1] != emptyCell) && (board[height - 1 - y - n][x + n] != emptyCell)) // check if the player cannot add a colinear piece
 						{
 							inARow = 1; // reset the count of InARow if we cannot add a piece
 						}
-						else if ((height - y < height) && (x - 1 > 0) && (board[height - y][x - 1] == emptyCell)) // if we have found an opportunity to expand colinearly in one direction
+						else if ((height - y < height) && (x - 1 >= 0) && (board[height - y][x - 1] == emptyCell)) // if we have found an opportunity to expand colinearly in one direction
 						{
 							totalCount++; //  add to the total count
 							inARow = 1;
 						}
-						else if ((height - 1 - y - n > 0) && (x + n < width) && (board[height - 1 - y - n][x + n] == emptyCell))  // if we have found an opportunity to expand colinearly in the other direction
+						else if ((height - 1 - y - n >= 0) && (x + n < width) && (board[height - 1 - y - n][x + n] == emptyCell))  // if we have found an opportunity to expand colinearly in the other direction
 						{
 							totalCount++;
 							inARow = 1;
@@ -482,7 +486,7 @@ public class Board {
 		return totalCount;
 	}
 
-	public int countDiagonally2(int n,int player)
+  	public int countDiagonally2(int n,int player)
   	{
 		int inARow = 0; // tracks the number of pieces found in a row at any given time
 		int totalCount = 0; // tracks the number of "n" tokens in a row with nothing blocking the player from adding another colinear token found
@@ -504,16 +508,16 @@ public class Board {
 					inARow++;
 					if(inARow == n)
 					{
-						if ((height - y < height) && (x + 1 > 0) && (height - 1 - y - n > 0) && (x - n < width) && (board[height - y][x + 1] != emptyCell) && (board[height - 1 - y - n][x - n] != emptyCell)) // check if the player cannot add a colinear piece
+						if (((height - y < height) && (height - y >= 0)) && ((x + 1 >= 0) && (x + 1 < width)) && ((height - 1 - y - n >= 0) && (height - 1 - y - n < height)) && ((x - n < width) && (x - n >= 0)) && (board[height - y][x + 1] != emptyCell) && (board[height - 1 - y - n][x - n] != emptyCell)) // check if the player cannot add a colinear piece
 						{
 							inARow = 1; // reset the count of InARow if we cannot add a piece
 						}
-						else if ((height - y < height) && (x + 1 > 0) && (board[height - y][x + 1] == emptyCell)) // if we have found an opportunity to expand colinearly in one direction
+						else if ((height - y < height) && ((x + 1 >= 0) && (x + 1 < width)) && (board[height - y][x + 1] == emptyCell)) // if we have found an opportunity to expand colinearly in one direction
 						{
 							totalCount++; //  add to the total count
 							inARow = 1;
 						}
-						else if ((height - 1 - y - n > 0) && ((x - n < width) && (x - n > 0)) && (board[height - 1 - y - n][x - n] == emptyCell))  // if we have found an opportunity to expand colinearly in the other direction
+						else if ((height - 1 - y - n >= 0) && ((x - n < width) && (x - n >= 0)) && (board[height - 1 - y - n][x - n] == emptyCell))  // if we have found an opportunity to expand colinearly in the other direction
 						{
 							totalCount++;
 							inARow = 1;
