@@ -3,15 +3,15 @@ import java.util.ArrayList;
 
 public class BoardTree
 {
-	Board board;
-	BoardTree parent;
-	ArrayList<BoardTree> children;
-	int turn;
-	int[] move;
-	boolean oneCanPop;
-	boolean twoCanPop;
-	double cutoff;
-	boolean pass;
+	Board board; // the board of connect n
+	BoardTree parent; // the boards parent board
+	ArrayList<BoardTree> children; // all of the boards that could be made by making a move on this board
+	int turn; // whos turn it is to play on this board
+	int[] move; // the move that lead you from the parent board to this board
+	boolean oneCanPop; // if player one can pop a piece
+	boolean twoCanPop; // if player 2 can pop a piece
+	double cutoff; // the alpha beta pruning cutoff value
+	boolean pass; // whether or not the branch has been pruned
 
 	public BoardTree(Board board, BoardTree parent, int turn, int[] move, boolean oneCanPop, boolean twoCanPop)
 	{
@@ -22,7 +22,7 @@ public class BoardTree
 		this.move = move;
 		this.oneCanPop = oneCanPop;
 		this.twoCanPop = twoCanPop;
-		if(turn == 1)
+		if(turn == 1) // start off with very low or very high cutoff value so that it is immidiatly overridden
 			cutoff = -2147483648;
 		else
 			cutoff = 2147483647;
@@ -37,32 +37,32 @@ public class BoardTree
 	*/
 	public void makeChildren()
 	{
-		if(children.isEmpty())
+		if(children.isEmpty()) // if this boardTree object has no children, make it children
 		{
 			if(board.isConnectN() == -1)
 			{
-				int nextTurn = (turn == 1) ? 2 : 1;
+				int nextTurn = (turn == 1) ? 2 : 1; // this switches the turn so we know whos turn is next
 				for(int i=0;  i<board.width; i++)
 				{
 					if(board.canDropADiscFromTop(i,turn))
 					{
 						int[] childMove = {i, 1};
-						children.add(new BoardTree(new Board(board, i, 1, turn), this, nextTurn, childMove, oneCanPop, twoCanPop));
+						children.add(new BoardTree(new Board(board, i, 1, turn), this, nextTurn, childMove, oneCanPop, twoCanPop)); // creates a child
 					}
 					if(turn == 1 && oneCanPop && board.canRemoveADiscFromBottom(i, 0))
 					{
 						int[] childMove = {i, 0};
-						children.add(new BoardTree(new Board(board, i, 0, turn), this, nextTurn, childMove, false, twoCanPop));
+						children.add(new BoardTree(new Board(board, i, 0, turn), this, nextTurn, childMove, false, twoCanPop)); // creates a child
 					}
 					else if(turn == 2 && twoCanPop && board.canRemoveADiscFromBottom(i, 0))
 					{
 						int[] childMove = {i, 0};
-						children.add(new BoardTree(new Board(board, i, 0, turn), this, nextTurn, childMove, oneCanPop, false));
+						children.add(new BoardTree(new Board(board, i, 0, turn), this, nextTurn, childMove, oneCanPop, false)); // creates a child
 					}
 				}
 			}
 		}
-		else
+		else // if it already has children make children for it's children
 		{
 			for(BoardTree child: children)
 			{
@@ -71,9 +71,10 @@ public class BoardTree
 		}
 	}
 
+	// this function updates the BoardTree when a move has been made
 	public void update(int location, int opperation)
 	{
-		board.update(location, opperation, turn);
+		board.update(location, opperation, turn); // updates the board
 		if(opperation == 0)
 		{
 			if(turn == 1)
@@ -82,10 +83,11 @@ public class BoardTree
 				twoCanPop = false;
 		}
 		turn = (turn == 1) ? 2 : 1;
-		move = null;
+		move = null; // clears the children and move so more minmax can be done
 		children = new ArrayList<BoardTree>();
 	}
 
+	// this function picks the child with the best value to assign as the heruistic for the Board
 	public void pickFavoriteChild()
 	{
 		double bestHeuristic = children.get(0).board.heuristic;

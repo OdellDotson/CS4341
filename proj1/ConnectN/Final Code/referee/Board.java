@@ -1,6 +1,9 @@
 /**
  * This code is created for cs 4341 AI 2013a at WPI. All rights are reserved. 
  */
+/**
+* Code was added to this class by Ethan Prihar and Odell Dotson
+*/
 
 package referee;
 
@@ -35,7 +38,8 @@ public class Board {
 		this.N=N;
 	 }
 
-	//contructor that makes a copy of a board and updates it too.
+	// contructor that makes a copy of a board and updates it too.
+	// this constructor is used when creating a tree for minmax
 	Board(Board old, int location, int opperation, int player)
 	{
 		this.width = old.width;
@@ -61,15 +65,16 @@ public class Board {
 		 }
 	 }
 
+	 // this function updates a board by performing the specified opperation
 	public void update(int location, int opperation, int player)
 	{
 		if(opperation == 1)
 		{
-			dropADiscFromTop(location, player);
+			dropADiscFromTop(location, player); // drops a piece
 		}
 		else
 		{
-			removeADiscFromBottom(location);
+			removeADiscFromBottom(location); // or pops a piece
 		}
 	}
 	 
@@ -330,7 +335,16 @@ public class Board {
 		 return this.NOCONNECTION;
    }
 
-   public void makeHeuristic()
+    // this function creates the heuristic that minmax uses
+    // the heuristic is based off of the number of avaiable spaces to go
+    // that will create more colinear pieces for a player
+    // player 1 is max and player 2 is min
+    // if there is a win condition than the heuristic is set to a very high or low value depending on if max or min wins
+    // the heuristic is set to 0 for a tie
+    // when calculating the heuristic, the fuction looks for how many "n" in a row's there are where n is in the range 1 to N
+    // the number of "n" in a rows you have is multiplied by n^2
+    // the final value is added to the heruistic for max and subtracted for min
+    public void makeHeuristic()
 	{
 		if(isConnectN() == 1)
 			heuristic = 10000000; // max value for a long
@@ -350,6 +364,7 @@ public class Board {
 		//System.out.println(heuristic);
 	}
 
+	// this function counts how many isntances of a certain number of pieces in a row you have.
 	public int countNInARow(int n, int player)
    	{
 		return countHorizontally(n,player) + countVertically(n,player) + countDiagonally1(n,player) + countDiagonally2(n,player);
@@ -357,8 +372,9 @@ public class Board {
 
 	public int countHorizontally(int n,int player)
 	{
-	// this method counts the number of times a specific player has "n" tokens
-	// in a row with nothing blocking the player from adding another colinear token
+		// this method counts the number of times a specific player has "n" horizontal tokens
+		// in a row with nothing blocking the player from adding another colinear token
+		// it is build from the checkHorizontaly function
 		int inARow = 0; // tracks the number of pieces found in a row at any given time
 		int totalCount = 0; // tracks the number of "n" tokens in a row with nothing blocking the player from adding another colinear token found
 		for(int i=0;i<this.height;i++) // itterates through all the rows
@@ -398,8 +414,9 @@ public class Board {
 
 	public int countVertically(int n,int player)
 	{
-	// this method counts the number of times a specific player has "n" tokens
-	// in a row with nothing blocking the player from adding another colinear token
+		// this method counts the number of times a specific player has "n" vertical tokens
+		// in a row with nothing blocking the player from adding another colinear token
+		// it is build from the checkVertically function
 		int inARow = 0; // tracks the number of pieces found in a row at any given time
 		int totalCount = 0; // tracks the number of "n" tokens in a row with nothing blocking the player from adding another colinear token found
 		for(int j=0;j<this.width;j++) // itterates through all the columns
@@ -440,6 +457,9 @@ public class Board {
  
   	public int countDiagonally1(int n,int player)
   	{
+		// this method counts the number of times a specific player has "n" diagonal tokens
+		// in a row with nothing blocking the player from adding another colinear token
+		// it is build from the checkDiagonally1 function
 		int inARow = 0; // tracks the number of pieces found in a row at any given time
 		int totalCount = 0; // tracks the number of "n" tokens in a row with nothing blocking the player from adding another colinear token found
 		int upper_bound=height-1+width-1-(N-1);
@@ -488,6 +508,9 @@ public class Board {
 
   	public int countDiagonally2(int n,int player)
   	{
+		// this method counts the number of times a specific player has "n" diagonal tokens
+		// in a row with nothing blocking the player from adding another colinear token
+		// it is build from the checkDiagonally2 function
 		int inARow = 0; // tracks the number of pieces found in a row at any given time
 		int totalCount = 0; // tracks the number of "n" tokens in a row with nothing blocking the player from adding another colinear token found
 		int upper_bound=width-1-(N-1);
