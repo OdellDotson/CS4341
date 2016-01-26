@@ -1,11 +1,15 @@
 # This is the project.
-# Odell "Stop Making Up Titles For Me" Dotson && Ethan "The Floorboards of Heaven" Prihar
+# Odell "Write something, Ethan" Dotson && Ethan "The Floorboards of Heaven" Prihar
 
 import sys
 
 data = {}
 numHiddenNodes = 0
 holdOutPercent = 0
+
+########################################################################################################################
+#####################################################_FUNCTIONS_########################################################
+########################################################################################################################
 
 def getData(fileName):
     """This function retrieves all the data from the specified text document.
@@ -25,6 +29,8 @@ def getData(fileName):
         numberOfLine+=1
     dataFile.close()
 
+
+
 def setup():
     """Sets up the system and retrieves data.
 
@@ -37,6 +43,19 @@ def setup():
     numHiddenNodes = sys.argv[2]
     holdOutPercent = sys.argv[3]
 
+
+def getPt(arrayToGetFrom, point):
+    """ Returns the data at <point> from array <arrayToGetFrom> in data.
+    This function exists so we can use commands like:
+        data.getPt(0,1)
+    instead of using the somewhat syntactically complex command:
+        (data[0])[1]
+
+    Note that this function is just a wrapper.
+    """
+    return (data[arrayToGetFrom])[point]
+
+########################################################################################################################
+#######################################################_MAIN_###########################################################
+########################################################################################################################
 setup()
-
-
