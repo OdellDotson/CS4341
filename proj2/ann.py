@@ -13,23 +13,21 @@ holdOutPercent = 0
 inputToHidden = []
 hiddenToOutput = []
 
-########################################################################################################################
-#####################################################_FUNCTIONS_########################################################
-########################################################################################################################
+# #################################################################################################################### #
+# ###################################################_FUNCTIONS_###################################################### #
+# #################################################################################################################### #
 
 def getData(fileName):
     """This function retrieves all the data from the specified text document.
 
-    This function retrieves all the data from the specified text document and stores it in the global dictionary data.
+    This function retrieves all the data from the specified text document and stores it in the global arrays.
 
     :param fileName: The name of the the file to get data from.
     """
     dataFile = open(fileName, 'r')
     numberOfLine = 0
-    global  outputMatrix
-    global  inputMatrix
-    for line in dataFile:
-        lineInfo = line.split(" ")
+    for line in dataFile: # For each line in the data file
+        lineInfo = line.split(" ")#
         sanitizedLineInfo = []
         for elt in lineInfo:
             sanitizedLineInfo.append(float(elt))
@@ -39,7 +37,6 @@ def getData(fileName):
         numberOfLine+=1
     dataFile.close()
     print inputArray
-
 
 
 def setup():
@@ -66,20 +63,22 @@ def setup():
     hiddenToOutput = 2*numpy.random.random((int(numHiddenNodes),1)) - 1
 
 
-def getPt(arrayToGetFrom, point):
-    """ Returns the data at <point> from array <arrayToGetFrom> in data.
-    This function exists so we can use commands like:
-        data.getPt(0,1)
-    instead of using the somewhat syntactically complex command:
-        (data[0])[1]
+def sig(x):
+    """ Gets the value of the sigmoid at x.
 
-    Note that this function is just a wrapper.
+    :param x: Where we get the sigmoid value at.
+    :return: The sigmoid value at x.
     """
-    return (data[arrayToGetFrom])[point]
-
-
-def sigmoid(x):
     return 1/(1+numpy.exp(-x))
+
+
+def sigD(x):
+    """ Gets the derivative of a sigmoid at point x.
+
+    :param x: The point at which we evaluate the derivative of the sigmoid.
+    :return: The value of the definite of the sigmoid at x.
+    """
+    return x*(1-x)
 
 ########################################################################################################################
 #######################################################_MAIN_###########################################################
