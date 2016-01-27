@@ -51,8 +51,10 @@ def getData(fileName):
         for elt in lineInfo:
             sanitizedLineInfo.append(float(elt))
         xypair = [sanitizedLineInfo[0],sanitizedLineInfo[1]]
-        inputArrayFull = numpy.append(inputArrayFull,xypair)
-        outputArrayFull = numpy.append(outputArrayFull,(sanitizedLineInfo[2]))
+        inputArrayFull = numpy.append(inputArrayFull,xypair, axis = numberOfLine)
+        print outputArrayFull
+        print "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+        outputArrayFull = numpy.append(outputArrayFull,(sanitizedLineInfo[2]), axis = numberOfLine)
 
         data.append(sanitizedLineInfo)
         numberOfLine += 1
