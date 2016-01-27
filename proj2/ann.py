@@ -6,14 +6,14 @@ import numpy
 import random
 
 data = []
-inputArray = numpy.array([])
-outputArray =  numpy.array([])
-inputArrayFull =  numpy.array([])
-outputArrayFull =  numpy.array([])
+inputArray = []#numpy.array([200])
+outputArray = []#numpy.array([200])
+inputArrayFull = []#numpy.array([200])
+outputArrayFull = []#numpy.array([200])
 numHiddenNodes = 0
 holdOutPercent = 0
-inputToHidden =  numpy.array([])
-hiddenToOutput =  numpy.array([])
+inputToHidden = []#numpy.array([])
+hiddenToOutput = []#numpy.array([])
 
 # #################################################################################################################### #
 # ###################################################_FUNCTIONS_###################################################### #
@@ -27,24 +27,37 @@ def getData(fileName):
     :param fileName: The name of the the file to get data from.
     """
     dataFile = open(fileName, 'r')
+    dataPointsTotal = 0
+    for line in dataFile:
+        dataPointsTotal+=1
+    dataFile.close()
+    dataFile = open(fileName, 'r')
+
+    global inputArray
+    global inputArrayFull
+    global outputArray
+    global outputArrayFull
+
     numberOfLine = 0
     for line in dataFile: # For each line in the data file
         lineInfo = line.split(" ")
         sanitizedLineInfo = []
         for elt in lineInfo:
             sanitizedLineInfo.append(float(elt))
-        numpy.append(inputArrayFull,[sanitizedLineInfo[0],sanitizedLineInfo[1]])
+        numpy.append(inputArrayFull,([sanitizedLineInfo[0],sanitizedLineInfo[1]]))
         numpy.append(outputArrayFull,(sanitizedLineInfo[2]))
         data.append(sanitizedLineInfo)
         numberOfLine+=1
     dataFile.close()
 
+    print inputArrayFull
+
     learningPortion = ((100-holdOutPercent)/100)
 
-    for x in xrange(0, int( (len(data) * learningPortion ))):
+    for x in xrange(0, int( (len(data) * learningPortion )) -1):
+        print x
         numpy.append(inputArray,(inputArrayFull[x]))
         numpy.append(outputArray,(outputArrayFull[x]))
-
 
 def setup():
     """Sets up the system and retrieves data.
@@ -76,7 +89,7 @@ def sig(x):
     :param x: Where we get the sigmoid value at.
     :return: The sigmoid value at x.
     """
-    return 1/(1+numpy.exp(-x))
+    return 1.0/(1.0+numpy.exp(-x))
 
 
 def sigD(x):
@@ -85,12 +98,18 @@ def sigD(x):
     :param x: The point at which we evaluate the derivative of the sigmoid.
     :return: The value of the definite of the sigmoid at x.
     """
-    return x*(1-x)
+    return x*(1.0-x)
 
 def backProp():
-    # propigate through the neural network by feeding foreward
-    hiddenValues = sig(numpy.dot(inputArray,inputToHidden))
-    outputGuess = sig(numpy.dot(hiddenValues,hiddenToOutput))
+    global inputToHidden
+    global hiddenToOutput
+
+    # propagate through the neural network by feeding forward
+    sigV = numpy.vectorize(sig)
+    sigDV = numpy.vectorize(sigD)
+
+    hiddenValues = sigV(numpy.dot(inputArray,inputToHidden))
+    outputGuess = sigV(numpy.dot(hiddenValues,hiddenToOutput))
     for i in range (0,outputGuess.len()):
         if outputGuess[i] < .5:
             outputGuess[i] = 0
@@ -99,19 +118,20 @@ def backProp():
     # Calculating error:
     outputMisses = outputArray - outputGuess
     # This provides a weighted error
-    outputError = outputMisses * sigD(outputGuess)
+    outputError = outputMisses * sigDV(outputGuess)
 
     hiddenContribution = numpy.dot(outputError,hiddenToOutput.T)
     # This provides a weighted error
-    hiddenError = hiddenContribution * sigD(hiddenValues)
+    hiddenError = hiddenContribution * sigDV(hiddenValues)
 
     # Update the weights:
     inputToHidden = numpy.dot(inputArray.T,hiddenError)
     hiddenToOutput = numpy.dot(hiddenValues.T,outputError)
 
 
-########################################################################################################################
-#######################################################_MAIN_###########################################################
-########################################################################################################################
+# #################################################################################################################### #
+# #####################################################_MAIN_######################################################### #
+# #################################################################################################################### #
 
 setup()
+
