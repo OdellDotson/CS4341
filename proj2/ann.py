@@ -12,8 +12,10 @@ inputArrayFull = numpy.array([200])
 outputArrayFull = numpy.array([200])
 numHiddenNodes = 0
 holdOutPercent = 0
-inputToHidden = numpy.array([])
-hiddenToOutput = numpy.array([])
+
+outputGuess = numpy.array([])
+inputToHidden =  numpy.array([])
+hiddenToOutput =  numpy.array([])
 
 # #################################################################################################################### #
 # ###################################################_FUNCTIONS_###################################################### #
@@ -128,6 +130,14 @@ def backProp():
     inputToHidden = numpy.dot(inputArray.T,hiddenError)
     hiddenToOutput = numpy.dot(hiddenValues.T,outputError)
 
+def calcErrorPercent():
+    total = outputArray.len()
+    error = 0.0
+    for i in range (0, total):
+        if outputArray[i] != outputGuess[i]:
+            error ++
+    return error / total * 100.0
+
 
 # #################################################################################################################### #
 # #####################################################_MAIN_######################################################### #
@@ -135,3 +145,6 @@ def backProp():
 
 setup()
 
+backProp()
+while(calcErrorPercent > 10):
+    backProp()
