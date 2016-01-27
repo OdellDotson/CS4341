@@ -86,3 +86,10 @@ def sigmoid(x):
 
 setup()
 #print data
+# propigate through the neural network by feeding foreward
+hiddenValues = sig(numpy.dot(inputArray,inputToHidden))
+outputGuess = sig(numpy.dot(hiddenValues,hiddenToOutput))
+
+outputMisses = outputArray - outputGuess
+outputError = outputMisses * sigD(outputGuess)
+hiddenMisses = numpy.dot(outputError,hiddenToOutput.T)
