@@ -85,3 +85,14 @@ def sigD(x):
 ########################################################################################################################
 
 setup()
+<<<<<<< HEAD
+=======
+#print data
+# propigate through the neural network by feeding foreward
+hiddenValues = sig(numpy.dot(inputArray,inputToHidden))
+outputGuess = sig(numpy.dot(hiddenValues,hiddenToOutput))
+
+outputMisses = outputArray - outputGuess
+outputError = outputMisses * sigD(outputGuess)
+hiddenMisses = numpy.dot(outputError,hiddenToOutput.T)
+>>>>>>> 5bf6edeabcfd029c6194744c8281e9d7d4f1aaf7
