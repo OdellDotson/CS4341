@@ -6,8 +6,8 @@ import numpy
 import random
 
 data = []
-inputMatrix = []
-outputMatrix = []
+inputArray = []
+outputArray = []
 numHiddenNodes = 0
 holdOutPercent = 0
 inputToHidden = []
@@ -26,18 +26,19 @@ def getData(fileName):
     """
     dataFile = open(fileName, 'r')
     numberOfLine = 0
+    global  outputMatrix
+    global  inputMatrix
     for line in dataFile:
         lineInfo = line.split(" ")
         sanitizedLineInfo = []
         for elt in lineInfo:
             sanitizedLineInfo.append(float(elt))
-        data[numberOfLine] = sanitizedLineInfo
+        inputArray.append([sanitizedLineInfo[0],sanitizedLineInfo[1]])
+        outputArray.append(sanitizedLineInfo[2])
+        data.append(sanitizedLineInfo)
         numberOfLine+=1
     dataFile.close()
-    x = data[:, 0]
-    y = data[:, 1]
-    inputMatrix = [x, y]
-    outputMatrix = data[:, 2]
+    print inputArray
 
 
 
@@ -62,7 +63,7 @@ def setup():
     global hiddenToOutput
 
     inputToHidden = 2*numpy.random.random((int(inputSize),int(numHiddenNodes))) - 1
-    hiddenToOutput = 2*numpy.random.random((int(numHiddenNodes),1)) - 1 # ,1 because we are mapping all hidden nodes to 1 out
+    hiddenToOutput = 2*numpy.random.random((int(numHiddenNodes),1)) - 1
 
 
 def getPt(arrayToGetFrom, point):
@@ -85,4 +86,3 @@ def sigmoid(x):
 ########################################################################################################################
 
 setup()
-#print data
