@@ -6,12 +6,14 @@ import numpy
 import random
 
 data = []
-inputArray = []
-outputArray = []
+inputArray = numpy.array()
+outputArray =  numpy.array()
+inputArrayFull =  numpy.array()
+outputArrayFull =  numpy.array()
 numHiddenNodes = 0
 holdOutPercent = 0
-inputToHidden = []
-hiddenToOutput = []
+inputToHidden =  numpy.array()
+hiddenToOutput =  numpy.array()
 
 # #################################################################################################################### #
 # ###################################################_FUNCTIONS_###################################################### #
@@ -27,16 +29,21 @@ def getData(fileName):
     dataFile = open(fileName, 'r')
     numberOfLine = 0
     for line in dataFile: # For each line in the data file
-        lineInfo = line.split(" ")#
+        lineInfo = line.split(" ")
         sanitizedLineInfo = []
         for elt in lineInfo:
             sanitizedLineInfo.append(float(elt))
-        inputArray.append([sanitizedLineInfo[0],sanitizedLineInfo[1]])
-        outputArray.append(sanitizedLineInfo[2])
+        inputArrayFull.append([sanitizedLineInfo[0],sanitizedLineInfo[1]])
+        outputArrayFull.append(sanitizedLineInfo[2])
         data.append(sanitizedLineInfo)
         numberOfLine+=1
     dataFile.close()
-    print inputArray
+
+    learningPortion = ((100-holdOutPercent)/100)
+
+    for x in xrange(0, int( (len(data) * learningPortion ))):
+        inputArray.append(inputArrayFull[x])
+        outputArray.append(outputArrayFull[x])
 
 
 def setup():
