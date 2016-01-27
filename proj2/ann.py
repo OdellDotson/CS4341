@@ -6,14 +6,14 @@ import numpy
 import random
 
 data = []
-inputArray = []#numpy.array([200])
-outputArray = []#numpy.array([200])
-inputArrayFull = []#numpy.array([200])
-outputArrayFull = []#numpy.array([200])
+inputArray = numpy.array([200])
+outputArray = numpy.array([200])
+inputArrayFull = numpy.array([200])
+outputArrayFull = numpy.array([200])
 numHiddenNodes = 0
 holdOutPercent = 0
-inputToHidden = []#numpy.array([])
-hiddenToOutput = []#numpy.array([])
+inputToHidden = numpy.array([])
+hiddenToOutput = numpy.array([])
 
 # #################################################################################################################### #
 # ###################################################_FUNCTIONS_###################################################### #
