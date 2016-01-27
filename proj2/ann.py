@@ -6,16 +6,10 @@ import numpy
 import random
 
 data = []
-inputArray = numpy.array([[0,0,1],
-[0,1,1],
-[1,0,1],
-[1,1,1]])
-outputArray = numpy.array([[0],[1],[1],[1]])
-inputArrayFull = numpy.array([[0,0,1],
-[0,1,1],
-[1,0,1],
-[1,1,1]])
-outputArrayFull = numpy.array([[0],[1],[1],[1]])
+inputArray = numpy.array([])
+outputArray = numpy.array([])
+inputArrayFull = numpy.array([])
+outputArrayFull = numpy.array([])
 numHiddenNodes = 0
 holdOutPercent = 0
 
@@ -137,8 +131,8 @@ def backProp():
     hiddenError = hiddenContribution * sigD(hiddenValues)
 
     # Update the weights:
-    inputToHiddenWeight = inputArray.T.dot(hiddenError)
-    hiddenToOutputWeight = hiddenValues.T.dot(outputError)
+    inputToHiddenWeight += inputArray.T.dot(hiddenError)
+    hiddenToOutputWeight += hiddenValues.T.dot(outputError)
 
     """print "Output guess, then input to hidden, then hidden to output."
     print outputGuess
