@@ -5,8 +5,9 @@ import sys
 import numpy
 import random
 
-
-data = {}
+data = []
+inputMatrix = []
+outputMatrix = []
 numHiddenNodes = 0
 holdOutPercent = 0
 inputToHidden = []
@@ -33,6 +34,10 @@ def getData(fileName):
         data[numberOfLine] = sanitizedLineInfo
         numberOfLine+=1
     dataFile.close()
+    x = data[:, 0]
+    y = data[:, 1]
+    inputMatrix = [x, y]
+    outputMatrix = data[:, 2]
 
 
 
