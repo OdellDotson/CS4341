@@ -89,7 +89,13 @@ setup()
 hiddenValues = sig(numpy.dot(inputArray,inputToHidden))
 outputGuess = sig(numpy.dot(hiddenValues,hiddenToOutput))
 
+# Calculating error:
 outputMisses = outputArray - outputGuess
 outputError = outputMisses * sigD(outputGuess)
-hiddenMisses = numpy.dot(outputError,hiddenToOutput.T)
 
+hiddenContribution = numpy.dot(outputError,hiddenToOutput.T)
+hiddenError = hiddenContribution * sigD(hiddenValues)
+
+# Update the weights:
+inputToHidden = numpy.dot(inputArray.T,hiddenError)
+hiddenToOutput = numpy.dot(hiddenValues.T,outputError)
