@@ -6,15 +6,20 @@ import numpy
 import random
 
 data = []
-inputArray = numpy.array()
-outputArray =  numpy.array()
-inputArrayFull =  numpy.array()
-outputArrayFull =  numpy.array()
+inputArray = numpy.array([])
+outputArray =  numpy.array([])
+inputArrayFull =  numpy.array([])
+outputArrayFull =  numpy.array([])
 numHiddenNodes = 0
 holdOutPercent = 0
+<<<<<<< HEAD
 inputToHidden =  numpy.array()
 hiddenToOutput =  numpy.array()
 outputGuess = numpy.array()
+=======
+inputToHidden =  numpy.array([])
+hiddenToOutput =  numpy.array([])
+>>>>>>> origin/master
 
 # #################################################################################################################### #
 # ###################################################_FUNCTIONS_###################################################### #
@@ -34,8 +39,8 @@ def getData(fileName):
         sanitizedLineInfo = []
         for elt in lineInfo:
             sanitizedLineInfo.append(float(elt))
-        inputArrayFull.append([sanitizedLineInfo[0],sanitizedLineInfo[1]])
-        outputArrayFull.append(sanitizedLineInfo[2])
+        numpy.append(inputArrayFull,[sanitizedLineInfo[0],sanitizedLineInfo[1]])
+        numpy.append(outputArrayFull,(sanitizedLineInfo[2]))
         data.append(sanitizedLineInfo)
         numberOfLine+=1
     dataFile.close()
@@ -43,8 +48,8 @@ def getData(fileName):
     learningPortion = ((100-holdOutPercent)/100)
 
     for x in xrange(0, int( (len(data) * learningPortion ))):
-        inputArray.append(inputArrayFull[x])
-        outputArray.append(outputArrayFull[x])
+        numpy.append(inputArray,(inputArrayFull[x]))
+        numpy.append(outputArray,(outputArrayFull[x]))
 
 
 def setup():
