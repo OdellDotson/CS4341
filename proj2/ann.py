@@ -8,6 +8,8 @@ import random
 data = []
 inputArray = numpy.array([])
 outputArray = numpy.array([])
+inputArrayHeld = numpy.array([])
+outputArrayHeld = numpy.array([])
 inputArrayFull = numpy.array([])
 outputArrayFull = numpy.array([])
 numHiddenNodes = 0
@@ -39,6 +41,8 @@ def getData(fileName):
     global inputArrayFull
     global outputArray
     global outputArrayFull
+    global inputArrayHeld
+    global outputArrayHeld
 
     numberOfLine = 0
     for line in dataFile: # For each line in the data file
@@ -46,20 +50,35 @@ def getData(fileName):
         sanitizedLineInfo = []
         for elt in lineInfo:
             sanitizedLineInfo.append(float(elt))
-        numpy.append(inputArrayFull,([sanitizedLineInfo[0],sanitizedLineInfo[1]]))
-        numpy.append(outputArrayFull,(sanitizedLineInfo[2]))
+        xypair = [sanitizedLineInfo[0],sanitizedLineInfo[1]]
+        inputArrayFull = numpy.append(inputArrayFull,xypair)
+        outputArrayFull = numpy.append(outputArrayFull,(sanitizedLineInfo[2]))
+
         data.append(sanitizedLineInfo)
         numberOfLine += 1
     dataFile.close()
 
+    print "Fulls"
     print inputArrayFull
+    print outputArrayFull
 
     learningPortion = ((100-holdOutPercent)/100)
 
-    for x in xrange(0, int( (len(data) * learningPortion )) -1):
-        print x
-        numpy.append(inputArray,(inputArrayFull[x]))
-        numpy.append(outputArray,(outputArrayFull[x]))
+    for x in xrange(0, len(outputArrayFull)):
+        if(x < int(len(outputArrayFull)*learningPortion)):
+            inputArray = numpy.append(inputArray,[(inputArrayFull[x])])
+            outputArray = numpy.append(outputArray,(outputArrayFull[x]))
+        else:
+            inputArrayHeld = numpy.append(inputArray,(inputArrayFull[x]))
+            outputArrayHeld = numpy.append(outputArray,(outputArrayFull[x]))
+
+    print "Data given:"
+    print inputArray
+    print outputArray
+    print "Data Withheld:"
+    print inputArrayHeld
+    print outputArrayHeld
+
 
 def setup():
     """Sets up the system and retrieves data.
@@ -74,7 +93,7 @@ def setup():
     numHiddenNodes = sys.argv[2]
     holdOutPercent = sys.argv[3]
 
-    random.seed([420]) #None so that we use current system time.
+    random.seed(420) #None so that we use current system time.
 
     inputSize = len(data[0]) -1
 
@@ -153,7 +172,8 @@ def calcErrorPercent():
 # #####################################################_MAIN_######################################################### #
 # #################################################################################################################### #
 
-#setup()
+setup()
+
 numHiddenNodes = sys.argv[2]
 holdOutPercent = sys.argv[3]
 
