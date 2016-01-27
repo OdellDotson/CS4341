@@ -6,10 +6,16 @@ import numpy
 import random
 
 data = []
-inputArray = numpy.array([200])
-outputArray = numpy.array([200])
-inputArrayFull = numpy.array([200])
-outputArrayFull = numpy.array([200])
+inputArray = numpy.array([[0,0,1],
+[0,1,1],
+[1,0,1],
+[1,1,1]])
+outputArray = numpy.array([[0],[1],[1],[1]])
+inputArrayFull = numpy.array([[0,0,1],
+[0,1,1],
+[1,0,1],
+[1,1,1]])
+outputArrayFull = numpy.array([[0],[1],[1],[1]])
 numHiddenNodes = 0
 holdOutPercent = 0
 
@@ -31,7 +37,7 @@ def getData(fileName):
     dataFile = open(fileName, 'r')
     dataPointsTotal = 0
     for line in dataFile:
-        dataPointsTotal+=1
+        dataPointsTotal += 1
     dataFile.close()
     dataFile = open(fileName, 'r')
 
@@ -49,7 +55,7 @@ def getData(fileName):
         numpy.append(inputArrayFull,([sanitizedLineInfo[0],sanitizedLineInfo[1]]))
         numpy.append(outputArrayFull,(sanitizedLineInfo[2]))
         data.append(sanitizedLineInfo)
-        numberOfLine+=1
+        numberOfLine += 1
     dataFile.close()
 
     print inputArrayFull
@@ -74,7 +80,7 @@ def setup():
     numHiddenNodes = sys.argv[2]
     holdOutPercent = sys.argv[3]
 
-    random.seed() #None so that we use current system time.
+    random.seed([420]) #None so that we use current system time.
 
     inputSize = len(data[0]) -1
 
@@ -105,6 +111,7 @@ def sigD(x):
 def backProp():
     global inputToHidden
     global hiddenToOutput
+    global outputGuess
 
     # propagate through the neural network by feeding forward
     sigV = numpy.vectorize(sig)
@@ -112,30 +119,39 @@ def backProp():
 
     hiddenValues = sigV(numpy.dot(inputArray,inputToHidden))
     outputGuess = sigV(numpy.dot(hiddenValues,hiddenToOutput))
-    for i in range (0,outputGuess.len()):
+    #print outputGuess
+    """for i in xrange (0,len(outputGuess)):
         if outputGuess[i] < .5:
             outputGuess[i] = 0
         else:
-            outputGuess[i] = 1
+            outputGuess[i] = 1"""
     # Calculating error:
     outputMisses = outputArray - outputGuess
+    #print outputMisses
     # This provides a weighted error
     outputError = outputMisses * sigDV(outputGuess)
+    #print outputError
 
-    hiddenContribution = numpy.dot(outputError,hiddenToOutput.T)
+    hiddenContribution = outputError.dot(hiddenToOutput.T)
     # This provides a weighted error
     hiddenError = hiddenContribution * sigDV(hiddenValues)
 
     # Update the weights:
-    inputToHidden = numpy.dot(inputArray.T,hiddenError)
-    hiddenToOutput = numpy.dot(hiddenValues.T,outputError)
+    inputToHidden = inputArray.T.dot(hiddenError)
+    hiddenToOutput = hiddenValues.T.dot(outputError)
+
+    """print "Output guess, then input to hidden, then hidden to output."
+    print outputGuess
+    print inputToHidden
+    print hiddenToOutput"""
+
 
 def calcErrorPercent():
-    total = outputArray.len()
+    total = outputArray.size()
     error = 0.0
     for i in range (0, total):
         if outputArray[i] != outputGuess[i]:
-            error ++
+            error += 1
     return error / total * 100.0
 
 
@@ -143,8 +159,28 @@ def calcErrorPercent():
 # #####################################################_MAIN_######################################################### #
 # #################################################################################################################### #
 
-setup()
+#setup()
+numHiddenNodes = sys.argv[2]
+holdOutPercent = sys.argv[3]
+
+random.seed(420) #None so that we use current system time.
+
+inputSize = 2
+
+global inputToHidden
+global hiddenToOutput
+
+inputToHidden = 2*numpy.random.random((3,int(numHiddenNodes))) - 1
+hiddenToOutput = 2*numpy.random.random((int(numHiddenNodes),1)) - 1
+
+print inputToHidden
+print hiddenToOutput
 
 backProp()
-while(calcErrorPercent > 10):
+j=0
+while(j < 100000):
     backProp()
+    if(j%10000):
+        global outputGuess
+        print outputGuess
+    j+=1
