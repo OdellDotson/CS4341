@@ -114,11 +114,11 @@ def backProp():
     hiddenValues = sig(numpy.dot(inputArray,inputToHiddenWeight))
     outputGuess = sig(numpy.dot(hiddenValues,hiddenToOutputWeight))
     #print outputGuess
-    """for i in xrange (0,len(outputGuess)):
+    for i in xrange (0,len(outputGuess)):
         if outputGuess[i] < .5:
             outputGuess[i] = 0
         else:
-            outputGuess[i] = 1"""
+            outputGuess[i] = 1
     # Calculating error:
     outputMisses = outputArray - outputGuess
     #print outputMisses
@@ -126,13 +126,13 @@ def backProp():
     outputError = outputMisses * sigD(outputGuess)
     #print outputError
 
-    hiddenContribution = outputError.dot(hiddenToOutputWeight.T)
+    hiddenContribution = numpy.dot(outputError,hiddenToOutputWeight.T)
     # This provides a weighted error
     hiddenError = hiddenContribution * sigD(hiddenValues)
 
     # Update the weights:
-    inputToHiddenWeight += inputArray.T.dot(hiddenError)
-    hiddenToOutputWeight += hiddenValues.T.dot(outputError)
+    inputToHiddenWeight += numpy.dot(inputArray.T,hiddenError)
+    hiddenToOutputWeight += numpy.dot(hiddenValues.T,outputError)
 
     """print "Output guess, then input to hidden, then hidden to output."
     print outputGuess
@@ -148,35 +148,27 @@ def calcErrorPercent():
             error += 1
     return error / total * 100.0
 
+def holdoutTest():
+    global inputArray
+    global outputArray
+    global inputArrayHeld
+    global outputArrayHeld
+    inputArray = inputArrayHeld
+    outputArray = outputArrayHeld
+    backProp()
+    print "The error is: " + calcErrorPercent()
+
+
 
 # #################################################################################################################### #
 # #####################################################_MAIN_######################################################### #
 # #################################################################################################################### #
 
-#setup()
-numHiddenNodes = sys.argv[2]
-holdOutPercent = sys.argv[3]
-
-random.seed(420) #None so that we use current system time.
-
-inputSize = 2
-
-global inputToHiddenWeight
-global hiddenToOutputWeight
-
-inputToHiddenWeight = 2*numpy.random.random((3,int(numHiddenNodes))) - 1
-hiddenToOutputWeight = 2*numpy.random.random((int(numHiddenNodes),1)) - 1
-
-print inputToHiddenWeight
-print hiddenToOutputWeight
-
+# Read all the data and place it in arrays
+setup()
+# Run backpropigation untill the error % is below the threshold
 backProp()
-j=0
-while(j < 100000):
+while(calcErrorPercent > 10):
     backProp()
-    if(j%10000 == 0):
-        print "Guesses:"
-        global outputGuess
-        print outputGuess
-        print j
-    j+=1
+# Test the nerual network on the holdout data
+holdoutTest()
