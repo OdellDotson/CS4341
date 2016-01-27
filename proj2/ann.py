@@ -20,8 +20,8 @@ numHiddenNodes = 0
 holdOutPercent = 0
 
 outputGuess = numpy.array([])
-inputToHidden =  numpy.array([])
-hiddenToOutput =  numpy.array([])
+inputToHiddenWeight =  numpy.array([])
+hiddenToOutputWeight =  numpy.array([])
 
 # #################################################################################################################### #
 # ###################################################_FUNCTIONS_###################################################### #
@@ -84,11 +84,11 @@ def setup():
 
     inputSize = len(data[0]) -1
 
-    global inputToHidden
-    global hiddenToOutput
+    global inputToHiddenWeight
+    global hiddenToOutputWeight
 
-    inputToHidden = 2*numpy.random.random((int(inputSize),int(numHiddenNodes))) - 1
-    hiddenToOutput = 2*numpy.random.random((int(numHiddenNodes),1)) - 1
+    inputToHiddenWeight = 2*numpy.random.random((int(inputSize),int(numHiddenNodes))) - 1
+    hiddenToOutputWeight = 2*numpy.random.random((int(numHiddenNodes),1)) - 1
 
 
 def sig(x):
@@ -109,16 +109,16 @@ def sigD(x):
     return x*(1.0-x)
 
 def backProp():
-    global inputToHidden
-    global hiddenToOutput
+    global inputToHiddenWeight
+    global hiddenToOutputWeight
     global outputGuess
 
     # propagate through the neural network by feeding forward
     sigV = numpy.vectorize(sig)
     sigDV = numpy.vectorize(sigD)
 
-    hiddenValues = sigV(numpy.dot(inputArray,inputToHidden))
-    outputGuess = sigV(numpy.dot(hiddenValues,hiddenToOutput))
+    hiddenValues = sig(numpy.dot(inputArray,inputToHiddenWeight))
+    outputGuess = sig(numpy.dot(hiddenValues,hiddenToOutputWeight))
     #print outputGuess
     """for i in xrange (0,len(outputGuess)):
         if outputGuess[i] < .5:
@@ -129,16 +129,16 @@ def backProp():
     outputMisses = outputArray - outputGuess
     #print outputMisses
     # This provides a weighted error
-    outputError = outputMisses * sigDV(outputGuess)
+    outputError = outputMisses * sigD(outputGuess)
     #print outputError
 
-    hiddenContribution = outputError.dot(hiddenToOutput.T)
+    hiddenContribution = outputError.dot(hiddenToOutputWeight.T)
     # This provides a weighted error
-    hiddenError = hiddenContribution * sigDV(hiddenValues)
+    hiddenError = hiddenContribution * sigD(hiddenValues)
 
     # Update the weights:
-    inputToHidden = inputArray.T.dot(hiddenError)
-    hiddenToOutput = hiddenValues.T.dot(outputError)
+    inputToHiddenWeight = inputArray.T.dot(hiddenError)
+    hiddenToOutputWeight = hiddenValues.T.dot(outputError)
 
     """print "Output guess, then input to hidden, then hidden to output."
     print outputGuess
@@ -167,20 +167,22 @@ random.seed(420) #None so that we use current system time.
 
 inputSize = 2
 
-global inputToHidden
-global hiddenToOutput
+global inputToHiddenWeight
+global hiddenToOutputWeight
 
-inputToHidden = 2*numpy.random.random((3,int(numHiddenNodes))) - 1
-hiddenToOutput = 2*numpy.random.random((int(numHiddenNodes),1)) - 1
+inputToHiddenWeight = 2*numpy.random.random((3,int(numHiddenNodes))) - 1
+hiddenToOutputWeight = 2*numpy.random.random((int(numHiddenNodes),1)) - 1
 
-print inputToHidden
-print hiddenToOutput
+print inputToHiddenWeight
+print hiddenToOutputWeight
 
 backProp()
 j=0
 while(j < 100000):
     backProp()
-    if(j%10000):
+    if(j%10000 == 0):
+        print "Guesses:"
         global outputGuess
         print outputGuess
+        print j
     j+=1
