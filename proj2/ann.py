@@ -1,5 +1,5 @@
 # This is the project.
-# Odell "Write something, Ethan" Dotson && Ethan "The Floorboards of Heaven" Prihar
+# Odell "Vorpal Bunny" Dotson && Ethan "The Floorboards of Heaven" Prihar
 
 import sys
 import numpy
@@ -87,22 +87,31 @@ def sigD(x):
     """
     return x*(1-x)
 
+def backProp():
+    # propigate through the neural network by feeding foreward
+    hiddenValues = sig(numpy.dot(inputArray,inputToHidden))
+    outputGuess = sig(numpy.dot(hiddenValues,hiddenToOutput))
+    for i in range (0,outputGuess.len()):
+        if outputGuess[i] < .5:
+            outputGuess[i] = 0
+        else:
+            outputGuess[i] = 1
+    # Calculating error:
+    outputMisses = outputArray - outputGuess
+    # This provides a weighted error
+    outputError = outputMisses * sigD(outputGuess)
+
+    hiddenContribution = numpy.dot(outputError,hiddenToOutput.T)
+    # This provides a weighted error
+    hiddenError = hiddenContribution * sigD(hiddenValues)
+
+    # Update the weights:
+    inputToHidden = numpy.dot(inputArray.T,hiddenError)
+    hiddenToOutput = numpy.dot(hiddenValues.T,outputError)
+
+
 ########################################################################################################################
 #######################################################_MAIN_###########################################################
 ########################################################################################################################
 
 setup()
-# propigate through the neural network by feeding foreward
-hiddenValues = sig(numpy.dot(inputArray,inputToHidden))
-outputGuess = sig(numpy.dot(hiddenValues,hiddenToOutput))
-
-# Calculating error:
-outputMisses = outputArray - outputGuess
-outputError = outputMisses * sigD(outputGuess)
-
-hiddenContribution = numpy.dot(outputError,hiddenToOutput.T)
-hiddenError = hiddenContribution * sigD(hiddenValues)
-
-# Update the weights:
-inputToHidden = numpy.dot(inputArray.T,hiddenError)
-hiddenToOutput = numpy.dot(hiddenValues.T,outputError)
