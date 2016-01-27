@@ -49,18 +49,16 @@ def setup():
     numHiddenNodes = sys.argv[2]
     holdOutPercent = sys.argv[3]
 
-    #random.seed([None]) #None so that we use current system time.
+    random.seed() #None so that we use current system time.
 
     inputSize = len(data[0]) -1
 
     global inputToHidden
     global hiddenToOutput
 
+    inputToHidden = 2*numpy.random.random((int(inputSize),int(numHiddenNodes))) - 1
+    hiddenToOutput = 2*numpy.random.random((int(numHiddenNodes),1)) - 1 # ,1 because we are mapping all hidden nodes to 1 out
 
-    syn0 = 2*np.random.random((3,4)) - 1
-    syn1 = 2*np.random.random((4,1)) - 1
-
-    print inputToHidden
 
 def getPt(arrayToGetFrom, point):
     """ Returns the data at <point> from array <arrayToGetFrom> in data.
