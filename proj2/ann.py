@@ -2,10 +2,15 @@
 # Odell "Write something, Ethan" Dotson && Ethan "The Floorboards of Heaven" Prihar
 
 import sys
+import numpy
+import random
+
 
 data = {}
 numHiddenNodes = 0
 holdOutPercent = 0
+inputToHidden = []
+hiddenToOutput = []
 
 ########################################################################################################################
 #####################################################_FUNCTIONS_########################################################
@@ -40,9 +45,22 @@ def setup():
     getData(sys.argv[1])
     global numHiddenNodes
     global holdOutPercent
+
     numHiddenNodes = sys.argv[2]
     holdOutPercent = sys.argv[3]
 
+    #random.seed([None]) #None so that we use current system time.
+
+    inputSize = len(data[0]) -1
+
+    global inputToHidden
+    global hiddenToOutput
+
+
+    syn0 = 2*np.random.random((3,4)) - 1
+    syn1 = 2*np.random.random((4,1)) - 1
+
+    print inputToHidden
 
 def getPt(arrayToGetFrom, point):
     """ Returns the data at <point> from array <arrayToGetFrom> in data.
@@ -55,8 +73,13 @@ def getPt(arrayToGetFrom, point):
     """
     return (data[arrayToGetFrom])[point]
 
+
+def sigmoid(x):
+    return 1/(1+numpy.exp(-x))
+
 ########################################################################################################################
 #######################################################_MAIN_###########################################################
 ########################################################################################################################
 
 setup()
+#print data
