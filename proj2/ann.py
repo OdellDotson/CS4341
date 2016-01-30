@@ -45,41 +45,62 @@ def getData(fileName):
     global outputArrayHeld
 
     numberOfLine = 0
-    for line in dataFile: # For each line in the data file
-        lineInfo = line.split(" ")
-        sanitizedLineInfo = []
-        for elt in lineInfo:
-            sanitizedLineInfo.append(float(elt))
-        xypair = [sanitizedLineInfo[0],sanitizedLineInfo[1]]
-        inputArrayFull = numpy.append(inputArrayFull,xypair, axis = numberOfLine)
-        print outputArrayFull
-        print "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-        outputArrayFull = numpy.append(outputArrayFull,(sanitizedLineInfo[2]), axis = numberOfLine)
 
-        data.append(sanitizedLineInfo)
+    for line in dataFile:
+        lineInfo = line.split(" ") #Split the line into into data points
+        floatLineInfo = [] # Create a variable for when we (string -> float) them.
+        for elt in lineInfo: #For each variable
+            floatLineInfo.append(float(elt))
+
+        dataIn = [floatLineInfo[0], floatLineInfo[1]] # Store the data in from that line as dataIn
+        dataOut = floatLineInfo[2] # Store the sanitized line info as dataOut for that line.
+
+        if numberOfLine == 0:
+            inputArrayFull = numpy.array((floatLineInfo[0], floatLineInfo[1]))
+            outputArrayFull = numpy.array((floatLineInfo[2]))
+        else:
+            inputArrayFull = numpy.vstack((inputArrayFull, dataIn))
+            outputArrayFull = numpy.vstack((outputArrayFull, dataOut))
         numberOfLine += 1
+
+    #print inputArrayFull
+    #print outputArrayFull
+
     dataFile.close()
 
-    print "Fulls"
-    print inputArrayFull
+    learningPortion = ((100.0-holdOutPercent)/100.0) # Converts this to a decimal value instead of a percent
+
+    numLearn = 0
+    numTest = 0
     print outputArrayFull
 
-    learningPortion = ((100-holdOutPercent)/100)
-
     for x in xrange(0, len(outputArrayFull)):
-        if(x < int(len(outputArrayFull)*learningPortion)):
-            inputArray = numpy.append(inputArray,[(inputArrayFull[x])])
-            outputArray = numpy.append(outputArray,(outputArrayFull[x]))
-        else:
-            inputArrayHeld = numpy.append(inputArray,(inputArrayFull[x]))
-            outputArrayHeld = numpy.append(outputArray,(outputArrayFull[x]))
+        if(x < int(len(outputArrayFull)*learningPortion)): # If we are adding to our learning data set
+            if numLearn == 0: # For the first time
+                inputArray = numpy.array((inputArrayFull[x]))
+                outputArray = numpy.array((outputArrayFull[x]))
+                print outputArray
+            else: # Not the first rodeo
+                xVal,yVal=inputArrayFull[x]
+                dataIn = numpy.array((xVal,yVal))
+                dataOut = outputArrayFull[x]
+                inputArray = numpy.vstack((inputArray, dataIn))
+                outputArray = numpy.vstack((outputArray, dataOut))
+            numLearn +=1
+        else: # If we are adding to our testing data set
+            if numTest == 0: # for the first time
+                inputArrayHeld = numpy.array((inputArrayFull[x]))
+                outputArrayHeld = numpy.array((outputArrayFull[x]))
+            else: # not first time
+                xVal,yVal= inputArrayFull[x]
+                dataIn = numpy.array((xVal,yVal))
+                dataOut = outputArrayFull[x]
+                inputArrayHeld = numpy.vstack((inputArrayHeld, dataIn))
+                outputArrayHeld = numpy.vstack((outputArrayHeld, dataOut))
+            numTest+=1
 
-    print "Data given:"
-    print inputArray
-    print outputArray
-    print "Data Withheld:"
-    print inputArrayHeld
-    print outputArrayHeld
+    print "Populated input array: ", inputArray
+    print "Populated output array: ", outputArray
 
 
 def setup():
@@ -88,17 +109,20 @@ def setup():
     This function calls getData to retrieve data and store it globally, as well as read in the
     number of hidden nodes and the percent of hold out that is specified by the user.
     """
-    getData(sys.argv[1])
-    global numHiddenNodes
-    global holdOutPercent
+    global  numHiddenNodes
+    global  holdOutPercent
 
-    numHiddenNodes = sys.argv[2]
-    holdOutPercent = sys.argv[3]
+    numHiddenNodes = float(sys.argv[2])
+    holdOutPercent = float(sys.argv[3])
+
+    getData(sys.argv[1])
 
     random.seed(420) #None so that we use current system time.
 
-    inputSize = len(data[0]) -1
+    print "Hold up"
+    inputSize = len(inputArrayFull[0])
 
+    print "Input size: " , inputSize
     global inputToHiddenWeight
     global hiddenToOutputWeight
 
@@ -134,7 +158,10 @@ def backProp():
 
     hiddenValues = sig(numpy.dot(inputArray,inputToHiddenWeight))
     outputGuess = sig(numpy.dot(hiddenValues,hiddenToOutputWeight))
+
     #print outputGuess
+    #print "------------------------------------------------------------------------------------------"
+
     """for i in xrange (0,len(outputGuess)):
         if outputGuess[i] < .5:
             outputGuess[i] = 0
@@ -142,32 +169,83 @@ def backProp():
             outputGuess[i] = 1"""
     # Calculating error:
     outputMisses = outputArray - outputGuess
+    #print "output guess-----------"
+    #print outputGuess
+
+    #print "--------------Output misses:"
     #print outputMisses
     # This provides a weighted error
-    outputError = outputMisses * sigD(outputGuess)
+    outputError = (1.0)*outputMisses * sigD(outputGuess)
+    #print "Output errors:------------"
     #print outputError
 
-    hiddenContribution = outputError.dot(hiddenToOutputWeight.T)
+    hiddenContribution = numpy.dot(outputError,hiddenToOutputWeight.T)
     # This provides a weighted error
     hiddenError = hiddenContribution * sigD(hiddenValues)
 
     # Update the weights:
-    inputToHiddenWeight += inputArray.T.dot(hiddenError)
-    hiddenToOutputWeight += hiddenValues.T.dot(outputError)
-
-    """print "Output guess, then input to hidden, then hidden to output."
-    print outputGuess
-    print inputToHidden
-    print hiddenToOutput"""
+    #print "----------------Old input -> hidden weights:--------------------------------------------------------"
+    #print inputToHiddenWeight
+    #print "----------------------New input -> hidden weights:-------------------------------------------------------"
+    inputToHiddenWeight += numpy.dot(inputArray.T,hiddenError)
+    hiddenToOutputWeight += numpy.dot(hiddenValues.T,outputError)
+    #print inputToHiddenWeight
+    #print "---------------------Re itterate-------------------------------------------------------"
 
 
 def calcErrorPercent():
-    total = outputArray.size()
+    total = len(outputArray)
     error = 0.0
     for i in range (0, total):
         if outputArray[i] != outputGuess[i]:
             error += 1
     return error / total * 100.0
+
+def holdoutTestBetter():
+    global inputArray
+    global outputArray
+    global inputArrayHeld
+    global outputArrayHeld
+    inputArray = inputArrayHeld
+    outputArray = outputArrayHeld
+    backProp()
+
+    #print "Input array:",inputArray
+    #print "Output array", outputArray
+
+    total = len(outputArray)
+    #print "Total: ",total
+    error = 0.0
+    for i in range (0, total):
+        #print "Actual output",outputArray[i]
+        #print "Output guess",outputGuess[i]
+        error += abs(outputArray[i] - outputGuess[i])
+        #print "How wrong: ", abs(outputArray[i] - outputGuess[i])
+    print "Avg. error percent:",  ((error / total) * 100.0)
+
+def errorPercent():
+    global inputArray
+    global outputArray
+    global inputArrayHeld
+    global outputArrayHeld
+    backProp()
+
+    total = len(outputArray)
+    error = 0.0
+    for i in range (0, total):
+        error += abs(outputArray[i] - outputGuess[i])
+    return  ((error / total) * 100.0)
+
+def holdoutTest():
+    global inputArray
+    global outputArray
+    global inputArrayHeld
+    global outputArrayHeld
+    inputArray = inputArrayHeld
+    outputArray = outputArrayHeld
+    backProp()
+    print "The error is: ", calcErrorPercent()
+
 
 
 # #################################################################################################################### #
@@ -176,29 +254,20 @@ def calcErrorPercent():
 
 setup()
 
-numHiddenNodes = sys.argv[2]
-holdOutPercent = sys.argv[3]
 
-random.seed(420) #None so that we use current system time.
-
-inputSize = 2
-
-global inputToHiddenWeight
-global hiddenToOutputWeight
-
-inputToHiddenWeight = 2*numpy.random.random((3,int(numHiddenNodes))) - 1
-hiddenToOutputWeight = 2*numpy.random.random((int(numHiddenNodes),1)) - 1
-
-print inputToHiddenWeight
-print hiddenToOutputWeight
+print inputArray
+print outputArray
 
 backProp()
-j=0
-while(j < 100000):
+
+#while(calcErrorPercent() > 10):
+    #backProp()
+
+for j in range (0, 50001):
     backProp()
-    if(j%10000 == 0):
-        print "Guesses:"
-        global outputGuess
-        print outputGuess
-        print j
-    j+=1
+    if j%10000 == 0:
+        print "Error percent on run number " , j, " is: ",errorPercent()
+
+
+# Test the neural network on the holdout data
+holdoutTestBetter()
