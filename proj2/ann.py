@@ -201,7 +201,7 @@ def calcErrorPercent():
             error += 1
     return error / total * 100.0
 
-def holdoutTestBetter():
+def holdoutTestVerbose():
     global inputArray
     global outputArray
     global inputArrayHeld
@@ -270,4 +270,4 @@ for j in range (0, 50001):
 
 
 # Test the neural network on the holdout data
-holdoutTestBetter()
+holdoutTestVerbose()
