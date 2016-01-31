@@ -30,20 +30,13 @@ def getData(fileName):
 
     :param fileName: The name of the the file to get data from.
     """
-    dataFile = open(fileName, 'r')
-    dataPointsTotal = 0
-    for line in dataFile:
-        dataPointsTotal += 1
-    dataFile.close()
-    dataFile = open(fileName, 'r')
-
     global inputArray
     global inputArrayFull
     global outputArray
     global outputArrayFull
     global inputArrayHeld
     global outputArrayHeld
-
+    dataFile = open(fileName, 'r')
     numberOfLine = 0
 
     for line in dataFile:
@@ -63,16 +56,12 @@ def getData(fileName):
             outputArrayFull = numpy.vstack((outputArrayFull, dataOut))
         numberOfLine += 1
 
-    #print inputArrayFull
-    #print outputArrayFull
-
     dataFile.close()
 
     learningPortion = ((100.0-holdOutPercent)/100.0) # Converts this to a decimal value instead of a percent
 
     numLearn = 0
     numTest = 0
-    print outputArrayFull
 
     for x in xrange(0, len(outputArrayFull)):
         if(x < int(len(outputArrayFull)*learningPortion)): # If we are adding to our learning data set
@@ -99,9 +88,6 @@ def getData(fileName):
                 outputArrayHeld = numpy.vstack((outputArrayHeld, dataOut))
             numTest+=1
 
-    print "Populated input array: ", inputArray
-    print "Populated output array: ", outputArray
-
 
 def setup():
     """Sets up the system and retrieves data.
@@ -112,17 +98,26 @@ def setup():
     global  numHiddenNodes
     global  holdOutPercent
 
-    numHiddenNodes = float(sys.argv[2])
-    holdOutPercent = float(sys.argv[3])
+    print "Arguments: ", len(sys.argv)
+
+    if len(sys.argv) == 2: # If we receive only two arguments, the program name and file name
+        numHiddenNodes = 5 # default 5 hidden nodes
+        holdOutPercent = 20 # default 20 holdout percent.
+    elif len(sys.argv) == 4:
+        if sys.argv[2] == 'h':
+            numHiddenNodes = sys.argv[3]
+        else:
+            holdOutPercent = sys.argv[3]
+    else:
+        numHiddenNodes = float(sys.argv[3])
+        holdOutPercent = float(sys.argv[5])
 
     getData(sys.argv[1])
 
-    random.seed(420) #None so that we use current system time.
+    random.seed(420)
 
-    print "Hold up"
     inputSize = len(inputArrayFull[0])
 
-    print "Input size: " , inputSize
     global inputToHiddenWeight
     global hiddenToOutputWeight
 
@@ -132,18 +127,12 @@ def setup():
 
 def sig(x):
     """ Gets the value of the sigmoid at x.
-
-    :param x: Where we get the sigmoid value at.
-    :return: The sigmoid value at x.
     """
     return 1.0/(1.0+numpy.exp(-x))
 
 
 def sigD(x):
     """ Gets the derivative of a sigmoid at point x.
-
-    :param x: The point at which we evaluate the derivative of the sigmoid.
-    :return: The value of the definite of the sigmoid at x.
     """
     return x*(1.0-x)
 
@@ -159,38 +148,22 @@ def backProp():
     hiddenValues = sig(numpy.dot(inputArray,inputToHiddenWeight))
     outputGuess = sig(numpy.dot(hiddenValues,hiddenToOutputWeight))
 
-    #print outputGuess
-    #print "------------------------------------------------------------------------------------------"
 
-    """for i in xrange (0,len(outputGuess)):
+    outputMisses = outputArray - outputGuess # Calculating error
+    outputError = outputMisses * sigD(outputGuess) # This provides a weighted error
+
+    for i in xrange (0,len(outputGuess)):    # Here is where we round our output guesses.
         if outputGuess[i] < .5:
             outputGuess[i] = 0
         else:
-            outputGuess[i] = 1"""
-    # Calculating error:
-    outputMisses = outputArray - outputGuess
-    #print "output guess-----------"
-    #print outputGuess
-
-    #print "--------------Output misses:"
-    #print outputMisses
-    # This provides a weighted error
-    outputError = (1.0)*outputMisses * sigD(outputGuess)
-    #print "Output errors:------------"
-    #print outputError
+            outputGuess[i] = 1
 
     hiddenContribution = numpy.dot(outputError,hiddenToOutputWeight.T)
     # This provides a weighted error
     hiddenError = hiddenContribution * sigD(hiddenValues)
 
-    # Update the weights:
-    #print "----------------Old input -> hidden weights:--------------------------------------------------------"
-    #print inputToHiddenWeight
-    #print "----------------------New input -> hidden weights:-------------------------------------------------------"
     inputToHiddenWeight += numpy.dot(inputArray.T,hiddenError)
     hiddenToOutputWeight += numpy.dot(hiddenValues.T,outputError)
-    #print inputToHiddenWeight
-    #print "---------------------Re itterate-------------------------------------------------------"
 
 
 def calcErrorPercent():
@@ -201,7 +174,8 @@ def calcErrorPercent():
             error += 1
     return error / total * 100.0
 
-def holdoutTestVerbose():
+
+def holdoutTestErrorAway():
     global inputArray
     global outputArray
     global inputArrayHeld
@@ -210,11 +184,7 @@ def holdoutTestVerbose():
     outputArray = outputArrayHeld
     backProp()
 
-    #print "Input array:",inputArray
-    #print "Output array", outputArray
-
     total = len(outputArray)
-    #print "Total: ",total
     error = 0.0
     for i in range (0, total):
         #print "Actual output",outputArray[i]
@@ -228,7 +198,6 @@ def errorPercent():
     global outputArray
     global inputArrayHeld
     global outputArrayHeld
-    backProp()
 
     total = len(outputArray)
     error = 0.0
@@ -254,20 +223,24 @@ def holdoutTest():
 
 setup()
 
-
 print inputArray
 print outputArray
 
-backProp()
+print inputArrayHeld
+print outputArrayHeld
 
 #while(calcErrorPercent() > 10):
     #backProp()
 
-for j in range (0, 50001):
+for j in range (0, 10000):
     backProp()
-    if j%10000 == 0:
-        print "Error percent on run number " , j, " is: ",errorPercent()
+    if j%1000 == 0:
+        print "Error percent on run number " , j+1, " is: ", errorPercent()
+        #print "Output guess: ", outputGuess
+        #print "Input to hidden NN weights", inputToHiddenWeight
+        #print "Hidden to output NN weights:", hiddenToOutputWeight
+        #print "----------------------------"
 
 
 # Test the neural network on the holdout data
-holdoutTestVerbose()
+holdoutTest()
