@@ -105,12 +105,12 @@ def setup():
         holdOutPercent = 20 # default 20 holdout percent.
     elif len(sys.argv) == 4:
         if sys.argv[2] == 'h':
-            numHiddenNodes = sys.argv[3]
+            numHiddenNodes = int(sys.argv[3])
         else:
-            holdOutPercent = sys.argv[3]
+            holdOutPercent = (10)*float(sys.argv[3])
     else:
-        numHiddenNodes = float(sys.argv[3])
-        holdOutPercent = float(sys.argv[5])
+        numHiddenNodes = int(sys.argv[3])
+        holdOutPercent = (10)*float(sys.argv[5])
 
     getData(sys.argv[1])
 
