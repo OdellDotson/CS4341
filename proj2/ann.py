@@ -64,7 +64,7 @@ def getData(fileName):
     numTest = 0
 
     for x in xrange(0, len(outputArrayFull)):
-        if(x < int(len(outputArrayFull)*learningPortion)): # If we are adding to our learning data set
+        if x < int(len(outputArrayFull)*learningPortion): # If we are adding to our learning data set
             if numLearn == 0: # For the first time
                 inputArray = numpy.array((inputArrayFull[x]))
                 outputArray = numpy.array((outputArrayFull[x]))
@@ -114,7 +114,7 @@ def setup():
 
     getData(sys.argv[1])
 
-    random.seed(420)
+    numpy.random.seed(420)
 
     inputSize = len(inputArrayFull[0])
 
@@ -136,6 +136,7 @@ def sigD(x):
     """
     return x*(1.0-x)
 
+
 def backProp():
     global inputToHiddenWeight
     global hiddenToOutputWeight
@@ -147,7 +148,6 @@ def backProp():
 
     hiddenValues = sig(numpy.dot(inputArray,inputToHiddenWeight))
     outputGuess = sig(numpy.dot(hiddenValues,hiddenToOutputWeight))
-
 
     outputMisses = outputArray - outputGuess # Calculating error
     outputError = outputMisses * sigD(outputGuess) # This provides a weighted error
@@ -166,16 +166,10 @@ def backProp():
     hiddenToOutputWeight += numpy.dot(hiddenValues.T,outputError)
 
 
-def calcErrorPercent():
-    total = len(outputArray)
-    error = 0.0
-    for i in range (0, total):
-        if outputArray[i] != outputGuess[i]:
-            error += 1
-    return error / total * 100.0
-
-
-def holdoutTestErrorAway():
+def nonBinHoldoutTest():
+    """
+    For nonbinary outputs
+    """
     global inputArray
     global outputArray
     global inputArrayHeld
@@ -193,7 +187,10 @@ def holdoutTestErrorAway():
         #print "How wrong: ", abs(outputArray[i] - outputGuess[i])
     print "Avg. error percent:",  ((error / total) * 100.0)
 
-def errorPercent():
+def nonBinErrorPercent():
+    """
+    For nonbinary outputs. This checks the percent off that each datapoint is and averages how off they are.
+    """
     global inputArray
     global outputArray
     global inputArrayHeld
@@ -203,7 +200,7 @@ def errorPercent():
     error = 0.0
     for i in range (0, total):
         error += abs(outputArray[i] - outputGuess[i])
-    return  ((error / total) * 100.0)
+    return  (error / total) * 100.0
 
 def holdoutTest():
     global inputArray
@@ -214,6 +211,15 @@ def holdoutTest():
     outputArray = outputArrayHeld
     backProp()
     print "The error is: ", calcErrorPercent()
+
+def calcErrorPercent():
+    total = len(outputArray)
+    error = 0.0
+    for i in range (0, total):
+        if outputArray[i] != outputGuess[i]:
+            error += 1
+    return error / total * 100.0
+
 
 
 
@@ -235,12 +241,12 @@ print outputArrayHeld
 for j in range (0, 10000):
     backProp()
     if j%1000 == 0:
-        print "Error percent on run number " , j+1, " is: ", errorPercent()
+        #print "Error percent on run number " , j+1, " is: ", errorPercent()
+        print "Error percent", calcErrorPercent()
         #print "Output guess: ", outputGuess
         #print "Input to hidden NN weights", inputToHiddenWeight
         #print "Hidden to output NN weights:", hiddenToOutputWeight
         #print "----------------------------"
-
 
 # Test the neural network on the holdout data
 holdoutTest()
