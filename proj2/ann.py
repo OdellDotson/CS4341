@@ -213,6 +213,8 @@ def holdoutTest():
     print "The error is: ", calcErrorPercent()
 
 def calcErrorPercent():
+    global outputArray
+    global outputGuess
     total = len(outputArray)
     error = 0.0
     for i in range (0, total):
