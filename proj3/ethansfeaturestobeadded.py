@@ -17,7 +17,7 @@ def getFeature2(board):
 	else:
 		return 0
 
-# uses a weight based on the pieces distance from a sensor to calculate each players value and uses the player with the highest value as the feature
+# uses a weight based on the pieces distance from the center to calculate each players value and uses the player with the highest value as the feature
 def getFeature3(board):
 	count = 0
 	for x in xrange(0,42):
@@ -36,3 +36,18 @@ def getFeature3(board):
 		return 2
 	else:
 		return 0
+
+# uses a weight based on the pieces distance from the center and whose piece it is to calculate a value for the board state and returns that value
+def getFeature4(board):
+	count = 0
+	for x in xrange(0,42):
+		if board[x] != 0:
+			if x <= 5 or x >= 36:
+				count = count + 2 * (1.5 - board[x])
+			else if x <= 11 or x >= 30:
+				count = count + 4 * (1.5 - board[x])
+			else if x <= 17 or x >= 24:
+				count = count + 8 * (1.5 - board[x])
+			else:
+				count = count + 16 * (1.5 - board[x])
+	return count
