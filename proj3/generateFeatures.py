@@ -1,8 +1,7 @@
-__author__ = 'odell'
+#Odell Dotson (ocdotson@wpi.edu) and Ethan Prihar (ebprihar@wpi.edu)
+#CS4341 Intro to AI, Project 3
 
 import sys
-
-print sys.argv
 
 def classify():
     if len(sys.argv) != 3:
@@ -11,6 +10,45 @@ def classify():
     outFileName = sys.argv[2]
     inDataFile = open(inFileName, 'r')
     outDataFile = open(outFileName, 'w')
+
+    lineNumber = 0
+    boardList = []
+    boardListFeatures = []
+
+    for line in inDataFile:
+        if lineNumber == 0:
+            lineNumber += 1
+        else:
+            dataLine = line.split(",")
+            cleanDataLine = []
+            for elt in dataLine:
+                cleanDataLine.append(int(elt))
+            boardList.append(cleanDataLine)
+            lineNumber += 1
+
+    lineNumber = 0
+
+    for elt in boardList:
+        featured = elt
+        featured.append(getFeature1(elt))
+        featured.append(getFeature2(elt))
+        featured.append(getFeature3(elt))
+        featured.append(getFeature4(elt))
+        featured.append(getFeature5(elt))
+
+        boardListFeatures.append(featured)
+        lineNumber += 1
+
+    for elt in boardListFeatures:
+        buff = ""
+        for x in elt:
+            buff = buff + str(x) + ","
+            print buff
+        buff = buff[:len(buff)-1]
+        buff = buff + '\n'
+
+        outDataFile.write(buff)
+
 
 # uses the bottom left space as the feature, this is the first required feature
 def getFeature1(board):
@@ -64,11 +102,11 @@ def getFeature4(board):
                 count = count + 8 * (1.5 - board[x])
             else:
                 count = count + 16 * (1.5 - board[x])
-    return count
+    return int(count)
 
 
 # Checks who has the greater number of top-of-column control pieces.
-def getFeature5(): # Dear future employers: I know this code is shit I have a deadline to meet I'm sorry
+def getFeature5(board): # Dear future employers: I know this code is shit I have a deadline to meet I'm sorry
     redTops = 0
     yellowTops = 0
     toAdd = 0
@@ -80,7 +118,7 @@ def getFeature5(): # Dear future employers: I know this code is shit I have a de
         x+=1
     if toAdd == 1:
         redTops += 1
-    elif toAdd == 1:
+    elif toAdd == 2:
         yellowTops +=1
 
     toAdd = 0
@@ -92,7 +130,7 @@ def getFeature5(): # Dear future employers: I know this code is shit I have a de
         x+=1
     if toAdd == 1:
         redTops += 1
-    elif toAdd == 1:
+    elif toAdd == 2:
         yellowTops +=1
 
     toAdd = 0
@@ -104,7 +142,7 @@ def getFeature5(): # Dear future employers: I know this code is shit I have a de
         x+=1
     if toAdd == 1:
         redTops += 1
-    elif toAdd == 1:
+    elif toAdd == 2:
         yellowTops +=1
 
     toAdd = 0
@@ -116,7 +154,7 @@ def getFeature5(): # Dear future employers: I know this code is shit I have a de
         x+=1
     if toAdd == 1:
         redTops += 1
-    elif toAdd == 1:
+    elif toAdd == 2:
         yellowTops +=1
 
     toAdd = 0
@@ -128,7 +166,7 @@ def getFeature5(): # Dear future employers: I know this code is shit I have a de
         x+=1
     if toAdd == 1:
         redTops += 1
-    elif toAdd == 1:
+    elif toAdd == 2:
         yellowTops +=1
 
     toAdd = 0
@@ -140,7 +178,7 @@ def getFeature5(): # Dear future employers: I know this code is shit I have a de
         x+=1
     if toAdd == 1:
         redTops += 1
-    elif toAdd == 1:
+    elif toAdd == 2:
         yellowTops +=1
 
     toAdd = 0
@@ -152,11 +190,11 @@ def getFeature5(): # Dear future employers: I know this code is shit I have a de
         x+=1
     if toAdd == 1:
         redTops += 1
-    elif toAdd == 1:
+    elif toAdd == 2:
         yellowTops +=1
 
+    return redTops - yellowTops
 
 
 
-getFeature5()
-
+classify()
