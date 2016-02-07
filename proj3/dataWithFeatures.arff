@@ -1,5 +1,103 @@
-P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19,P20,P21,P22,P23,P24,P25,P26,P27,P28,P29,P30,P31,P32,P33,P34,P35,P36,P37,P38,P39,P40,P41,P42,Winner,Feat1,Feat2,Feat3,Feat4,Feat5
-1,0,0,0,0,0,0,0,0,0,0,0,2,1,2,0,0,0,0,0,0,0,0,0,2,1,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,2,2,-3,1
+@relation 'trainDataSet (2)-weka.filters.unsupervised.attribute.NumericToNominal-R1-42-weka.filters.unsupervised.attribute.NumericToNominal-R1-43'
+
+
+@attribute f1 {0,1,2}
+
+@attribute f2 {0,1,2}
+
+@attribute f3 {0,1,2}
+
+@attribute f4 {0,1,2}
+
+@attribute f5 {0,1,2}
+
+@attribute f6 {0,1,2}
+
+@attribute f7 {0,1,2}
+
+@attribute f8 {0,1,2}
+
+@attribute f9 {0,1,2}
+
+@attribute f10 {0,1,2}
+
+@attribute f11 {0,1,2}
+
+@attribute f12 {0,1,2}
+
+@attribute f13 {0,1,2}
+
+@attribute f14 {0,1,2}
+
+@attribute f15 {0,1,2}
+
+@attribute f16 {0,1,2}
+
+@attribute f17 {0,1,2}
+
+@attribute f18 {0,1,2}
+
+@attribute f19 {0,1,2}
+
+@attribute f20 {0,1,2}
+
+@attribute f21 {0,1,2}
+
+@attribute f22 {0,1,2}
+
+@attribute f23 {0,1,2}
+
+@attribute f24 {0,1,2}
+
+@attribute f25 {0,1,2}
+
+@attribute f26 {0,1,2}
+
+@attribute f27 {0,1,2}
+
+@attribute f28 {0,1,2}
+
+@attribute f29 {0,1,2}
+
+@attribute f30 {0,1,2}
+
+@attribute f31 {0,1,2}
+
+@attribute f32 {0,1,2}
+
+@attribute f33 {0,1,2}
+
+@attribute f34 {0,1,2}
+
+@attribute f35 {0,1,2}
+
+@attribute f36 {0,1,2}
+
+@attribute f37 {0,1,2}
+
+@attribute f38 {0,1,2}
+
+@attribute f39 {0,1,2}
+
+@attribute f40 {0,1,2}
+
+@attribute f41 {0,1,2}
+
+@attribute f42 {0,1,2}
+
+@attribute winner {0,1,2}
+
+@attribute feat1 {0,1,2}
+@attribute feat2 {0,1,2}
+@attribute feat3 {0,1,2}
+
+@attribute feat4 numeric
+
+@attribute feat5 numeric
+
+
+@data
+1,1,0,0,0,0,0,0,0,0,0,0,0,2,1,2,0,0,0,0,0,0,0,0,0,2,1,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,2,2,-3,1
 0,0,0,0,0,0,1,1,0,0,0,0,1,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,2,2,0,0,0,0,1,0,1,0,0,0
 1,2,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,2,1,1,0,0,0,1,1,2,1,5,-1
 0,0,0,0,0,0,2,1,0,0,0,0,1,2,1,1,0,0,2,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,1,0,0,2,-2,0
