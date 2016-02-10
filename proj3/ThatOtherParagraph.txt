@@ -1,0 +1,5 @@
+Cross-validation is used to prevent overfitting.
+
+Holdout percents will train a system on a protion of the data, and then test that trained model against the holdout percent, testing the validity of the model. This helps prevent overfitting because it is observable how badly off the prediciton is on data that it has never seen before. THis prevents it from becoming overfit on that data.
+
+K-fold cross validation is essentially holdout cross-validation that runs multiple times, on the data split up in different ways. This prevents overfitting because across a full k-folded run, all the data will be run upon multiple times but each datapoint will also have been left out at some point in the testing. This helps to prevent overfitting becasuse the data tthat is left out is not overfit for.
