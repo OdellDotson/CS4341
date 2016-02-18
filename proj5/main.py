@@ -3,10 +3,10 @@ global itemList []
 global assignedItems[]
 
 def backtracking(items, bags):
-	finished = False
-	backtracking = False
-	currentItem = 0
-	currentBag = 0
+	finished = False 												# wheather or not we are done with the search
+	backtracking = False 											# wheather or not we are backtracking
+	currentItem = 0 												# the current item we are placing in a bag
+	currentBag = 0 													# the current bag we are trying to place the item in
 	while not finished: 											# as long as we are still searching for a solution
 		while not backtracking: 									# if we are not backtracking
 			if items[currentItem].canBeIn(bags[currentBag]): 		# if we can place the current item in the current bag
