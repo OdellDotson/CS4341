@@ -1,5 +1,11 @@
+import Bag
+import Item
+
+
+
 bagList = []
 itemList = []
+fittingLimits = []
 
 def backtracking(items, bags):
     finished = False 												# wheather or not we are done with the search
@@ -37,4 +43,57 @@ def backtracking(items, bags):
 
 
 def readFile():
-    open()
+    dataFile = open('data/input1.txt', 'r')
+    state = -1
+    """
+    State 0:
+        Adding variables
+    State 1:
+        Adding values
+    State 2:
+        fitting limits
+    State 3:
+        unary inclusive
+    State 4:
+        unary exclusive
+    State 5:
+        binary equals
+    State 6:
+        binary not equals
+    State 7:
+        binary simultaneous
+    """
+
+    items = 0
+    bags = 0
+
+    for line in dataFile:
+        if line[0] == '#':
+            state += 1
+        elif:
+            if state == 0:
+                lineData = line.split(" ")
+                itemList[items] = Item(lineData[0], lineData[1])
+                items += 1
+            elif state == 1:
+                lineData = line.split(" ")
+                bagList[bags] = Bag(lineData[0], lineData[1])
+                bags += 1
+            elif state == 2:
+                lineData = line.split(" ")
+                fittingLimits[0], fittingLimits[1] = (lineData[0], lineData[1]) #Dumb depackaging thing because python yay
+            elif state == 3:
+                lineData = line.split(" ")
+                for len(lineData):
+
+            elif state == 4:
+
+            elif state == 5:
+
+            elif state == 6:
+
+            else: # state == 7:
+
+
+
+readFile()

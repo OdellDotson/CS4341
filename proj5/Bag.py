@@ -1,4 +1,4 @@
-import Item.py
+import Item
 
 class Bag:
 	
