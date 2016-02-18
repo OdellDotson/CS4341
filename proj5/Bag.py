@@ -1,3 +1,5 @@
+import Item.py
+
 class Bag:
 	
 	def __init__(self, name, capacity):
