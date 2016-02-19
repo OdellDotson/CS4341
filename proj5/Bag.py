@@ -2,7 +2,7 @@ import Item
 
 class Bag:
 	
-	def __init__(self, name, capacity):
+	def __init__(self, name, capacity, minItems, maxItems):
 		self.name = name
 		self.capacity = capacity
 		self.items = []
@@ -10,6 +10,9 @@ class Bag:
 		self.percentFull = 0
 		self.isFull = False
 		self.isFullEnough = False
+		self.numItems = 0
+		self.minItems = minItems
+		self.maxItems = maxItems
 
 	# Adds a given item 
 	def addItem(self, item):

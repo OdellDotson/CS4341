@@ -25,6 +25,8 @@ class Item:
 				return False
 		if bag.totalWeight + self.weight > 100: # if the bag will be over capacity if this item is placed in it
 			return False
+		if bag.numItems = bag.maxItems
+			return False
 		if self.partnerItem.inBag in self.partnerBags and self.partnerItem.inBag.equals(bag): # if this item's mutual inclusive partner item is in one of the mutual bags and that bag is the bag
 			return False
 		if self.partnerItem.inBag in self.partnerBags and bag not in self.partnerBags: # if this item's mutual inclusive partner item is in one of the mutual bags and the bag is not a mutual bag
