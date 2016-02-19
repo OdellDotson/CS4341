@@ -1,4 +1,4 @@
-import Bag
+from Bag import Bag
 
 class Item:
 
@@ -10,8 +10,14 @@ class Item:
 		self.allowedBags = [] # list of bags that this item can be in
 		self.mustBeWith = [] # list of items that must be in the same bag as this item
 		self.cantBeWith = [] # list of items that cannot be in the same bad as this item
-		self.partnerItem = Item("noItem", 0) # mutualy exclusive item
-		self.partnerBags = [] # the bags that the mutualy exclusive item can be in
+
+		# @TODO: This needs a big restructure so it takes into account the fact that a single item can have multiple partners each with exclusive bag pairings.
+		self.partnerItem = [] # Mutually exclusive item. Empty if this item does not have a mutually inclusive binary constraint.
+
+		# How it used to look, for your reference:
+		#Item("noItem", 0) # mutually exclusive item
+
+		self.partnerBags = [] # the bags that the mutually exclusive item can be in
 
 	# This function will return true if an item is allowed in a bag and false if it is not.
 	def canBeIn(self, bag):

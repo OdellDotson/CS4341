@@ -1,7 +1,7 @@
 import Item
 
 class Bag:
-	
+
 	def __init__(self, name, capacity, minItems, maxItems):
 		self.name = name
 		self.capacity = capacity

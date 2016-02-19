@@ -1,15 +1,14 @@
-import Bag
-import Item
-
-
+from Bag import Bag
+from Item import Item
+from Tools import removeNonAscii
 
 bagList = []
 itemList = []
-fittingLimits = []
+fittingLimits = [0,0]
 
 def backtracking(items, bags):
-    finished = False 												# wheather or not we are done with the search
-    backtracking = False 											# wheather or not we are backtracking
+    finished = False 												# whether or not we are done with the search
+    backtracking = False 											# whether or not we are backtracking
     currentItem = 0 												# the current item we are placing in a bag
     currentBag = 0 													# the current bag we are trying to place the item in
     while not finished: 											# as long as we are still searching for a solution
@@ -43,7 +42,7 @@ def backtracking(items, bags):
 
 
 def readFile():
-    dataFile = open('data/input1.txt', 'r')
+    dataFile = open('data/input24.txt', 'r')
     state = -1
     """
     State 0:
@@ -64,35 +63,133 @@ def readFile():
         binary simultaneous
     """
 
-    items = 0
-    bags = 0
-
     for line in dataFile:
         if line[0] == '#':
             state += 1
-        elif:
+            print "State change to: ", state
+        else:
             if state == 0:
                 lineData = line.split(" ")
-                itemList[items] = Item(lineData[0], lineData[1])
-                items += 1
+                itemList.append(Item(lineData[0], lineData[1]))
             elif state == 1:
                 lineData = line.split(" ")
-                bagList[bags] = Bag(lineData[0], lineData[1])
-                bags += 1
+                bagList.append(Bag(lineData[0], lineData[1]))
             elif state == 2:
                 lineData = line.split(" ")
-                fittingLimits[0], fittingLimits[1] = (lineData[0], lineData[1]) #Dumb depackaging thing because python yay
+                fittingLimits[0], fittingLimits[1] = (int(removeNonAscii(lineData[0])), int(removeNonAscii(lineData[1]))) #Dumb depackaging thing because python yay
             elif state == 3:
                 lineData = line.split(" ")
-                for len(lineData):
+                cleanedLineData = []
+                for term in lineData: # Clean each term of non-ascii formatting characters
+                    cleanedLineData.append(removeNonAscii(term))
+                for item in itemList: # For each item in our item list
+                    if item.name == cleanedLineData[0]: # If we've found the item that this line is describing
+                        for nameOfBag in cleanedLineData: #For each element in the cleaned line data. Of course first element will never be the case we want. Looking for bag names.
+                            for bag in bagList: # for each of our bags
+                                if bag.name == nameOfBag: #If any of our bags are of the name of the item we are setting up inclusive unary constraints:
+                                    item.allowedBags.append(bag) #Add that bag to the list of acceptable bags.'
+                                    #print "List of bags that ", item.name, "is exclusively allowed in so far:"
+                                    #for g in item.allowedBags:
+                                        #print g.name
+
 
             elif state == 4:
+                lineData = line.split(" ")
+                cleanedLineData = []
 
-            elif state == 5:
+                bagsToAdd = []
 
-            elif state == 6:
+                for bagInit in bagList:
+                    bagsToAdd.append(bagInit)
 
+                for term in lineData: # Clean each term of non-ascii formatting characters
+                    cleanedLineData.append(removeNonAscii(term))
+                for item in itemList: # For each item in our item list
+                    if item.name == cleanedLineData[0]: # If we've found the item that this line is describing
+                        for nameOfBag in cleanedLineData: #For each element in the cleaned line data. Of course first element will never be the case we want. Looking for bag names.
+                            for bag in bagList: # for each of our bags
+                                if bag.name == nameOfBag: #If any of our bags are of the name of the item we are setting up exclusive unary constraints:
+                                    if bag in item.allowedBags:
+                                        item.allowedBags.remove(bag) #If the bag was listed in unary exclusion AND unary inclusion. Why that would ever happen, IDK, but it happens in one of the given cases. Ugh. Thanks.
+                                    bagsToAdd.remove(bag)
+                                    #print "Removing ", bag.name , " bag from ", item.name ,"'s pool of possible bags."
+                        #print "Bags it's really ok to add for ", item.name
+                        for bagsToReallyAdd in bagsToAdd:
+                            item.allowedBags.append(bagsToReallyAdd)
+                            #print bagsToReallyAdd.name
+            elif state == 5: # Binary Equality
+                lineData = line.split(" ")
+
+                cleanedLineData = []
+
+                for itemName in lineData:
+                    cleanedLineData.append(removeNonAscii(itemName))
+
+                for itemsToCheck in itemList:
+                    if itemsToCheck.name == cleanedLineData[0]:
+                        for itemPartnerToCheck in itemList:
+                            if itemPartnerToCheck.name == cleanedLineData[1]:
+                                itemsToCheck.mustBeWith.append(itemPartnerToCheck)
+                                itemPartnerToCheck.mustBeWith.append(itemsToCheck)
+
+
+
+            elif state == 6: # Binary Inequality
+                lineData = line.split(" ")
+
+                cleanedLineData = []
+
+                for itemName in lineData:
+                    cleanedLineData.append(removeNonAscii(itemName))
+
+                for itemsToCheck in itemList:
+                    if itemsToCheck.name == cleanedLineData[0]:
+                        for itemPartnerToCheck in itemList:
+                            if itemPartnerToCheck.name == cleanedLineData[1]:
+                                itemsToCheck.cantBeWith.append(itemPartnerToCheck)
+                                itemPartnerToCheck.cantBeWith.append(itemsToCheck)
             else: # state == 7:
+                lineData = line.split(" ")
+
+                cleanedLineData = []
+
+                for descriptor in lineData:
+                    cleanedLineData.append(removeNonAscii(descriptor))
+
+                for itemsToCheck in itemList:
+                    if itemsToCheck.name == cleanedLineData[0]:
+                        for itemPartnerToCheck in itemList:
+                            if itemPartnerToCheck.name == cleanedLineData[1]: # If we have detected partners:
+                                itemsToCheck.partnerItem.append(itemPartnerToCheck)
+                                itemPartnerToCheck.partnerItem.append(itemsToCheck)
+                                for bagsNames in bagList:
+                                    if bagsNames.name == cleanedLineData[2]:
+                                        itemsToCheck.partnerBags.append(bagsNames)
+                                        itemPartnerToCheck.partnerBags.append(bagsNames)
+                                    if bagsNames.name == cleanedLineData[3]:
+                                        itemsToCheck.partnerBags.append(bagsNames)
+                                        itemPartnerToCheck.partnerBags.append(bagsNames)
+
+    # Finish up lists of acceptable bags
+    for itemsToCheckBagsAllowed in itemList:
+        if len(itemsToCheckBagsAllowed.allowedBags) == 0:
+            for allBags in bagList:
+                itemsToCheckBagsAllowed.allowedBags.append(allBags)
+        print "Bags that ", itemsToCheckBagsAllowed.name, " is allowed in:"
+        for bagsAllowed in itemsToCheckBagsAllowed.allowedBags:
+            print bagsAllowed.name
+        print "Bags that ", itemsToCheckBagsAllowed.name, " must be in a bag with:"
+        for bagFriends in itemsToCheckBagsAllowed.mustBeWith:
+            print bagFriends.name
+        print "Bags that ", itemsToCheckBagsAllowed.name, " must NOT be in a bag with:"
+        for bagEnemies in itemsToCheckBagsAllowed.cantBeWith:
+            print bagEnemies.name
+        for partners in itemsToCheckBagsAllowed.partnerItem:
+            print itemsToCheckBagsAllowed.name " is partner of ", itemsToCheckBagsAllowed.name, ":"
+            print itemsToCheckBagsAllowed.partnerItem[0].name
+            print "Bags it uses mutual inclusive binary constraints with it's partner with:", itemsToCheckBagsAllowed.name, ":"
+            for partnerBags in itemsToCheckBagsAllowed.partnerBags:
+                print partnerBags.name
 
 
 
