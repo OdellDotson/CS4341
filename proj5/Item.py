@@ -12,6 +12,7 @@ class Item:
 		self.cantBeWith = [] # list of items that cannot be in the same bad as this item
 		self.partnerItems = [] # Mutually exclusive items. Empty if this item does not have a mutually inclusive binary constraint.
 		self.partnerBags = [] # the bags that the mutually exclusive items can be in, all arrays of 2 bags
+		self.heuristic = 0
 
 	# This function will return true if an item is allowed in a bag and false if it is not.
 	def canBeIn(self, bag):
@@ -39,6 +40,9 @@ class Item:
 					if partnerBag.equals(bag):
 						return False
 		return True
+
+	def makeHeuristic(self): # tries to quantify how constrained the item is, lower value equals more constrained
+		self.heuristic = 3 * len(self.allowedBags) - len(self.mustBeWith) - len(self.cantBeWith) - len(self.partnerItems)
 
 	def equals(self, other):
 		if self.name == other.name:

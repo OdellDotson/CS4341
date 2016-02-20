@@ -13,6 +13,7 @@ class Bag:
 		self.numItems = 0
 		self.minItems = minItems
 		self.maxItems = maxItems
+		self.heuristic = 0
 
 	# Adds a given item 
 	def addItem(self, item):
@@ -36,6 +37,9 @@ class Bag:
 		if percentFull < 90:
 			isFullEnough = False
 		self.items.pop() # this will remove and return the last item in the items list
+
+	def makeHeuristic(self): # tries to quantify how constrained the bag is, lower value equals less constrained
+		self.heuristic = -2 * self.capacity - (self.maxItems - self.minItems)
 
 	def equals(self, other):
 		if self.name == other.name:
