@@ -16,6 +16,21 @@ def sortObjects(): # this will sort the items and bags by how constrained they a
 	itemList.sort(key = lambda x: x.heuristic) # this might not work, it is from google
 	bagList.sort(key = lambda x: x.heuristic) # this might not work, it is from google
 
+def finalCheck(): # checks at the end of backtracking search to make sure all of the conditions are met for the bags
+	global bagList
+	for bag in bagList:
+		if bag.numItems < bag.minItems:
+			return False
+		if bag not isFullEnough:
+			return False
+	return True
+
+# @TODO this function needs to be run in backtracking
+# this function should be used to test wheather asigning
+# an item to a bag will prevent any of the unassigned bags
+# from being able to be placed in a bag
+def ForewardCheck():
+
 def backtracking():
 	global bagList
 	global itemList
@@ -28,7 +43,7 @@ def backtracking():
             if itemList[currentItem].canBeIn(bagList[currentBag]): 		# if we can place the current item in the current bag
                 bagList[currentBag].addItem(itemList[currentItem]) 		# add the item to the bag
                 if currentItem == len(itemList) - 1: 					# if the last item is placed in a bag
-                    if finalCheck: 										# check if all the criteria are met
+                    if finalCheck(): 										# check if all the criteria are met
                         finished = True 								# if they are, then we are finished
                     else: 												# if they are not
                         backtracking = True 							# start to backtrack
