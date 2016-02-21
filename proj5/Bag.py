@@ -25,12 +25,13 @@ class Bag:
 		#print self.percentFull
 		if self.percentFull == 100:
 			self.isFull = True
-			self.isFullEnough = True
+			#self.isFullEnough = True
 		if self.percentFull >= 90:
 			self.isFullEnough = True
 
 	def removeLastItem(self):
-		print self.items[len(self.items)-1].name, " <- ", self.name
+		#print self.items[len(self.items)-1].name, " <- ", self.name
+		print "This many: ", len(self.items)
 		self.items[len(self.items) - 1].inBag = Bag("noBag", 0,0,0)
 		self.items[len(self.items) - 1].isInBag = False
 		self.totalWeight = (self.totalWeight) - (self.items[len(self.items) - 1].weight)

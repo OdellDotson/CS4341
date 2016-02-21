@@ -18,13 +18,20 @@ def sortObjects(): # this will sort the items and bags by how constrained they a
 
 
 def finalCheck(): # checks at the end of backtracking search to make sure all of the conditions are met for the bags
-    global bagList
+    #global bagList
+    printFinalState()
     for bag in bagList:
+        print "Num items: ", bag.numItems, ". minItems: ", bag.minItems, ". isFullEnough: ", bag.isFullEnough, ". Name: ", bag.name
         if bag.numItems < bag.minItems:
             return False
         if not bag.isFullEnough:
             return False
     return True
+
+def printBagStats():
+    global bagList
+    for bag in bagList:
+        print "TESTTTTTT   Num items: ", bag.numItems, ". minItems: ", bag.minItems, ". isFullEnough: ", bag.isFullEnough, ". Name: ", bag.name
 
 
 # this function is called in run in backtracking
@@ -59,17 +66,25 @@ def backtrack():
     global itemList
     finished = False 													# whether or not we are done with the search
     backtracking = False 												# whether or not we are backtracking
+    wasJustBT = False
     currentItem = 0 													# the current item we are placing in a bag
     currentBag = 0 														# the current bag we are trying to place the item in
     while not finished: 												# as long as we are still searching for a solution
-        printFinalState()
+        #printFinalState()
         if not backtracking: 										    # if we are not backtracking
+            if wasJustBT:
+                #currentItem += 1
+                wasJustBT = False
+
             print "current item:", itemList[currentItem].name, "current bag: ", bagList[currentBag].name
             if itemList[currentItem].canBeIn(bagList[currentBag]): 		# if we can place the current item in the current bag
                 bagList[currentBag].addItem(itemList[currentItem]) 		# add the item to the bag
                 print itemList[currentItem].name, " -> ", bagList[currentBag].name
                 if currentItem == len(itemList) - 1: 					# if the last item is placed in a bag
-                    if finalCheck(): 									# check if all the criteria are met
+
+
+                    #getValidation()
+                    if getValidation(): 									# check if all the criteria are met
                         finished = True 								# if they are, then we are finished
                     else: 												# if they are not
                         print "BTS"
@@ -87,6 +102,7 @@ def backtrack():
             else: 														# if the item cannot be placed in this bag
                 currentBag += 1 										# try to place the item in the next bag
         if backtracking: 											    # if we are backtracking
+            currentItem -= 1    										# go back to the last item
             print "At start of backtracking condition: current item:", itemList[currentItem].name, "current bag: ", bagList[currentBag].name, ", backtracking."
             if currentItem == 0: 										# if this is the first item
                 print "Backtracked all the way, no solution."
@@ -100,13 +116,13 @@ def backtrack():
                 if currentBag != len(bagList) - 1: 						# if the bag the last item was in was not the last bag it could be placed in
                     currentBag += 1 									# move on to the next bag it could be placed in
                     backtracking = False 								# stop backtracking
-            
-            currentItem -= 1    										# go back to the last item
+                    wasJustBT = True
+
 
 
 
 def readFile():
-    dataFile = open('data/input5.txt', 'r')
+    dataFile = open('data/input4.txt', 'r')
     state = -1
     """
     State 0:
@@ -290,8 +306,23 @@ def printFinalState():
         print "total weight: " , bag.totalWeight, "/", bag.capacity
         print "wasted capacity: " , bag.capacity - bag.totalWeight, "\n"
 
+def getValidation():
+    for bag in bagList:
+        header = bag.name
+        items = 0
+        for item in itemList:
+            if not (item.inBag.name == "noBag"):
+                if item.inBag.name == bag.name:
+                    header = header + " " + item.name
+                    items += 1
+        if items < fittingLimits[0]:
+            return False
+        elif (float(bag.totalWeight) / float(bag.capacity)) < 0.9:
+            return False
+    return True
 
 
+print "START!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 
 readFile()
 backtrack()
