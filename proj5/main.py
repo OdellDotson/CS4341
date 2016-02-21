@@ -66,15 +66,11 @@ def backtrack():
     global itemList
     finished = False 													# whether or not we are done with the search
     backtracking = False 												# whether or not we are backtracking
-    wasJustBT = False
     currentItem = 0 													# the current item we are placing in a bag
     currentBag = 0 														# the current bag we are trying to place the item in
     while not finished: 												# as long as we are still searching for a solution
-        #printFinalState()
+        printFinalState()
         if not backtracking: 										    # if we are not backtracking
-            if wasJustBT:
-                currentItem += 1
-                wasJustBT = False
 
             print "current item:", itemList[currentItem].name, "current bag: ", bagList[currentBag].name
             if itemList[currentItem].canBeIn(bagList[currentBag]): 		# if we can place the current item in the current bag
@@ -82,8 +78,6 @@ def backtrack():
                 print itemList[currentItem].name, " -> ", bagList[currentBag].name
                 if currentItem == len(itemList) - 1: 					# if the last item is placed in a bag
 
-
-                    #getValidation()
                     if getValidation(): 									# check if all the criteria are met
                         finished = True 								# if they are, then we are finished
                     else: 												# if they are not
@@ -95,13 +89,13 @@ def backtrack():
                         currentItem += 1 								# move on to the next item
                     else:												# if we didn't make it impossible to place an un placed item in a bag
                         currentItem += 1 								# move on to the next item
-                        #print "Current item: !!!!!!!!!", itemList[currentItem].name
                         currentBag = 0 									# start by trying to place the next item in the first bag
             elif currentBag == len(bagList) - 1: 					# if the item could not be placed in any of the bags
                 backtracking = True 									# start to backtrack
             else: 														# if the item cannot be placed in this bag
                 currentBag += 1 										# try to place the item in the next bag
         if backtracking: 											    # if we are backtracking
+            currentItem -= 1    										# go back to the last item
             print "At start of backtracking condition: current item:", itemList[currentItem].name, "current bag: ", bagList[currentBag].name, ", backtracking."
             if currentItem == 0: 										# if this is the first item
                 print "Backtracked all the way, no solution."
@@ -115,11 +109,6 @@ def backtrack():
                 if currentBag != len(bagList) - 1: 						# if the bag the last item was in was not the last bag it could be placed in
                     currentBag += 1 									# move on to the next bag it could be placed in
                     backtracking = False 								# stop backtracking
-                    wasJustBT = True
-
-            currentItem -= 1    										# go back to the last item
-
-
 
 def readFile():
     dataFile = open('data/input5.txt', 'r')
