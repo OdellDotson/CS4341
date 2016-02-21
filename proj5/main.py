@@ -4,26 +4,28 @@ from Tools import removeNonAscii
 
 itemList = []
 bagList = []
-fittingLimits = [0,0]
+fittingLimits = [0,9999999]
 
 def sortObjects(): # this will sort the items and bags by how constrained they are
-	global itemList
-	global bagList
-	for item in ItemList:
-		item.makeHeuristic()
-	for bag in bagList:
-		bag.makeHeuristic()
-	itemList.sort(key = lambda x: x.heuristic) # this might not work, it is from google
-	bagList.sort(key = lambda x: x.heuristic) # this might not work, it is from google
+    global itemList
+    global bagList
+    for item in ItemList:
+        item.makeHeuristic()
+    for bag in bagList:
+        bag.makeHeuristic()
+    itemList.sort(key = lambda x: x.heuristic) # this might not work, it is from google
+    bagList.sort(key = lambda x: x.heuristic) # this might not work, it is from google
+
 
 def finalCheck(): # checks at the end of backtracking search to make sure all of the conditions are met for the bags
-	global bagList
-	for bag in bagList:
-		if bag.numItems < bag.minItems:
-			return False
-		if bag not isFullEnough:
-			return False
-	return True
+    global bagList
+    for bag in bagList:
+        if bag.numItems < bag.minItems:
+            return False
+        if not bag.isFullEnough:
+            return False
+    return True
+
 
 # this function is called in run in backtracking
 # this function is used to test wheather asigning
@@ -31,62 +33,66 @@ def finalCheck(): # checks at the end of backtracking search to make sure all of
 # from being able to be placed in a bag. It is
 # called after an item is added to a bag in backtracking.
 def forwardCheck(): # returns true if assiging an item to a bag eliminates the domain of another item
-	global itemList
-	global bagList
-	for item in itemList:
-		if not item.isInBag:
-			noDomain = True
-			for bag in bagList:
-				if item.canBeIn(bag):
-					noDomain = False
-		if noDomain:
-			return True
-	return False
+    global itemList
+    global bagList
+    noDomain = False # @TODO: What should this be defaulting to?
+    for item in itemList:
+        if not item.isInBag:
+            noDomain = True
+            for bag in bagList:
+                if item.canBeIn(bag):
+                    noDomain = False
+        if noDomain:
+            return True
+    return False
 
 
 
 def backtracking():
-	global bagList
-	global itemList
+    global bagList
+    global itemList
     finished = False 													# whether or not we are done with the search
     backtracking = False 												# whether or not we are backtracking
     currentItem = 0 													# the current item we are placing in a bag
     currentBag = 0 														# the current bag we are trying to place the item in
     while not finished: 												# as long as we are still searching for a solution
-        while not backtracking: 										# if we are not backtracking
+        if not backtracking: 										    # if we are not backtracking
+            print "current item:", currentItem, "current bag: ", currentBag
             if itemList[currentItem].canBeIn(bagList[currentBag]): 		# if we can place the current item in the current bag
                 bagList[currentBag].addItem(itemList[currentItem]) 		# add the item to the bag
+                print itemList[currentItem].name, " -> ", bagList[currentBag].name
                 if currentItem == len(itemList) - 1: 					# if the last item is placed in a bag
                     if finalCheck(): 									# check if all the criteria are met
                         finished = True 								# if they are, then we are finished
                     else: 												# if they are not
+                        print "BTS"
                         backtracking = True 							# start to backtrack
                 else: 													# if we have just placed an item that is not the last item in a bag
-                	if forwardCheck():									# if we have made it impossible to place an un placed item in a bag
-                		backtracking = True 							# start to backtrack
-                	else:												# if we didn't make it impossible to place an un placed item in a bag
-                    	currentItem += 1 								# move on to the next item
-                    	currentBag = 0 									# start by trying to place the next item in the first bag
-            elif currentBag == (len(bagList) - 1): 						# if the item could not be placed in any of the bags
+                    if forwardCheck():									# if we have made it impossible to place an un placed item in a bag
+                        backtracking = True 							# start to backtrack
+                    else:												# if we didn't make it impossible to place an un placed item in a bag
+                        currentItem += 1 								# move on to the next item
+                        currentBag = 0 									# start by trying to place the next item in the first bag
+            elif (currentBag == (len(bagList) - 1)): 					# if the item could not be placed in any of the bags
                 backtracking = True 									# start to backtrack
             else: 														# if the item cannot be placed in this bag
                 currentBag += 1 										# try to place the item in the next bag
-        while backtracking: 											# if we are backtracking
+        if backtracking: 											    # if we are backtracking
             if currentItem == 0: 										# if this is the first item
                 finished = True 										# there is no solution to this problem
             else: 														# if we have not determined that there is no solution
                 currentItem -= 1 										# go back to the last item
                 for i in xrange(0,len(bagList) - 1): 					# for every bag
-                    if bagList[i].equals(ItemList[currentItem].inBag): 	# if the last item was placed in this bag
+                    if bagList[i].equals(itemList[currentItem].inBag): 	# if the last item was placed in this bag
                         currentBag = i 									# set the current bag to be the bag the last item was placed in
-                ItemList[currentItem].inBag.removeLastItem() 			# take the last item out of the bag it was placed in
+                itemList[currentItem].inBag.removeLastItem() 			# take the last item out of the bag it was placed in
                 if currentBag != len(bagList) - 1: 						# if the bag the last item was in was not the last bag it could be placed in
                     currentBag += 1 									# move on to the next bag it could be placed in
                     backtracking = False 								# stop backtracking
 
 
 def readFile():
-    dataFile = open('data/input24.txt', 'r')
+    dataFile = open('data/input4.txt', 'r')
     state = -1
     """
     State 0:
@@ -110,14 +116,14 @@ def readFile():
     for line in dataFile:
         if line[0] == '#':
             state += 1
-            print "State change to: ", state
+            #print "State change to: ", state
         else:
             if state == 0:
                 lineData = line.split(" ")
                 itemList.append(Item(lineData[0], lineData[1]))
             elif state == 1:
                 lineData = line.split(" ")
-                bagList.append(Bag(lineData[0], lineData[1]))
+                bagList.append(Bag(lineData[0], int(lineData[1]), 0, 0))
             elif state == 2:
                 lineData = line.split(" ")
                 fittingLimits[0], fittingLimits[1] = (int(removeNonAscii(lineData[0])), int(removeNonAscii(lineData[1]))) #Dumb depackaging thing because python yay
@@ -204,37 +210,64 @@ def readFile():
                     if itemsToCheck.name == cleanedLineData[0]:
                         for itemPartnerToCheck in itemList:
                             if itemPartnerToCheck.name == cleanedLineData[1]: # If we have detected partners:
-                                itemsToCheck.partnerItem.append(itemPartnerToCheck)
-                                itemPartnerToCheck.partnerItem.append(itemsToCheck)
+                                itemsToCheck.partnerItems.append(itemPartnerToCheck)
+                                itemPartnerToCheck.partnerItems.append(itemsToCheck)
+                                bagArray = []
                                 for bagsNames in bagList:
-                                    if bagsNames.name == cleanedLineData[2]:
-                                        itemsToCheck.partnerBags.append(bagsNames)
-                                        itemPartnerToCheck.partnerBags.append(bagsNames)
-                                    if bagsNames.name == cleanedLineData[3]:
-                                        itemsToCheck.partnerBags.append(bagsNames)
-                                        itemPartnerToCheck.partnerBags.append(bagsNames)
+                                    if ((bagsNames.name == cleanedLineData[2]) or (bagsNames.name == cleanedLineData[3])):
+                                        bagArray.append(bagsNames)
+
+                                itemsToCheck.partnerBags.append(bagArray)
+                                itemPartnerToCheck.partnerBags.append(bagArray)
 
     # Finish up lists of acceptable bags
+    verbose = False
+
+
     for itemsToCheckBagsAllowed in itemList:
         if len(itemsToCheckBagsAllowed.allowedBags) == 0:
             for allBags in bagList:
                 itemsToCheckBagsAllowed.allowedBags.append(allBags)
-        print "Bags that ", itemsToCheckBagsAllowed.name, " is allowed in:"
+        if verbose: print "Bags that ", itemsToCheckBagsAllowed.name, " is allowed in:"
         for bagsAllowed in itemsToCheckBagsAllowed.allowedBags:
-            print bagsAllowed.name
-        print "Bags that ", itemsToCheckBagsAllowed.name, " must be in a bag with:"
+            if verbose:print bagsAllowed.name
+        if verbose:print "Bags that ", itemsToCheckBagsAllowed.name, " must be in a bag with:"
         for bagFriends in itemsToCheckBagsAllowed.mustBeWith:
-            print bagFriends.name
-        print "Bags that ", itemsToCheckBagsAllowed.name, " must NOT be in a bag with:"
+            if verbose:print bagFriends.name
+        if verbose:print "Bags that ", itemsToCheckBagsAllowed.name, " must NOT be in a bag with:"
         for bagEnemies in itemsToCheckBagsAllowed.cantBeWith:
-            print bagEnemies.name
-        for partners in itemsToCheckBagsAllowed.partnerItem:
-            print itemsToCheckBagsAllowed.name " is partner of ", itemsToCheckBagsAllowed.name, ":"
-            print itemsToCheckBagsAllowed.partnerItem[0].name
-            print "Bags it uses mutual inclusive binary constraints with it's partner with:", itemsToCheckBagsAllowed.name, ":"
-            for partnerBags in itemsToCheckBagsAllowed.partnerBags:
-                print partnerBags.name
+            if verbose:print bagEnemies.name
+        for x in range (0, len(itemsToCheckBagsAllowed.partnerItems)):
+            if verbose:print itemsToCheckBagsAllowed.name, "'s first binary simultaneous partner is ", itemsToCheckBagsAllowed.partnerItems[x].name,\
+                ", and their bags are "
+            for partnerBags in itemsToCheckBagsAllowed.partnerBags[x]:
+                if verbose:print partnerBags.name
 
+    for bagsToUpdateMinMax in bagList:
+        bagsToUpdateMinMax.minItems = fittingLimits[0]
+        bagsToUpdateMinMax.maxItems = fittingLimits[1]
+
+    if len(bagList) > 0:
+        if verbose: print "Bags can hold between ", bagList[0].minItems, " and ", bagList[0].maxItems, " items, inclusively."
+    if verbose: print "Set up complete."
+
+
+def printState():
+    for bag in bagList:
+        header = bag.name
+        items = 0
+        for item in itemList:
+            if item.inBag != None:
+                if item.inBag.name == bag.name:
+                    header = header + " " + item.name
+                    items += 1
+        print header
+        print "number of items: ", items
+        print "total weight: " , bag.totalWeight, "/", bag.capacity
+        print "wasted capacity: " , bag.capacity - bag.totalWeight, "\n"
 
 
 readFile()
+backtracking()
+
+printState()

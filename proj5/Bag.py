@@ -1,4 +1,4 @@
-import Item
+#from Item import Item
 
 class Bag:
 
@@ -20,21 +20,23 @@ class Bag:
 		self.items.append(item)
 		item.inBag = self
 		item.isInBag = True
-		self.totalWeight = totalWeight + item.weight
-		self.percentFull = int(capacity / totalWeight)
-		if percentFull == 100:
+		self.totalWeight = int(self.totalWeight) + int(item.weight)
+		self.percentFull = 100*int(int(self.capacity) / self.totalWeight)
+		#print self.percentFull
+		if self.percentFull == 100:
 			self.isFull = True
-		if percentFull >= 90:
-			isFullEnough = True
+			self.isFullEnough = True
+		if self.percentFull >= 90:
+			self.isFullEnough = True
 
 	def removeLastItem(self):
-		self.items[len(self.items) - 1].inBag = Bag(noBag, 0)
+		self.items[len(self.items) - 1].inBag = None # Bag("noBag", 0)
 		self.items[len(self.items) - 1].isInBag = False
-		self.totalWeight = self.totalWeight - self.items[len(self.items) - 1].weight
-		self.percentFull = int(self.capacity / self.totalWeight)
-		if percentFull != 100:
+		self.totalWeight = int(self.totalWeight) - int(self.items[len(self.items) - 1].weight)
+		self.percentFull = int(self.totalWeight) / int(self.capacity)  # @TODO: This was the other way around, was it supposed to be??
+		if self.percentFull != 100:
 			self.isFull = False
-		if percentFull < 90:
+		if self.percentFull < 90:
 			isFullEnough = False
 		self.items.pop() # this will remove and return the last item in the items list
 
