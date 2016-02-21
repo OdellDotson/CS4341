@@ -25,11 +25,25 @@ def finalCheck(): # checks at the end of backtracking search to make sure all of
 			return False
 	return True
 
-# @TODO this function needs to be run in backtracking
-# this function should be used to test wheather asigning
-# an item to a bag will prevent any of the unassigned bags
-# from being able to be placed in a bag
-def ForewardCheck():
+# this function is called in run in backtracking
+# this function is used to test wheather asigning
+# an item to a bag prevented any of the unassigned bags
+# from being able to be placed in a bag. It is
+# called after an item is added to a bag in backtracking.
+def forwardCheck(): # returns true if assiging an item to a bag eliminates the domain of another item
+	global itemList
+	global bagList
+	for item in itemList:
+		if not item.isInBag:
+			noDomain = True
+			for bag in bagList:
+				if item.canBeIn(bag):
+					noDomain = False
+		if noDomain:
+			return True
+	return False
+
+
 
 def backtracking():
 	global bagList
@@ -43,13 +57,16 @@ def backtracking():
             if itemList[currentItem].canBeIn(bagList[currentBag]): 		# if we can place the current item in the current bag
                 bagList[currentBag].addItem(itemList[currentItem]) 		# add the item to the bag
                 if currentItem == len(itemList) - 1: 					# if the last item is placed in a bag
-                    if finalCheck(): 										# check if all the criteria are met
+                    if finalCheck(): 									# check if all the criteria are met
                         finished = True 								# if they are, then we are finished
                     else: 												# if they are not
                         backtracking = True 							# start to backtrack
                 else: 													# if we have just placed an item that is not the last item in a bag
-                    currentItem += 1 									# move on to the next item
-                    currentBag = 0 										# start by trying to place the next item in the first bag
+                	if forwardCheck():									# if we have made it impossible to place an un placed item in a bag
+                		backtracking = True 							# start to backtrack
+                	else:												# if we didn't make it impossible to place an un placed item in a bag
+                    	currentItem += 1 								# move on to the next item
+                    	currentBag = 0 									# start by trying to place the next item in the first bag
             elif currentBag == (len(bagList) - 1): 						# if the item could not be placed in any of the bags
                 backtracking = True 									# start to backtrack
             else: 														# if the item cannot be placed in this bag
