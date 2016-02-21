@@ -73,7 +73,7 @@ def backtrack():
         #printFinalState()
         if not backtracking: 										    # if we are not backtracking
             if wasJustBT:
-                #currentItem += 1
+                currentItem += 1
                 wasJustBT = False
 
             print "current item:", itemList[currentItem].name, "current bag: ", bagList[currentBag].name
@@ -102,7 +102,6 @@ def backtrack():
             else: 														# if the item cannot be placed in this bag
                 currentBag += 1 										# try to place the item in the next bag
         if backtracking: 											    # if we are backtracking
-            currentItem -= 1    										# go back to the last item
             print "At start of backtracking condition: current item:", itemList[currentItem].name, "current bag: ", bagList[currentBag].name, ", backtracking."
             if currentItem == 0: 										# if this is the first item
                 print "Backtracked all the way, no solution."
@@ -118,11 +117,12 @@ def backtrack():
                     backtracking = False 								# stop backtracking
                     wasJustBT = True
 
+            currentItem -= 1    										# go back to the last item
 
 
 
 def readFile():
-    dataFile = open('data/input4.txt', 'r')
+    dataFile = open('data/input5.txt', 'r')
     state = -1
     """
     State 0:
