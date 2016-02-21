@@ -29,10 +29,11 @@ def finalCheck(): # checks at the end of backtracking search to make sure all of
 
 # this function is called in run in backtracking
 # this function is used to test wheather asigning
-# an item to a bag prevented any of the unassigned bags
+# an item to a bag prevented any of the unassigned items
 # from being able to be placed in a bag. It is
-# called after an item is added to a bag in backtracking.
+# called after an item is added to a bag in backtrack.
 def forwardCheck(): # returns true if assiging an item to a bag eliminates the domain of another item
+    return False
     global itemList
     global bagList
     noDomain = False # @TODO: What should this be defaulting to?
@@ -40,9 +41,14 @@ def forwardCheck(): # returns true if assiging an item to a bag eliminates the d
         if not item.isInBag:
             noDomain = True
             for bag in bagList:
+                #print item.name, "THKJNS"
                 if item.canBeIn(bag):
                     noDomain = False
+                else:
+                    pass
+                    #print item.name, "can't go into !!!!!!!!!!!!!!!!!!!!!!!!!! bag:", bag.name
         if noDomain:
+            print item.name, "can't go anywhere! !!!!!!!!!!!!!!!!!!!!!"
             return True
     return False
 
@@ -56,7 +62,7 @@ def backtrack():
     currentItem = 0 													# the current item we are placing in a bag
     currentBag = 0 														# the current bag we are trying to place the item in
     while not finished: 												# as long as we are still searching for a solution
-        printState()
+        printFinalState()
         if not backtracking: 										    # if we are not backtracking
             print "current item:", itemList[currentItem].name, "current bag: ", bagList[currentBag].name
             if itemList[currentItem].canBeIn(bagList[currentBag]): 		# if we can place the current item in the current bag
@@ -71,31 +77,36 @@ def backtrack():
                 else: 													# if we have just placed an item that is not the last item in a bag
                     if forwardCheck():									# if we have made it impossible to place an un placed item in a bag
                         backtracking = True 							# start to backtrack
+                        currentItem += 1 								# move on to the next item
                     else:												# if we didn't make it impossible to place an un placed item in a bag
                         currentItem += 1 								# move on to the next item
+                        #print "Current item: !!!!!!!!!", itemList[currentItem].name
                         currentBag = 0 									# start by trying to place the next item in the first bag
             elif currentBag == len(bagList) - 1: 					# if the item could not be placed in any of the bags
                 backtracking = True 									# start to backtrack
             else: 														# if the item cannot be placed in this bag
                 currentBag += 1 										# try to place the item in the next bag
         if backtracking: 											    # if we are backtracking
-            print "current item:", itemList[currentItem].name, "current bag: ", bagList[currentBag].name, ", backtracking."
+            print "At start of backtracking condition: current item:", itemList[currentItem].name, "current bag: ", bagList[currentBag].name, ", backtracking."
             if currentItem == 0: 										# if this is the first item
                 print "Backtracked all the way, no solution."
                 finished = True 										# there is no solution to this problem
             else: 														# if we have not determined that there is no solution
-                currentItem -= 1 										# go back to the last item
-                for i in xrange(0,len(bagList) - 1): 					# for every bag
+                for i in xrange(0,len(bagList)): 					    # for every bag
                     if bagList[i].equals(itemList[currentItem].inBag): 	# if the last item was placed in this bag
                         currentBag = i 									# set the current bag to be the bag the last item was placed in
+
                 itemList[currentItem].inBag.removeLastItem() 			# take the last item out of the bag it was placed in
                 if currentBag != len(bagList) - 1: 						# if the bag the last item was in was not the last bag it could be placed in
                     currentBag += 1 									# move on to the next bag it could be placed in
                     backtracking = False 								# stop backtracking
+            
+            currentItem -= 1    										# go back to the last item
+
 
 
 def readFile():
-    dataFile = open('data/input4.txt', 'r')
+    dataFile = open('data/input5.txt', 'r')
     state = -1
     """
     State 0:
@@ -123,7 +134,7 @@ def readFile():
         else:
             if state == 0:
                 lineData = line.split(" ")
-                itemList.append(Item(lineData[0], lineData[1]))
+                itemList.append(Item(lineData[0], int(lineData[1])))
             elif state == 1:
                 lineData = line.split(" ")
                 bagList.append(Bag(lineData[0], int(lineData[1]), 0, 0))
@@ -259,7 +270,7 @@ def printState():
         header = bag.name
         items = 0
         for item in itemList:
-            if not (item.inBag is None):
+            if not (item.inBag.name == "noBag"):
                 if item.inBag.name == bag.name:
                     header = header + " " + item.name
                     items += 1
@@ -270,7 +281,7 @@ def printFinalState():
         header = bag.name
         items = 0
         for item in itemList:
-            if not (item.inBag is None):
+            if not (item.inBag.name == "noBag"):
                 if item.inBag.name == bag.name:
                     header = header + " " + item.name
                     items += 1
@@ -280,7 +291,8 @@ def printFinalState():
         print "wasted capacity: " , bag.capacity - bag.totalWeight, "\n"
 
 
+
+
 readFile()
 backtrack()
-
 printFinalState()

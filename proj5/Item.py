@@ -5,7 +5,7 @@ class Item:
     def __init__(self, name, weight):
         self.name = name
         self.weight = weight
-        self.inBag = None #Bag("noBag", 0) @TODO: This caused errors as a bag.
+        self.inBag = Bag("noBag", 0, 0, 0)
         self.isInBag = False
         self.allowedBags = [] # list of bags that this item can be in
         self.mustBeWith = [] # list of items that must be in the same bag as this item
@@ -31,7 +31,7 @@ class Item:
             return False
         # @TODO
 		# read this so that you understand what has been changed
-        for i in xrange(0, len(self.partnerItems) - 1):
+        for i in xrange(0, len(self.partnerItems)):
             if self.partnerItems[i].inBag in partnerBags[i] and self.partnerItems[i].inBag.equals(bag): # if this item's mutual inclusive partner item is in one of the mutual bags and that bag is the bag
                 return False
             if self.partnerItems[i].inBag in self.partnerBags[i] and bag not in self.partnerBags[i]: # if this item's mutual inclusive partner item is in one of the mutual bags and the bag is not a mutual bag

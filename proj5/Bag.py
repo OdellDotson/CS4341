@@ -20,8 +20,8 @@ class Bag:
 		self.items.append(item)
 		item.inBag = self
 		item.isInBag = True
-		self.totalWeight = int(self.totalWeight) + int(item.weight)
-		self.percentFull = 100*int(int(self.capacity) / self.totalWeight)
+		self.totalWeight = (self.totalWeight) + (item.weight)
+		self.percentFull = 100*int((self.totalWeight)/(self.capacity))
 		#print self.percentFull
 		if self.percentFull == 100:
 			self.isFull = True
@@ -31,10 +31,10 @@ class Bag:
 
 	def removeLastItem(self):
 		print self.items[len(self.items)-1].name, " <- ", self.name
-		self.items[len(self.items) - 1].inBag = None # Bag("noBag", 0)
+		self.items[len(self.items) - 1].inBag = Bag("noBag", 0,0,0)
 		self.items[len(self.items) - 1].isInBag = False
-		self.totalWeight = int(self.totalWeight) - int(self.items[len(self.items) - 1].weight)
-		self.percentFull = int(self.totalWeight) / int(self.capacity)  # @TODO: This was the other way around, was it supposed to be??
+		self.totalWeight = (self.totalWeight) - (self.items[len(self.items) - 1].weight)
+		self.percentFull = 100*int((self.totalWeight)/(self.capacity))
 		if self.percentFull != 100:
 			self.isFull = False
 		if self.percentFull < 90:
