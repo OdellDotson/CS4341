@@ -1,0 +1,85 @@
+Script started on Sun Feb 21 20:55:45 2016
+bash-3.2$ python main.py
+START
+a
+number of items:  0
+total weight:  0 / 100
+wasted capacity:  100 
+
+b
+number of items:  0
+total weight:  0 / 100
+wasted capacity:  100 
+
+B  ->  a
+a B
+number of items:  1
+total weight:  2 / 100
+wasted capacity:  98 
+
+b
+number of items:  0
+total weight:  0 / 100
+wasted capacity:  100 
+
+A  ->  a
+a B A
+number of items:  2
+total weight:  92 / 100
+wasted capacity:  8 
+
+b
+number of items:  0
+total weight:  0 / 100
+wasted capacity:  100 
+
+a B A
+number of items:  2
+total weight:  92 / 100
+wasted capacity:  8 
+
+b
+number of items:  0
+total weight:  0 / 100
+wasted capacity:  100 
+
+C  ->  b
+a B A
+number of items:  2
+total weight:  92 / 100
+wasted capacity:  8 
+
+b C
+number of items:  1
+total weight:  2 / 100
+wasted capacity:  98 
+
+a B A
+number of items:  2
+total weight:  92 / 100
+wasted capacity:  8 
+
+b C
+number of items:  1
+total weight:  2 / 100
+wasted capacity:  98 
+
+D  ->  b
+
+
+
+
+a B A
+number of items:  2
+total weight:  92 / 100
+wasted capacity:  8 
+
+b C D
+number of items:  2
+total weight:  92 / 100
+wasted capacity:  8 
+
+bash-3.2$ exit
+exit
+
+Script done on Sun Feb 21 20:55:51 2016

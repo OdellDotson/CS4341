@@ -1,0 +1,167 @@
+Script started on Sun Feb 21 20:51:51 2016
+bash-3.2$ python main.py
+START
+a
+number of items:  0
+total weight:  0 / 7
+wasted capacity:  7 
+
+b
+number of items:  0
+total weight:  0 / 7
+wasted capacity:  7 
+
+A  ->  a
+a A
+number of items:  1
+total weight:  1 / 7
+wasted capacity:  6 
+
+b
+number of items:  0
+total weight:  0 / 7
+wasted capacity:  7 
+
+B  ->  a
+a A B
+number of items:  2
+total weight:  3 / 7
+wasted capacity:  4 
+
+b
+number of items:  0
+total weight:  0 / 7
+wasted capacity:  7 
+
+C  ->  a
+a A B C
+number of items:  3
+total weight:  7 / 7
+wasted capacity:  0 
+
+b
+number of items:  0
+total weight:  0 / 7
+wasted capacity:  7 
+
+a A B C
+number of items:  3
+total weight:  7 / 7
+wasted capacity:  0 
+
+b
+number of items:  0
+total weight:  0 / 7
+wasted capacity:  7 
+
+D  ->  b
+0.857142857143
+0.857142857143
+At start of backtracking condition: current item: D current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: D current bag:  b , backtracking.
+D  <-  b
+a A B C
+number of items:  3
+total weight:  7 / 7
+wasted capacity:  0 
+
+b
+number of items:  0
+total weight:  0 / 7
+wasted capacity:  7 
+
+At start of backtracking condition: current item: C current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: C current bag:  a , backtracking.
+C  <-  a
+a A B
+number of items:  2
+total weight:  3 / 7
+wasted capacity:  4 
+
+b
+number of items:  0
+total weight:  0 / 7
+wasted capacity:  7 
+
+C  ->  b
+At start of backtracking condition: current item: C current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: C current bag:  b , backtracking.
+C  <-  b
+a A B
+number of items:  2
+total weight:  3 / 7
+wasted capacity:  4 
+
+b
+number of items:  0
+total weight:  0 / 7
+wasted capacity:  7 
+
+At start of backtracking condition: current item: B current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: B current bag:  a , backtracking.
+B  <-  a
+a A
+number of items:  1
+total weight:  1 / 7
+wasted capacity:  6 
+
+b
+number of items:  0
+total weight:  0 / 7
+wasted capacity:  7 
+
+B  ->  b
+a A
+number of items:  1
+total weight:  1 / 7
+wasted capacity:  6 
+
+b B
+number of items:  1
+total weight:  2 / 7
+wasted capacity:  5 
+
+C  ->  a
+At start of backtracking condition: current item: C current bag:  a , backtracking.
+In backtracking condition, about to remove something. current item: C current bag:  a , backtracking.
+C  <-  a
+a A
+number of items:  1
+total weight:  1 / 7
+wasted capacity:  6 
+
+b B
+number of items:  1
+total weight:  2 / 7
+wasted capacity:  5 
+
+C  ->  b
+a A
+number of items:  1
+total weight:  1 / 7
+wasted capacity:  6 
+
+b B C
+number of items:  2
+total weight:  6 / 7
+wasted capacity:  1 
+
+D  ->  a
+
+
+
+
+a A D
+number of items:  2
+total weight:  7 / 7
+wasted capacity:  0 
+
+b B C
+number of items:  2
+total weight:  6 / 7
+wasted capacity:  1 
+
+bash-3.2$ exit
+exit
+
+Script done on Sun Feb 21 20:51:58 2016

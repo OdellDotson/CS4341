@@ -3,6 +3,8 @@ from Item import Item
 from Tools import removeNonAscii
 from numpy import floor
 
+file = 'data/input12.txt'
+
 itemList = []
 bagList = []
 fittingLimits = [0,9999999]
@@ -10,7 +12,7 @@ fittingLimits = [0,9999999]
 def sortObjects(): # this will sort the items and bags by how constrained they are
     global itemList
     global bagList
-    for item in ItemList:
+    for item in itemList:
         item.makeHeuristic()
     for bag in bagList:
         bag.makeHeuristic()
@@ -19,21 +21,13 @@ def sortObjects(): # this will sort the items and bags by how constrained they a
 
 
 def finalCheck(): # checks at the end of backtracking search to make sure all of the conditions are met for the bags
-    #global bagList
     printFinalState()
     for bag in bagList:
-        print "Num items: ", bag.numItems, ". minItems: ", bag.minItems, ". isFullEnough: ", bag.isFullEnough, ". Name: ", bag.name
         if bag.numItems < bag.minItems:
             return False
         if not bag.isFullEnough:
             return False
     return True
-
-def printBagStats():
-    global bagList
-    for bag in bagList:
-        print "TESTTTTTT   Num items: ", bag.numItems, ". minItems: ", bag.minItems, ". isFullEnough: ", bag.isFullEnough, ". Name: ", bag.name
-
 
 # this function is called in run in backtracking
 # this function is used to test wheather asigning
@@ -41,22 +35,18 @@ def printBagStats():
 # from being able to be placed in a bag. It is
 # called after an item is added to a bag in backtrack.
 def forwardCheck(): # returns true if assiging an item to a bag eliminates the domain of another item
-    return False
     global itemList
     global bagList
-    noDomain = False # @TODO: What should this be defaulting to?
+    noDomain = False
     for item in itemList:
         if not item.isInBag:
             noDomain = True
             for bag in bagList:
-                #print item.name, "THKJNS"
                 if item.canBeIn(bag):
                     noDomain = False
                 else:
                     pass
-                    #print item.name, "can't go into !!!!!!!!!!!!!!!!!!!!!!!!!! bag:", bag.name
         if noDomain:
-            print item.name, "can't go anywhere! !!!!!!!!!!!!!!!!!!!!!"
             return True
     return False
 
@@ -74,7 +64,7 @@ def backtrack():
         printFinalState()
         if not backtracking: 										    # if we are not backtracking
 
-            print "Not backtracking: current item:", itemList[currentItem].name, "current bag: ", bagList[currentBag].name
+            #print "Not backtracking: current item:", itemList[currentItem].name, "current bag: ", bagList[currentBag].name
             if itemList[currentItem].canBeIn(bagList[currentBag]): 		# if we can place the current item in the current bag
                 bagList[currentBag].addItem(itemList[currentItem]) 		# add the item to the bag
                 print itemList[currentItem].name, " -> ", bagList[currentBag].name
@@ -99,7 +89,7 @@ def backtrack():
                 currentBag += 1 										# try to place the item in the next bag
         if backtracking: 											    # if we are backtracking
             currentItem -= 1    										# go back to the last item
-            #print "At start of backtracking condition: current item:", itemList[currentItem].name, "current bag: ", bagList[currentBag].name, ", backtracking."
+            print "At start of backtracking condition: current item:", itemList[currentItem].name, "current bag: ", bagList[currentBag].name, ", backtracking."
 
             if currentItem == 0 and itemList[0].inBag.equals(bagList[len(bagList)-1]): 										# if this is the first item
                 print "Backtracked all the way, no solution."
@@ -115,7 +105,7 @@ def backtrack():
                     backtracking = False 								# stop backtracking
 
 def readFile():
-    dataFile = open('data/input26.txt', 'r')
+    dataFile = open(file, 'r')
     state = -1
     """
     State 0:
@@ -240,10 +230,7 @@ def readFile():
                                 itemsToCheck.partnerBags.append(bagArray)
                                 itemPartnerToCheck.partnerBags.append(bagArray)
 
-    # Finish up lists of acceptable bags
-    verbose = True
-
-
+    verbose = False
     for itemsToCheckBagsAllowed in itemList:
         if len(itemsToCheckBagsAllowed.allowedBags) == 0:
             for allBags in bagList:
@@ -270,8 +257,7 @@ def readFile():
     if len(bagList) > 0:
         if verbose: print "Bags can hold between ", bagList[0].minItems, " and ", bagList[0].maxItems, " items, inclusively."
     if verbose: print "Set up complete."
-    for wg in itemList:
-        print wg.partnerBags
+
 
 
 
@@ -311,7 +297,7 @@ def getValidation():
                     header = header + " " + item.name
                     items += 1
         limit  = floor((0.9 * float(bag.capacity)))/float(bag.capacity)
-        print limit
+        #print limit
         if items < fittingLimits[0]:
             return False
 
@@ -319,10 +305,10 @@ def getValidation():
             return False
     return True
 
-
-print "START!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-
+print "START"
 
 readFile()
+sortObjects()
 backtrack()
+print "\n\n\n"
 printFinalState()

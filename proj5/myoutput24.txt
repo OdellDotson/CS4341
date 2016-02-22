@@ -1,0 +1,360 @@
+Script started on Sun Feb 21 20:56:02 2016
+bash-3.2$ python main.py
+START
+a
+number of items:  0
+total weight:  0 / 5
+wasted capacity:  5 
+
+b
+number of items:  0
+total weight:  0 / 5
+wasted capacity:  5 
+
+c
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+A  ->  a
+a A
+number of items:  1
+total weight:  1 / 5
+wasted capacity:  4 
+
+b
+number of items:  0
+total weight:  0 / 5
+wasted capacity:  5 
+
+c
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+a A
+number of items:  1
+total weight:  1 / 5
+wasted capacity:  4 
+
+b
+number of items:  0
+total weight:  0 / 5
+wasted capacity:  5 
+
+c
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+B  ->  b
+a A
+number of items:  1
+total weight:  1 / 5
+wasted capacity:  4 
+
+b B
+number of items:  1
+total weight:  1 / 5
+wasted capacity:  4 
+
+c
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+a A
+number of items:  1
+total weight:  1 / 5
+wasted capacity:  4 
+
+b B
+number of items:  1
+total weight:  1 / 5
+wasted capacity:  4 
+
+c
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+C  ->  b
+a A
+number of items:  1
+total weight:  1 / 5
+wasted capacity:  4 
+
+b B C
+number of items:  2
+total weight:  2 / 5
+wasted capacity:  3 
+
+c
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+D  ->  a
+a A D
+number of items:  2
+total weight:  2 / 5
+wasted capacity:  3 
+
+b B C
+number of items:  2
+total weight:  2 / 5
+wasted capacity:  3 
+
+c
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+E  ->  a
+a A D E
+number of items:  3
+total weight:  3 / 5
+wasted capacity:  2 
+
+b B C
+number of items:  2
+total weight:  2 / 5
+wasted capacity:  3 
+
+c
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+H  ->  a
+a A D E H
+number of items:  4
+total weight:  4 / 5
+wasted capacity:  1 
+
+b B C
+number of items:  2
+total weight:  2 / 5
+wasted capacity:  3 
+
+c
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+F  ->  a
+At start of backtracking condition: current item: F current bag:  a , backtracking.
+In backtracking condition, about to remove something. current item: F current bag:  a , backtracking.
+F  <-  a
+a A D E H
+number of items:  4
+total weight:  4 / 5
+wasted capacity:  1 
+
+b B C
+number of items:  2
+total weight:  2 / 5
+wasted capacity:  3 
+
+c
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+a A D E H
+number of items:  4
+total weight:  4 / 5
+wasted capacity:  1 
+
+b B C
+number of items:  2
+total weight:  2 / 5
+wasted capacity:  3 
+
+c
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+At start of backtracking condition: current item: H current bag:  c , backtracking.
+In backtracking condition, about to remove something. current item: H current bag:  a , backtracking.
+H  <-  a
+a A D E
+number of items:  3
+total weight:  3 / 5
+wasted capacity:  2 
+
+b B C
+number of items:  2
+total weight:  2 / 5
+wasted capacity:  3 
+
+c
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+H  ->  b
+a A D E
+number of items:  3
+total weight:  3 / 5
+wasted capacity:  2 
+
+b B C H
+number of items:  3
+total weight:  3 / 5
+wasted capacity:  2 
+
+c
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+F  ->  a
+a A D E F
+number of items:  4
+total weight:  4 / 5
+wasted capacity:  1 
+
+b B C H
+number of items:  3
+total weight:  3 / 5
+wasted capacity:  2 
+
+c
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+a A D E F
+number of items:  4
+total weight:  4 / 5
+wasted capacity:  1 
+
+b B C H
+number of items:  3
+total weight:  3 / 5
+wasted capacity:  2 
+
+c
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+G  ->  b
+a A D E F
+number of items:  4
+total weight:  4 / 5
+wasted capacity:  1 
+
+b B C H G
+number of items:  4
+total weight:  4 / 5
+wasted capacity:  1 
+
+c
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+I  ->  a
+a A D E F I
+number of items:  5
+total weight:  5 / 5
+wasted capacity:  0 
+
+b B C H G
+number of items:  4
+total weight:  4 / 5
+wasted capacity:  1 
+
+c
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+a A D E F I
+number of items:  5
+total weight:  5 / 5
+wasted capacity:  0 
+
+b B C H G
+number of items:  4
+total weight:  4 / 5
+wasted capacity:  1 
+
+c
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+J  ->  b
+a A D E F I
+number of items:  5
+total weight:  5 / 5
+wasted capacity:  0 
+
+b B C H G J
+number of items:  5
+total weight:  5 / 5
+wasted capacity:  0 
+
+c
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+a A D E F I
+number of items:  5
+total weight:  5 / 5
+wasted capacity:  0 
+
+b B C H G J
+number of items:  5
+total weight:  5 / 5
+wasted capacity:  0 
+
+c
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+a A D E F I
+number of items:  5
+total weight:  5 / 5
+wasted capacity:  0 
+
+b B C H G J
+number of items:  5
+total weight:  5 / 5
+wasted capacity:  0 
+
+c
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+K  ->  c
+
+
+
+
+a A D E F I
+number of items:  5
+total weight:  5 / 5
+wasted capacity:  0 
+
+b B C H G J
+number of items:  5
+total weight:  5 / 5
+wasted capacity:  0 
+
+c K
+number of items:  1
+total weight:  1 / 1
+wasted capacity:  0 
+
+bash-3.2$ exit
+exit
+
+Script done on Sun Feb 21 20:56:11 2016

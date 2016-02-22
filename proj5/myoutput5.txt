@@ -1,0 +1,1586 @@
+Script started on Sun Feb 21 20:49:03 2016
+bash-3.2$ python main.py
+START
+a
+number of items:  0
+total weight:  0 / 10
+wasted capacity:  10 
+
+b
+number of items:  0
+total weight:  0 / 10
+wasted capacity:  10 
+
+A  ->  a
+a A
+number of items:  1
+total weight:  1 / 10
+wasted capacity:  9 
+
+b
+number of items:  0
+total weight:  0 / 10
+wasted capacity:  10 
+
+B  ->  a
+a A B
+number of items:  2
+total weight:  2 / 10
+wasted capacity:  8 
+
+b
+number of items:  0
+total weight:  0 / 10
+wasted capacity:  10 
+
+C  ->  a
+a A B C
+number of items:  3
+total weight:  3 / 10
+wasted capacity:  7 
+
+b
+number of items:  0
+total weight:  0 / 10
+wasted capacity:  10 
+
+D  ->  a
+a A B C D
+number of items:  4
+total weight:  4 / 10
+wasted capacity:  6 
+
+b
+number of items:  0
+total weight:  0 / 10
+wasted capacity:  10 
+
+E  ->  a
+a A B C D E
+number of items:  5
+total weight:  5 / 10
+wasted capacity:  5 
+
+b
+number of items:  0
+total weight:  0 / 10
+wasted capacity:  10 
+
+F  ->  a
+a A B C D E F
+number of items:  6
+total weight:  6 / 10
+wasted capacity:  4 
+
+b
+number of items:  0
+total weight:  0 / 10
+wasted capacity:  10 
+
+G  ->  a
+a A B C D E F G
+number of items:  7
+total weight:  7 / 10
+wasted capacity:  3 
+
+b
+number of items:  0
+total weight:  0 / 10
+wasted capacity:  10 
+
+H  ->  a
+a A B C D E F G H
+number of items:  8
+total weight:  8 / 10
+wasted capacity:  2 
+
+b
+number of items:  0
+total weight:  0 / 10
+wasted capacity:  10 
+
+I  ->  a
+a A B C D E F G H I
+number of items:  9
+total weight:  9 / 10
+wasted capacity:  1 
+
+b
+number of items:  0
+total weight:  0 / 10
+wasted capacity:  10 
+
+J  ->  a
+a A B C D E F G H I J
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b
+number of items:  0
+total weight:  0 / 10
+wasted capacity:  10 
+
+a A B C D E F G H I J
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b
+number of items:  0
+total weight:  0 / 10
+wasted capacity:  10 
+
+K  ->  b
+a A B C D E F G H I J
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b K
+number of items:  1
+total weight:  1 / 10
+wasted capacity:  9 
+
+a A B C D E F G H I J
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b K
+number of items:  1
+total weight:  1 / 10
+wasted capacity:  9 
+
+L  ->  b
+a A B C D E F G H I J
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b K L
+number of items:  2
+total weight:  2 / 10
+wasted capacity:  8 
+
+a A B C D E F G H I J
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b K L
+number of items:  2
+total weight:  2 / 10
+wasted capacity:  8 
+
+M  ->  b
+a A B C D E F G H I J
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b K L M
+number of items:  3
+total weight:  3 / 10
+wasted capacity:  7 
+
+a A B C D E F G H I J
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b K L M
+number of items:  3
+total weight:  3 / 10
+wasted capacity:  7 
+
+N  ->  b
+a A B C D E F G H I J
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b K L M N
+number of items:  4
+total weight:  4 / 10
+wasted capacity:  6 
+
+a A B C D E F G H I J
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b K L M N
+number of items:  4
+total weight:  4 / 10
+wasted capacity:  6 
+
+O  ->  b
+a A B C D E F G H I J
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b K L M N O
+number of items:  5
+total weight:  5 / 10
+wasted capacity:  5 
+
+a A B C D E F G H I J
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b K L M N O
+number of items:  5
+total weight:  5 / 10
+wasted capacity:  5 
+
+P  ->  b
+a A B C D E F G H I J
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b K L M N O P
+number of items:  6
+total weight:  6 / 10
+wasted capacity:  4 
+
+a A B C D E F G H I J
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b K L M N O P
+number of items:  6
+total weight:  6 / 10
+wasted capacity:  4 
+
+Q  ->  b
+a A B C D E F G H I J
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b K L M N O P Q
+number of items:  7
+total weight:  7 / 10
+wasted capacity:  3 
+
+a A B C D E F G H I J
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b K L M N O P Q
+number of items:  7
+total weight:  7 / 10
+wasted capacity:  3 
+
+R  ->  b
+0.9
+0.9
+At start of backtracking condition: current item: R current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: R current bag:  b , backtracking.
+R  <-  b
+a A B C D E F G H I J
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b K L M N O P Q
+number of items:  7
+total weight:  7 / 10
+wasted capacity:  3 
+
+At start of backtracking condition: current item: Q current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: Q current bag:  b , backtracking.
+Q  <-  b
+a A B C D E F G H I J
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b K L M N O P
+number of items:  6
+total weight:  6 / 10
+wasted capacity:  4 
+
+At start of backtracking condition: current item: P current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: P current bag:  b , backtracking.
+P  <-  b
+a A B C D E F G H I J
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b K L M N O
+number of items:  5
+total weight:  5 / 10
+wasted capacity:  5 
+
+At start of backtracking condition: current item: O current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: O current bag:  b , backtracking.
+O  <-  b
+a A B C D E F G H I J
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b K L M N
+number of items:  4
+total weight:  4 / 10
+wasted capacity:  6 
+
+At start of backtracking condition: current item: N current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: N current bag:  b , backtracking.
+N  <-  b
+a A B C D E F G H I J
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b K L M
+number of items:  3
+total weight:  3 / 10
+wasted capacity:  7 
+
+At start of backtracking condition: current item: M current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: M current bag:  b , backtracking.
+M  <-  b
+a A B C D E F G H I J
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b K L
+number of items:  2
+total weight:  2 / 10
+wasted capacity:  8 
+
+At start of backtracking condition: current item: L current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: L current bag:  b , backtracking.
+L  <-  b
+a A B C D E F G H I J
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b K
+number of items:  1
+total weight:  1 / 10
+wasted capacity:  9 
+
+At start of backtracking condition: current item: K current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: K current bag:  b , backtracking.
+K  <-  b
+a A B C D E F G H I J
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b
+number of items:  0
+total weight:  0 / 10
+wasted capacity:  10 
+
+At start of backtracking condition: current item: J current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: J current bag:  a , backtracking.
+J  <-  a
+a A B C D E F G H I
+number of items:  9
+total weight:  9 / 10
+wasted capacity:  1 
+
+b
+number of items:  0
+total weight:  0 / 10
+wasted capacity:  10 
+
+J  ->  b
+a A B C D E F G H I
+number of items:  9
+total weight:  9 / 10
+wasted capacity:  1 
+
+b J
+number of items:  1
+total weight:  1 / 10
+wasted capacity:  9 
+
+K  ->  a
+a A B C D E F G H I K
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J
+number of items:  1
+total weight:  1 / 10
+wasted capacity:  9 
+
+a A B C D E F G H I K
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J
+number of items:  1
+total weight:  1 / 10
+wasted capacity:  9 
+
+L  ->  b
+a A B C D E F G H I K
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J L
+number of items:  2
+total weight:  2 / 10
+wasted capacity:  8 
+
+a A B C D E F G H I K
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J L
+number of items:  2
+total weight:  2 / 10
+wasted capacity:  8 
+
+M  ->  b
+a A B C D E F G H I K
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J L M
+number of items:  3
+total weight:  3 / 10
+wasted capacity:  7 
+
+a A B C D E F G H I K
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J L M
+number of items:  3
+total weight:  3 / 10
+wasted capacity:  7 
+
+N  ->  b
+a A B C D E F G H I K
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J L M N
+number of items:  4
+total weight:  4 / 10
+wasted capacity:  6 
+
+a A B C D E F G H I K
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J L M N
+number of items:  4
+total weight:  4 / 10
+wasted capacity:  6 
+
+O  ->  b
+a A B C D E F G H I K
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J L M N O
+number of items:  5
+total weight:  5 / 10
+wasted capacity:  5 
+
+a A B C D E F G H I K
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J L M N O
+number of items:  5
+total weight:  5 / 10
+wasted capacity:  5 
+
+P  ->  b
+a A B C D E F G H I K
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J L M N O P
+number of items:  6
+total weight:  6 / 10
+wasted capacity:  4 
+
+a A B C D E F G H I K
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J L M N O P
+number of items:  6
+total weight:  6 / 10
+wasted capacity:  4 
+
+Q  ->  b
+a A B C D E F G H I K
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J L M N O P Q
+number of items:  7
+total weight:  7 / 10
+wasted capacity:  3 
+
+a A B C D E F G H I K
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J L M N O P Q
+number of items:  7
+total weight:  7 / 10
+wasted capacity:  3 
+
+R  ->  b
+0.9
+0.9
+At start of backtracking condition: current item: R current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: R current bag:  b , backtracking.
+R  <-  b
+a A B C D E F G H I K
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J L M N O P Q
+number of items:  7
+total weight:  7 / 10
+wasted capacity:  3 
+
+At start of backtracking condition: current item: Q current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: Q current bag:  b , backtracking.
+Q  <-  b
+a A B C D E F G H I K
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J L M N O P
+number of items:  6
+total weight:  6 / 10
+wasted capacity:  4 
+
+At start of backtracking condition: current item: P current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: P current bag:  b , backtracking.
+P  <-  b
+a A B C D E F G H I K
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J L M N O
+number of items:  5
+total weight:  5 / 10
+wasted capacity:  5 
+
+At start of backtracking condition: current item: O current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: O current bag:  b , backtracking.
+O  <-  b
+a A B C D E F G H I K
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J L M N
+number of items:  4
+total weight:  4 / 10
+wasted capacity:  6 
+
+At start of backtracking condition: current item: N current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: N current bag:  b , backtracking.
+N  <-  b
+a A B C D E F G H I K
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J L M
+number of items:  3
+total weight:  3 / 10
+wasted capacity:  7 
+
+At start of backtracking condition: current item: M current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: M current bag:  b , backtracking.
+M  <-  b
+a A B C D E F G H I K
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J L
+number of items:  2
+total weight:  2 / 10
+wasted capacity:  8 
+
+At start of backtracking condition: current item: L current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: L current bag:  b , backtracking.
+L  <-  b
+a A B C D E F G H I K
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J
+number of items:  1
+total weight:  1 / 10
+wasted capacity:  9 
+
+At start of backtracking condition: current item: K current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: K current bag:  a , backtracking.
+K  <-  a
+a A B C D E F G H I
+number of items:  9
+total weight:  9 / 10
+wasted capacity:  1 
+
+b J
+number of items:  1
+total weight:  1 / 10
+wasted capacity:  9 
+
+K  ->  b
+a A B C D E F G H I
+number of items:  9
+total weight:  9 / 10
+wasted capacity:  1 
+
+b J K
+number of items:  2
+total weight:  2 / 10
+wasted capacity:  8 
+
+L  ->  a
+a A B C D E F G H I L
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K
+number of items:  2
+total weight:  2 / 10
+wasted capacity:  8 
+
+a A B C D E F G H I L
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K
+number of items:  2
+total weight:  2 / 10
+wasted capacity:  8 
+
+M  ->  b
+a A B C D E F G H I L
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K M
+number of items:  3
+total weight:  3 / 10
+wasted capacity:  7 
+
+a A B C D E F G H I L
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K M
+number of items:  3
+total weight:  3 / 10
+wasted capacity:  7 
+
+N  ->  b
+a A B C D E F G H I L
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K M N
+number of items:  4
+total weight:  4 / 10
+wasted capacity:  6 
+
+a A B C D E F G H I L
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K M N
+number of items:  4
+total weight:  4 / 10
+wasted capacity:  6 
+
+O  ->  b
+a A B C D E F G H I L
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K M N O
+number of items:  5
+total weight:  5 / 10
+wasted capacity:  5 
+
+a A B C D E F G H I L
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K M N O
+number of items:  5
+total weight:  5 / 10
+wasted capacity:  5 
+
+P  ->  b
+a A B C D E F G H I L
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K M N O P
+number of items:  6
+total weight:  6 / 10
+wasted capacity:  4 
+
+a A B C D E F G H I L
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K M N O P
+number of items:  6
+total weight:  6 / 10
+wasted capacity:  4 
+
+Q  ->  b
+a A B C D E F G H I L
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K M N O P Q
+number of items:  7
+total weight:  7 / 10
+wasted capacity:  3 
+
+a A B C D E F G H I L
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K M N O P Q
+number of items:  7
+total weight:  7 / 10
+wasted capacity:  3 
+
+R  ->  b
+0.9
+0.9
+At start of backtracking condition: current item: R current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: R current bag:  b , backtracking.
+R  <-  b
+a A B C D E F G H I L
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K M N O P Q
+number of items:  7
+total weight:  7 / 10
+wasted capacity:  3 
+
+At start of backtracking condition: current item: Q current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: Q current bag:  b , backtracking.
+Q  <-  b
+a A B C D E F G H I L
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K M N O P
+number of items:  6
+total weight:  6 / 10
+wasted capacity:  4 
+
+At start of backtracking condition: current item: P current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: P current bag:  b , backtracking.
+P  <-  b
+a A B C D E F G H I L
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K M N O
+number of items:  5
+total weight:  5 / 10
+wasted capacity:  5 
+
+At start of backtracking condition: current item: O current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: O current bag:  b , backtracking.
+O  <-  b
+a A B C D E F G H I L
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K M N
+number of items:  4
+total weight:  4 / 10
+wasted capacity:  6 
+
+At start of backtracking condition: current item: N current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: N current bag:  b , backtracking.
+N  <-  b
+a A B C D E F G H I L
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K M
+number of items:  3
+total weight:  3 / 10
+wasted capacity:  7 
+
+At start of backtracking condition: current item: M current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: M current bag:  b , backtracking.
+M  <-  b
+a A B C D E F G H I L
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K
+number of items:  2
+total weight:  2 / 10
+wasted capacity:  8 
+
+At start of backtracking condition: current item: L current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: L current bag:  a , backtracking.
+L  <-  a
+a A B C D E F G H I
+number of items:  9
+total weight:  9 / 10
+wasted capacity:  1 
+
+b J K
+number of items:  2
+total weight:  2 / 10
+wasted capacity:  8 
+
+L  ->  b
+a A B C D E F G H I
+number of items:  9
+total weight:  9 / 10
+wasted capacity:  1 
+
+b J K L
+number of items:  3
+total weight:  3 / 10
+wasted capacity:  7 
+
+M  ->  a
+a A B C D E F G H I M
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L
+number of items:  3
+total weight:  3 / 10
+wasted capacity:  7 
+
+a A B C D E F G H I M
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L
+number of items:  3
+total weight:  3 / 10
+wasted capacity:  7 
+
+N  ->  b
+a A B C D E F G H I M
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L N
+number of items:  4
+total weight:  4 / 10
+wasted capacity:  6 
+
+a A B C D E F G H I M
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L N
+number of items:  4
+total weight:  4 / 10
+wasted capacity:  6 
+
+O  ->  b
+a A B C D E F G H I M
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L N O
+number of items:  5
+total weight:  5 / 10
+wasted capacity:  5 
+
+a A B C D E F G H I M
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L N O
+number of items:  5
+total weight:  5 / 10
+wasted capacity:  5 
+
+P  ->  b
+a A B C D E F G H I M
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L N O P
+number of items:  6
+total weight:  6 / 10
+wasted capacity:  4 
+
+a A B C D E F G H I M
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L N O P
+number of items:  6
+total weight:  6 / 10
+wasted capacity:  4 
+
+Q  ->  b
+a A B C D E F G H I M
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L N O P Q
+number of items:  7
+total weight:  7 / 10
+wasted capacity:  3 
+
+a A B C D E F G H I M
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L N O P Q
+number of items:  7
+total weight:  7 / 10
+wasted capacity:  3 
+
+R  ->  b
+0.9
+0.9
+At start of backtracking condition: current item: R current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: R current bag:  b , backtracking.
+R  <-  b
+a A B C D E F G H I M
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L N O P Q
+number of items:  7
+total weight:  7 / 10
+wasted capacity:  3 
+
+At start of backtracking condition: current item: Q current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: Q current bag:  b , backtracking.
+Q  <-  b
+a A B C D E F G H I M
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L N O P
+number of items:  6
+total weight:  6 / 10
+wasted capacity:  4 
+
+At start of backtracking condition: current item: P current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: P current bag:  b , backtracking.
+P  <-  b
+a A B C D E F G H I M
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L N O
+number of items:  5
+total weight:  5 / 10
+wasted capacity:  5 
+
+At start of backtracking condition: current item: O current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: O current bag:  b , backtracking.
+O  <-  b
+a A B C D E F G H I M
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L N
+number of items:  4
+total weight:  4 / 10
+wasted capacity:  6 
+
+At start of backtracking condition: current item: N current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: N current bag:  b , backtracking.
+N  <-  b
+a A B C D E F G H I M
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L
+number of items:  3
+total weight:  3 / 10
+wasted capacity:  7 
+
+At start of backtracking condition: current item: M current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: M current bag:  a , backtracking.
+M  <-  a
+a A B C D E F G H I
+number of items:  9
+total weight:  9 / 10
+wasted capacity:  1 
+
+b J K L
+number of items:  3
+total weight:  3 / 10
+wasted capacity:  7 
+
+M  ->  b
+a A B C D E F G H I
+number of items:  9
+total weight:  9 / 10
+wasted capacity:  1 
+
+b J K L M
+number of items:  4
+total weight:  4 / 10
+wasted capacity:  6 
+
+N  ->  a
+a A B C D E F G H I N
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L M
+number of items:  4
+total weight:  4 / 10
+wasted capacity:  6 
+
+a A B C D E F G H I N
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L M
+number of items:  4
+total weight:  4 / 10
+wasted capacity:  6 
+
+O  ->  b
+a A B C D E F G H I N
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L M O
+number of items:  5
+total weight:  5 / 10
+wasted capacity:  5 
+
+a A B C D E F G H I N
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L M O
+number of items:  5
+total weight:  5 / 10
+wasted capacity:  5 
+
+P  ->  b
+a A B C D E F G H I N
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L M O P
+number of items:  6
+total weight:  6 / 10
+wasted capacity:  4 
+
+a A B C D E F G H I N
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L M O P
+number of items:  6
+total weight:  6 / 10
+wasted capacity:  4 
+
+Q  ->  b
+a A B C D E F G H I N
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L M O P Q
+number of items:  7
+total weight:  7 / 10
+wasted capacity:  3 
+
+a A B C D E F G H I N
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L M O P Q
+number of items:  7
+total weight:  7 / 10
+wasted capacity:  3 
+
+R  ->  b
+0.9
+0.9
+At start of backtracking condition: current item: R current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: R current bag:  b , backtracking.
+R  <-  b
+a A B C D E F G H I N
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L M O P Q
+number of items:  7
+total weight:  7 / 10
+wasted capacity:  3 
+
+At start of backtracking condition: current item: Q current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: Q current bag:  b , backtracking.
+Q  <-  b
+a A B C D E F G H I N
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L M O P
+number of items:  6
+total weight:  6 / 10
+wasted capacity:  4 
+
+At start of backtracking condition: current item: P current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: P current bag:  b , backtracking.
+P  <-  b
+a A B C D E F G H I N
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L M O
+number of items:  5
+total weight:  5 / 10
+wasted capacity:  5 
+
+At start of backtracking condition: current item: O current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: O current bag:  b , backtracking.
+O  <-  b
+a A B C D E F G H I N
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L M
+number of items:  4
+total weight:  4 / 10
+wasted capacity:  6 
+
+At start of backtracking condition: current item: N current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: N current bag:  a , backtracking.
+N  <-  a
+a A B C D E F G H I
+number of items:  9
+total weight:  9 / 10
+wasted capacity:  1 
+
+b J K L M
+number of items:  4
+total weight:  4 / 10
+wasted capacity:  6 
+
+N  ->  b
+a A B C D E F G H I
+number of items:  9
+total weight:  9 / 10
+wasted capacity:  1 
+
+b J K L M N
+number of items:  5
+total weight:  5 / 10
+wasted capacity:  5 
+
+O  ->  a
+a A B C D E F G H I O
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L M N
+number of items:  5
+total weight:  5 / 10
+wasted capacity:  5 
+
+a A B C D E F G H I O
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L M N
+number of items:  5
+total weight:  5 / 10
+wasted capacity:  5 
+
+P  ->  b
+a A B C D E F G H I O
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L M N P
+number of items:  6
+total weight:  6 / 10
+wasted capacity:  4 
+
+a A B C D E F G H I O
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L M N P
+number of items:  6
+total weight:  6 / 10
+wasted capacity:  4 
+
+Q  ->  b
+a A B C D E F G H I O
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L M N P Q
+number of items:  7
+total weight:  7 / 10
+wasted capacity:  3 
+
+a A B C D E F G H I O
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L M N P Q
+number of items:  7
+total weight:  7 / 10
+wasted capacity:  3 
+
+R  ->  b
+0.9
+0.9
+At start of backtracking condition: current item: R current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: R current bag:  b , backtracking.
+R  <-  b
+a A B C D E F G H I O
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L M N P Q
+number of items:  7
+total weight:  7 / 10
+wasted capacity:  3 
+
+At start of backtracking condition: current item: Q current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: Q current bag:  b , backtracking.
+Q  <-  b
+a A B C D E F G H I O
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L M N P
+number of items:  6
+total weight:  6 / 10
+wasted capacity:  4 
+
+At start of backtracking condition: current item: P current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: P current bag:  b , backtracking.
+P  <-  b
+a A B C D E F G H I O
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L M N
+number of items:  5
+total weight:  5 / 10
+wasted capacity:  5 
+
+At start of backtracking condition: current item: O current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: O current bag:  a , backtracking.
+O  <-  a
+a A B C D E F G H I
+number of items:  9
+total weight:  9 / 10
+wasted capacity:  1 
+
+b J K L M N
+number of items:  5
+total weight:  5 / 10
+wasted capacity:  5 
+
+O  ->  b
+a A B C D E F G H I
+number of items:  9
+total weight:  9 / 10
+wasted capacity:  1 
+
+b J K L M N O
+number of items:  6
+total weight:  6 / 10
+wasted capacity:  4 
+
+P  ->  a
+a A B C D E F G H I P
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L M N O
+number of items:  6
+total weight:  6 / 10
+wasted capacity:  4 
+
+a A B C D E F G H I P
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L M N O
+number of items:  6
+total weight:  6 / 10
+wasted capacity:  4 
+
+Q  ->  b
+a A B C D E F G H I P
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L M N O Q
+number of items:  7
+total weight:  7 / 10
+wasted capacity:  3 
+
+a A B C D E F G H I P
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L M N O Q
+number of items:  7
+total weight:  7 / 10
+wasted capacity:  3 
+
+R  ->  b
+0.9
+0.9
+At start of backtracking condition: current item: R current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: R current bag:  b , backtracking.
+R  <-  b
+a A B C D E F G H I P
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L M N O Q
+number of items:  7
+total weight:  7 / 10
+wasted capacity:  3 
+
+At start of backtracking condition: current item: Q current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: Q current bag:  b , backtracking.
+Q  <-  b
+a A B C D E F G H I P
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L M N O
+number of items:  6
+total weight:  6 / 10
+wasted capacity:  4 
+
+At start of backtracking condition: current item: P current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: P current bag:  a , backtracking.
+P  <-  a
+a A B C D E F G H I
+number of items:  9
+total weight:  9 / 10
+wasted capacity:  1 
+
+b J K L M N O
+number of items:  6
+total weight:  6 / 10
+wasted capacity:  4 
+
+P  ->  b
+a A B C D E F G H I
+number of items:  9
+total weight:  9 / 10
+wasted capacity:  1 
+
+b J K L M N O P
+number of items:  7
+total weight:  7 / 10
+wasted capacity:  3 
+
+Q  ->  a
+a A B C D E F G H I Q
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L M N O P
+number of items:  7
+total weight:  7 / 10
+wasted capacity:  3 
+
+a A B C D E F G H I Q
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L M N O P
+number of items:  7
+total weight:  7 / 10
+wasted capacity:  3 
+
+R  ->  b
+0.9
+0.9
+At start of backtracking condition: current item: R current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: R current bag:  b , backtracking.
+R  <-  b
+a A B C D E F G H I Q
+number of items:  10
+total weight:  10 / 10
+wasted capacity:  0 
+
+b J K L M N O P
+number of items:  7
+total weight:  7 / 10
+wasted capacity:  3 
+
+At start of backtracking condition: current item: Q current bag:  b , backtracking.
+In backtracking condition, about to remove something. current item: Q current bag:  a , backtracking.
+Q  <-  a
+a A B C D E F G H I
+number of items:  9
+total weight:  9 / 10
+wasted capacity:  1 
+
+b J K L M N O P
+number of items:  7
+total weight:  7 / 10
+wasted capacity:  3 
+
+Q  ->  b
+a A B C D E F G H I
+number of items:  9
+total weight:  9 / 10
+wasted capacity:  1 
+
+b J K L M N O P Q
+number of items:  8
+total weight:  8 / 10
+wasted capacity:  2 
+
+R  ->  a
+0.9
+0.9
+At start of backtracking condition: current item: R current bag:  a , backtracking.
+In backtracking condition, about to remove something. current item: R current bag:  a , backtracking.
+R  <-  a
+a A B C D E F G H I
+number of items:  9
+total weight:  9 / 10
+wasted capacity:  1 
+
+b J K L M N O P Q
+number of items:  8
+total weight:  8 / 10
+wasted capacity:  2 
+
+R  ->  b
+
+
+
+a A B C D E F G H I
+number of items:  9
+total weight:  9 / 10
+wasted capacity:  1 
+
+b J K L M N O P Q R
+number of items:  9
+total weight:  9 / 10
+wasted capacity:  1 
+
+bash-3.2$ exit
+exit
+
+Script done on Sun Feb 21 20:49:12 2016

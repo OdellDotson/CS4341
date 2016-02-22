@@ -1,0 +1,238 @@
+Script started on Sun Feb 21 20:52:09 2016
+bash-3.2$ python main.py
+START
+a
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+b
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+c
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+d
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+D  ->  a
+a D
+number of items:  1
+total weight:  1 / 1
+wasted capacity:  0 
+
+b
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+c
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+d
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+a D
+number of items:  1
+total weight:  1 / 1
+wasted capacity:  0 
+
+b
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+c
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+d
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+a D
+number of items:  1
+total weight:  1 / 1
+wasted capacity:  0 
+
+b
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+c
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+d
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+A  ->  c
+a D
+number of items:  1
+total weight:  1 / 1
+wasted capacity:  0 
+
+b
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+c A
+number of items:  1
+total weight:  1 / 1
+wasted capacity:  0 
+
+d
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+a D
+number of items:  1
+total weight:  1 / 1
+wasted capacity:  0 
+
+b
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+c A
+number of items:  1
+total weight:  1 / 1
+wasted capacity:  0 
+
+d
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+a D
+number of items:  1
+total weight:  1 / 1
+wasted capacity:  0 
+
+b
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+c A
+number of items:  1
+total weight:  1 / 1
+wasted capacity:  0 
+
+d
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+a D
+number of items:  1
+total weight:  1 / 1
+wasted capacity:  0 
+
+b
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+c A
+number of items:  1
+total weight:  1 / 1
+wasted capacity:  0 
+
+d
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+B  ->  d
+a D
+number of items:  1
+total weight:  1 / 1
+wasted capacity:  0 
+
+b
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+c A
+number of items:  1
+total weight:  1 / 1
+wasted capacity:  0 
+
+d B
+number of items:  1
+total weight:  1 / 1
+wasted capacity:  0 
+
+a D
+number of items:  1
+total weight:  1 / 1
+wasted capacity:  0 
+
+b
+number of items:  0
+total weight:  0 / 1
+wasted capacity:  1 
+
+c A
+number of items:  1
+total weight:  1 / 1
+wasted capacity:  0 
+
+d B
+number of items:  1
+total weight:  1 / 1
+wasted capacity:  0 
+
+C  ->  b
+0.0
+0.0
+0.0
+0.0
+
+
+
+a D
+number of items:  1
+total weight:  1 / 1
+wasted capacity:  0 
+
+b C
+number of items:  1
+total weight:  1 / 1
+wasted capacity:  0 
+
+c A
+number of items:  1
+total weight:  1 / 1
+wasted capacity:  0 
+
+d B
+number of items:  1
+total weight:  1 / 1
+wasted capacity:  0 
+
+bash-3.2$ exit
+exit
+
+Script done on Sun Feb 21 20:52:21 2016
