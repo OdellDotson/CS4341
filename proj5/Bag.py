@@ -17,6 +17,7 @@ class Bag:
 
 	# Adds a given item 
 	def addItem(self, item):
+		self.numItems += 1
 		self.items.append(item)
 		item.inBag = self
 		item.isInBag = True
@@ -30,8 +31,7 @@ class Bag:
 			self.isFullEnough = True
 
 	def removeLastItem(self):
-		#print self.items[len(self.items)-1].name, " <- ", self.name
-		print "This many: ", len(self.items)
+		print self.items[len(self.items)-1].name, " <- ", self.name
 		self.items[len(self.items) - 1].inBag = Bag("noBag", 0,0,0)
 		self.items[len(self.items) - 1].isInBag = False
 		self.totalWeight = (self.totalWeight) - (self.items[len(self.items) - 1].weight)
@@ -41,6 +41,7 @@ class Bag:
 		if self.percentFull < 90:
 			self.isFullEnough = False
 		self.items.pop() # this will remove and return the last item in the items list
+		self.numItems -= 1
 
 	def makeHeuristic(self): # tries to quantify how constrained the bag is, lower value equals less constrained
 		self.heuristic = -2 * self.capacity - (self.maxItems - self.minItems)

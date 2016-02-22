@@ -1,6 +1,7 @@
 from Bag import Bag
 from Item import Item
 from Tools import removeNonAscii
+from numpy import floor
 
 itemList = []
 bagList = []
@@ -69,10 +70,11 @@ def backtrack():
     currentItem = 0 													# the current item we are placing in a bag
     currentBag = 0 														# the current bag we are trying to place the item in
     while not finished: 												# as long as we are still searching for a solution
+
         printFinalState()
         if not backtracking: 										    # if we are not backtracking
 
-            print "current item:", itemList[currentItem].name, "current bag: ", bagList[currentBag].name
+            print "Not backtracking: current item:", itemList[currentItem].name, "current bag: ", bagList[currentBag].name
             if itemList[currentItem].canBeIn(bagList[currentBag]): 		# if we can place the current item in the current bag
                 bagList[currentBag].addItem(itemList[currentItem]) 		# add the item to the bag
                 print itemList[currentItem].name, " -> ", bagList[currentBag].name
@@ -81,8 +83,9 @@ def backtrack():
                     if getValidation(): 									# check if all the criteria are met
                         finished = True 								# if they are, then we are finished
                     else: 												# if they are not
-                        print "BTS"
+                        #print "BTS"
                         backtracking = True 							# start to backtrack
+                        currentItem += 1
                 else: 													# if we have just placed an item that is not the last item in a bag
                     if forwardCheck():									# if we have made it impossible to place an un placed item in a bag
                         backtracking = True 							# start to backtrack
@@ -96,22 +99,23 @@ def backtrack():
                 currentBag += 1 										# try to place the item in the next bag
         if backtracking: 											    # if we are backtracking
             currentItem -= 1    										# go back to the last item
-            print "At start of backtracking condition: current item:", itemList[currentItem].name, "current bag: ", bagList[currentBag].name, ", backtracking."
-            if currentItem == 0: 										# if this is the first item
+            #print "At start of backtracking condition: current item:", itemList[currentItem].name, "current bag: ", bagList[currentBag].name, ", backtracking."
+
+            if currentItem == 0 and itemList[0].inBag.equals(bagList[len(bagList)-1]): 										# if this is the first item
                 print "Backtracked all the way, no solution."
                 finished = True 										# there is no solution to this problem
             else: 														# if we have not determined that there is no solution
                 for i in xrange(0,len(bagList)): 					    # for every bag
                     if bagList[i].equals(itemList[currentItem].inBag): 	# if the last item was placed in this bag
                         currentBag = i 									# set the current bag to be the bag the last item was placed in
-
+                print "In backtracking condition, about to remove something. current item:", itemList[currentItem].name, "current bag: ", bagList[currentBag].name, ", backtracking."
                 itemList[currentItem].inBag.removeLastItem() 			# take the last item out of the bag it was placed in
                 if currentBag != len(bagList) - 1: 						# if the bag the last item was in was not the last bag it could be placed in
                     currentBag += 1 									# move on to the next bag it could be placed in
                     backtracking = False 								# stop backtracking
 
 def readFile():
-    dataFile = open('data/input5.txt', 'r')
+    dataFile = open('data/input26.txt', 'r')
     state = -1
     """
     State 0:
@@ -194,13 +198,11 @@ def readFile():
                     cleanedLineData.append(removeNonAscii(itemName))
 
                 for itemsToCheck in itemList:
-                    if itemsToCheck.name == cleanedLineData[0]:
-                        for itemPartnerToCheck in itemList:
-                            if itemPartnerToCheck.name == cleanedLineData[1]:
-                                itemsToCheck.mustBeWith.append(itemPartnerToCheck)
-                                itemPartnerToCheck.mustBeWith.append(itemsToCheck)
-
-
+                    if itemsToCheck.name in cleanedLineData:
+                        for elt in cleanedLineData:
+                            for items in itemList:
+                                if items.name == elt:
+                                    itemsToCheck.mustBeWith.append(items)
 
             elif state == 6: # Binary Inequality
                 lineData = line.split(" ")
@@ -239,7 +241,7 @@ def readFile():
                                 itemPartnerToCheck.partnerBags.append(bagArray)
 
     # Finish up lists of acceptable bags
-    verbose = False
+    verbose = True
 
 
     for itemsToCheckBagsAllowed in itemList:
@@ -268,6 +270,10 @@ def readFile():
     if len(bagList) > 0:
         if verbose: print "Bags can hold between ", bagList[0].minItems, " and ", bagList[0].maxItems, " items, inclusively."
     if verbose: print "Set up complete."
+    for wg in itemList:
+        print wg.partnerBags
+
+
 
 
 def printState():
@@ -304,14 +310,18 @@ def getValidation():
                 if item.inBag.name == bag.name:
                     header = header + " " + item.name
                     items += 1
+        limit  = floor((0.9 * float(bag.capacity)))/float(bag.capacity)
+        print limit
         if items < fittingLimits[0]:
             return False
-        elif (float(bag.totalWeight) / float(bag.capacity)) < 0.9:
+
+        elif (float(bag.totalWeight) / float(bag.capacity)) < limit:
             return False
     return True
 
 
-print "START!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+print "START!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+
 
 readFile()
 backtrack()

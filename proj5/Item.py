@@ -26,17 +26,16 @@ class Item:
                 return False
         if (int(bag.totalWeight) + int(self.weight)) > int(bag.capacity): # if the bag will be over capacity if this item is placed in it
             return False
-        if bag.numItems == bag.maxItems:
-            print bag.numItems == bag.maxItems
+        if bag.numItems >= bag.maxItems:
             return False
         # @TODO
 		# read this so that you understand what has been changed
         for i in xrange(0, len(self.partnerItems)):
-            if self.partnerItems[i].inBag in partnerBags[i] and self.partnerItems[i].inBag.equals(bag): # if this item's mutual inclusive partner item is in one of the mutual bags and that bag is the bag
+            if (self.partnerItems[i].inBag in self.partnerBags[i]) and self.partnerItems[i].inBag.equals(bag): # if this item's mutual inclusive partner item is in one of the mutual bags and that bag is the bag
                 return False
             if self.partnerItems[i].inBag in self.partnerBags[i] and bag not in self.partnerBags[i]: # if this item's mutual inclusive partner item is in one of the mutual bags and the bag is not a mutual bag
                 return False
-            if self.partnerItems[i].inBag not in self.partnerBags[i]: # if the partner item is not in a partner bag
+            if self.partnerItems[i].isInBag and self.partnerItems[i].inBag not in self.partnerBags[i]: # if the partner item is not in a partner bag
                 for partnerBag in self.partnerBags[i]:
                     if partnerBag.equals(bag):
                         return False
