@@ -9,7 +9,7 @@ itemList = []
 bagList = []
 fittingLimits = [0,9999999]
 
-def sortObjects(): # this will sort the items and bags by how constrained they are
+def sortObjects(): # this will sort the items and bags by how constrained they are, using our heuristic functions
     global itemList
     global bagList
     for item in itemList:
@@ -59,11 +59,11 @@ def backtrack():
     backtracking = False 												# whether or not we are backtracking
     currentItem = 0 													# the current item we are placing in a bag
     currentBag = 0 														# the current bag we are trying to place the item in
+    count = 0
     while not finished: 												# as long as we are still searching for a solution
-
+        count += 1
         #printFinalState()
         if not backtracking: 										    # if we are not backtracking
-
             #print "Not backtracking: current item:", itemList[currentItem].name, "current bag: ", bagList[currentBag].name
             if itemList[currentItem].canBeIn(bagList[currentBag]): 		# if we can place the current item in the current bag
                 bagList[currentBag].addItem(itemList[currentItem]) 		# add the item to the bag
@@ -103,6 +103,7 @@ def backtrack():
                 if currentBag != len(bagList) - 1: 						# if the bag the last item was in was not the last bag it could be placed in
                     currentBag += 1 									# move on to the next bag it could be placed in
                     backtracking = False 								# stop backtracking
+    print count
 
 def readFile():
     file = sys.argv[1]
