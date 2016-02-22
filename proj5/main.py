@@ -1,9 +1,9 @@
+#Odell Dotson and Ethan Prihar, ocdotson@wpi.edu ebprihar@wpi.edu, Intro to AI Project 5
 from Bag import Bag
 from Item import Item
 from Tools import removeNonAscii
 from numpy import floor
-
-file = 'data/input12.txt'
+import sys
 
 itemList = []
 bagList = []
@@ -61,13 +61,13 @@ def backtrack():
     currentBag = 0 														# the current bag we are trying to place the item in
     while not finished: 												# as long as we are still searching for a solution
 
-        printFinalState()
+        #printFinalState()
         if not backtracking: 										    # if we are not backtracking
 
             #print "Not backtracking: current item:", itemList[currentItem].name, "current bag: ", bagList[currentBag].name
             if itemList[currentItem].canBeIn(bagList[currentBag]): 		# if we can place the current item in the current bag
                 bagList[currentBag].addItem(itemList[currentItem]) 		# add the item to the bag
-                print itemList[currentItem].name, " -> ", bagList[currentBag].name
+                #print itemList[currentItem].name, " -> ", bagList[currentBag].name
                 if currentItem == len(itemList) - 1: 					# if the last item is placed in a bag
 
                     if getValidation(): 									# check if all the criteria are met
@@ -89,7 +89,7 @@ def backtrack():
                 currentBag += 1 										# try to place the item in the next bag
         if backtracking: 											    # if we are backtracking
             currentItem -= 1    										# go back to the last item
-            print "At start of backtracking condition: current item:", itemList[currentItem].name, "current bag: ", bagList[currentBag].name, ", backtracking."
+            #print "At start of backtracking condition: current item:", itemList[currentItem].name, "current bag: ", bagList[currentBag].name, ", backtracking."
 
             if currentItem == 0 and itemList[0].inBag.equals(bagList[len(bagList)-1]): 										# if this is the first item
                 print "Backtracked all the way, no solution."
@@ -98,13 +98,14 @@ def backtrack():
                 for i in xrange(0,len(bagList)): 					    # for every bag
                     if bagList[i].equals(itemList[currentItem].inBag): 	# if the last item was placed in this bag
                         currentBag = i 									# set the current bag to be the bag the last item was placed in
-                print "In backtracking condition, about to remove something. current item:", itemList[currentItem].name, "current bag: ", bagList[currentBag].name, ", backtracking."
+                #print "In backtracking condition, about to remove something. current item:", itemList[currentItem].name, "current bag: ", bagList[currentBag].name, ", backtracking."
                 itemList[currentItem].inBag.removeLastItem() 			# take the last item out of the bag it was placed in
                 if currentBag != len(bagList) - 1: 						# if the bag the last item was in was not the last bag it could be placed in
                     currentBag += 1 									# move on to the next bag it could be placed in
                     backtracking = False 								# stop backtracking
 
 def readFile():
+    file = sys.argv[1]
     dataFile = open(file, 'r')
     state = -1
     """
@@ -305,10 +306,10 @@ def getValidation():
             return False
     return True
 
-print "START"
+#print "START"
 
 readFile()
 sortObjects()
 backtrack()
-print "\n\n\n"
+#print "\n\n\n"
 printFinalState()

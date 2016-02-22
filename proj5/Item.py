@@ -1,3 +1,5 @@
+#Odell Dotson and Ethan Prihar, ocdotson@wpi.edu ebprihar@wpi.edu, Intro to AI Project 5
+
 from Bag import Bag
 
 class Item:

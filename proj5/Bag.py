@@ -1,4 +1,4 @@
-#from Item import Item
+#Odell Dotson and Ethan Prihar, ocdotson@wpi.edu ebprihar@wpi.edu, Intro to AI Project 5
 
 class Bag:
 
@@ -31,7 +31,7 @@ class Bag:
 			self.isFullEnough = True
 
 	def removeLastItem(self):
-		print self.items[len(self.items)-1].name, " <- ", self.name
+		#print self.items[len(self.items)-1].name, " <- ", self.name
 		self.items[len(self.items) - 1].inBag = Bag("noBag", 0,0,0)
 		self.items[len(self.items) - 1].isInBag = False
 		self.totalWeight = (self.totalWeight) - (self.items[len(self.items) - 1].weight)
