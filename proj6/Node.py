@@ -7,10 +7,10 @@ class Node:
 	def __init__(self, name, probabiltyList):
 		self.name = name
 		self.parents = []
-		self.probabilty = list(truthList)
+		self.probabilty = list(probabiltyList)
 		self.truth = -1
 
-	def addParents(parentList):
+	def addParents(self, parentList):
 		self.parents = list(reversed(parentList))
 
 	def getTruth(self):
@@ -19,7 +19,7 @@ class Node:
 			state = state + str(parent.getTruth())
 		if (self.truth == -1):
 			pos = int(state, 2)
-			if(random.random() < probabilty[pos]):
+			if(random.random() < self.probabilty[pos]):
 				return 1
 			else:
 				return 0
