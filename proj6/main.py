@@ -1,5 +1,5 @@
+#Odell Dotson and Ethan Prihar, ocdotson@wpi.edu ebprihar@wpi.edu, Intro to AI Project 6, Bayes nets
 from Node import Node
-import Net
 import sys
 
 nodeList = []
@@ -17,6 +17,21 @@ def rejectionSampling(samples):
             numTotal += 1
     return numOfTrue / numTotal
 
+
+def likelihoodWeighting(samples):
+    global queryNode
+    global nodeList
+    weightsForQuery = 0
+    weightsTotal = 0
+
+    for y in xrange(0, samples):
+        weight, truth = nodeList[queryNode].getTruthLW()
+        if truth:
+            weightsForQuery += weight
+        weightsTotal += weight
+    return weightsForQuery/weightsTotal
+
+
 def makeNodes(nodeFileName):
     nodeData = open(nodeFileName, 'r')
     nodeParents = []
@@ -30,22 +45,14 @@ def makeNodes(nodeFileName):
         for i in range (0, len(probList)):
             probList[i] = float(probList[i])
 
-
-        #print "Name data: ",nameData
-        #print "Parent list: ", parList
-        #print "Prob list: ", probList, "\n"
-
         nodeList.append(Node(nameData, probList))
         nodeParents.append(parList)
-    #print nodeParents
     for x in range (0, len(nodeList)):
-        #print "Child: ", nodeList[x].name, ", parents: "
         parentList = []
         for parentName in nodeParents[x]:
             for nodesThatMayBeParents in nodeList:
                 if nodesThatMayBeParents.name == parentName:
                     parentList.append(nodesThatMayBeParents)
-        #print parentList
         nodeList[x].addParents(parentList)
 
 def processQuery(queryFileName):

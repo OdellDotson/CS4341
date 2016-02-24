@@ -1,4 +1,4 @@
-#Odell Dotson and Ethan Prihar, ocdotson@wpi.edu ebprihar@wpi.edu, Intro to AI Project 5
+#Odell Dotson and Ethan Prihar, ocdotson@wpi.edu ebprihar@wpi.edu, Intro to AI Project 6, Bayes nets
 
 import random
 
@@ -16,11 +16,13 @@ class Node:
 	def getTruthLW(self):
 		state = ""
 		for parent in self.parents:
-			state = state + str(parent.getTruth())
+			state = state + str(parent.getTruthLW())
 		if state == "":
 			pos = 0
 		else:
 			pos = int(state, 2)
+		if self.truth == 1: #In the case that we are forcing self to be true:
+
 		if(random.random() < self.probabilty[pos]):
 			truth = 1
 		else:
