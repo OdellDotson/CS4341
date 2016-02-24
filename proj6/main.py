@@ -19,21 +19,21 @@ def makeNodes():
             probList[i] = float(probList[i])
 
 
-        print "Name data: ",nameData
-        print "Parent list: ", parList
-        print "Prob list: ", probList, "\n"
+        #print "Name data: ",nameData
+        #print "Parent list: ", parList
+        #print "Prob list: ", probList, "\n"
 
         nodeList.append(Node(nameData, probList))
         nodeParents.append(parList)
-    print nodeParents
+    #print nodeParents
     for x in range (0, len(nodeList)):
-        print "Child: ", nodeList[x].name, ", parents: "
-        #print nodeParents[x]
+        #print "Child: ", nodeList[x].name, ", parents: "
         parentList = []
         for parentName in nodeParents[x]:
             for nodesThatMayBeParents in nodeList:
                 if nodesThatMayBeParents.name == parentName:
                     parentList.append(nodesThatMayBeParents)
+        #print parentList
         nodeList[x].addParents(parentList)
 
 def processQuery():
@@ -44,8 +44,6 @@ def processQuery():
         if queryString == '':
             queryString = line
     queryList = queryString.split(",")
-    for t in queryList:
-        print t
     numberOfQueryNode = -1
     for x in range (0, len(queryList)):
         if queryList[x] == 't':
