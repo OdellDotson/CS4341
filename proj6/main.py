@@ -3,11 +3,23 @@ import Net
 import sys
 
 nodeList = []
-nodeParents = []
+queryNode = -1
 
-def makeNodes():
-    nodeFileName = sys.argv[1]
+def rejectionSampling(samples):
+    global queryNode
+    global nodeList
+    numOfTrue = 0
+    numTotal = 0
+    for x in xrange(0, samples):
+        sample = nodeList[queryNode].getTruthRS()
+        if sample != -1:
+            numOfTrue += sample
+            numTotal += 1
+    return numOfTrue / numTotal
+
+def makeNodes(nodeFileName):
     nodeData = open(nodeFileName, 'r')
+    nodeParents = []
     for line in nodeData:
         lineData = line.split(":")
         nameData = lineData[0]
@@ -36,23 +48,21 @@ def makeNodes():
         #print parentList
         nodeList[x].addParents(parentList)
 
-def processQuery():
-    queryFileName = sys.argv[2]
+def processQuery(queryFileName):
+    global queryNode
     queryFile = open(queryFileName, 'r')
     queryString = ''
     for line in queryFile:
         if queryString == '':
             queryString = line
     queryList = queryString.split(",")
-    numberOfQueryNode = -1
     for x in range (0, len(queryList)):
         if queryList[x] == 't':
             nodeList[x].truth = 1
         elif queryList[x] == 'f':
             nodeList[x].truth = 0
         elif queryList[x] == '?':
-            numberOfQueryNode = x
-    nodeList[numberOfQueryNode].getTruth()
+            queryNode = x
 
-makeNodes()
-processQuery()
+makeNodes(sys.argv[1])
+processQuery(sys.argv[2])
