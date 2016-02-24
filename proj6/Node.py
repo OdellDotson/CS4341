@@ -29,11 +29,13 @@ class Node:
 
 		return (weight, truth)
 
-	def getTruthRS(self):
+	def getTruthRS(self):		
 		state = ""
 		for parent in self.parents:
 			truth = parent.getTruthRS()
-			state = state + str(parent.getTruth())
+			if truth = -1:
+				return -1
+			state = state + str(truth)
 		if state == "":
 			pos = 0
 		else:
