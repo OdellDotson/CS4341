@@ -15,7 +15,7 @@ def rejectionSampling(samples):
         if sample != -1:
             numOfTrue += sample
             numTotal += 1
-    return numOfTrue / numTotal
+    return float(numOfTrue) / float(numTotal)
 
 
 def likelihoodWeighting(samples):
@@ -24,13 +24,13 @@ def likelihoodWeighting(samples):
     weightOfTrue = 0
     weightTotal = 0
     for x in xrange(0, samples):
-        sample = getTruthLW()
+        sample = nodeList[queryNode].getTruthLW()
         if sample[1] == 0:
             weightTotal += sample[0]
         else:
             weightOfTrue += sample[0]
             weightTotal += sample[0]
-    return weightOfTrue / weightTotal
+    return float(weightOfTrue) / float(weightTotal)
 
 def makeNodes(nodeFileName):
     nodeData = open(nodeFileName, 'r')
@@ -73,3 +73,13 @@ def processQuery(queryFileName):
 
 makeNodes(sys.argv[1])
 processQuery(sys.argv[2])
+
+if sys.argv[3] == -1:
+
+
+
+    print "Rejection sampling: " ,rejectionSampling(int(sys.argv[3]))
+    print "Likelihood weighting:  ", likelihoodWeighting(int(sys.argv[3]))
+else:
+    print "Rejection sampling: " ,rejectionSampling(int(sys.argv[3]))
+    print "Likelihood weighting:  ", likelihoodWeighting(int(sys.argv[3]))
