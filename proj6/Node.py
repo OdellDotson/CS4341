@@ -26,7 +26,7 @@ class Node:
 		else:
 			return self.truth"""
 
-	def getTruth(self):
+	def getTruthRS(self):
 		state = ""
 		for parent in self.parents:
 			state = state + str(parent.getTruth())
@@ -35,6 +35,12 @@ class Node:
 		else:
 			pos = int(state, 2)
 		if(random.random() < self.probabilty[pos]):
-			return 1
+			sample = 1
 		else:
-			return 0
+			sample = 0
+		if self.truth == -1
+			return sample
+		elif sample == self.truth:
+			return sample
+		else:
+			return -1
