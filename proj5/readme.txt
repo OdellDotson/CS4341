@@ -44,3 +44,23 @@ python main.py data/input1.txt
 
 This will print the solution to the terminal. Please note that the file extension AND directory need to be specified.
 ========================================================================================================================
+For examples of verbose outputs, see the files also in this directory:
+
+myoutput5.txt
+myoutput7.txt
+myoutput12.txt
+myoutput20.txt
+myoutput24.txt
+
+The actual program supplied provides a much less messy output. If you’re interested in seeing these steps, uncomment the following lines in main:
+
+65
+67
+76
+92
+101
+
+as well as
+
+line 34 in Bag.py
+========================================================================================================================
