@@ -4,11 +4,14 @@ import random
 
 class Node:
 
-	def __init__(self, name, parentList, probabiltyList):
+	def __init__(self, name, probabiltyList):
 		self.name = name
-		self.parents = list(reversed(parentList))
+		self.parents = []
 		self.probabilty = list(truthList)
 		self.truth = -1
+
+	def addParents(parentList):
+		self.parents = list(reversed(parentList))
 
 	def getTruth(self):
 		state = ""
