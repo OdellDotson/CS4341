@@ -13,22 +13,26 @@ class Node:
 	def addParents(self, parentList):
 		self.parents = list(reversed(parentList))
 
-	"""def getTruth(self):
+	def getTruthLW(self):
 		state = ""
 		for parent in self.parents:
 			state = state + str(parent.getTruth())
-		if (self.truth == -1):
-			pos = int(state, 2)
-			if(random.random() < self.probabilty[pos]):
-				return 1
-			else:
-				return 0
+		if state == "":
+			pos = 0
 		else:
-			return self.truth"""
+			pos = int(state, 2)
+		if(random.random() < self.probabilty[pos]):
+			truth = 1
+		else:
+			truth = 0
+
+
+		return (weight, truth)
 
 	def getTruthRS(self):
 		state = ""
 		for parent in self.parents:
+			truth = parent.getTruthRS()
 			state = state + str(parent.getTruth())
 		if state == "":
 			pos = 0
