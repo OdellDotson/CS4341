@@ -21,16 +21,16 @@ def rejectionSampling(samples):
 def likelihoodWeighting(samples):
     global queryNode
     global nodeList
-    weightsForQuery = 0
-    weightsTotal = 0
-
-    for y in xrange(0, samples):
-        weight, truth = nodeList[queryNode].getTruthLW()
-        if truth:
-            weightsForQuery += weight
-        weightsTotal += weight
-    return weightsForQuery/weightsTotal
-
+    weightOfTrue = 0
+    weightTotal = 0
+    for x in xrange(0, samples):
+        sample = getTruthLW()
+        if sample[1] == 0:
+            weightTotal += sample[0]
+        else:
+            weightOfTrue += sample[0]
+            weightTotal += sample[0]
+    return weightOfTrue / weightTotal
 
 def makeNodes(nodeFileName):
     nodeData = open(nodeFileName, 'r')
