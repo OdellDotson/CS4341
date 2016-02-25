@@ -32,6 +32,41 @@ def likelihoodWeighting(samples):
             weightTotal += sample[0]
     return float(weightOfTrue) / float(weightTotal)
 
+def RSConverge():
+    global queryNode
+    global nodeList
+    numOfTrue = 0
+    numTotal = 0
+    error = 0
+    doWhile = True
+    while error > .01 or doWhile:
+        doWhile = False
+        sample = nodeList[queryNode].getTruthRS()
+        if sample != -1:
+            numOfTrue += sample
+            numTotal += 1
+            error = abs(error - float(numOfTrue) / float(numTotal))
+    return float(numOfTrue) / float(numTotal)
+
+
+def LWConverge():
+    global queryNode
+    global nodeList
+    weightOfTrue = 0
+    weightTotal = 0
+    error = 0
+    doWhile = True
+    while error > .01 or doWhile:
+        doWhile = False
+        sample = nodeList[queryNode].getTruthLW()
+        if sample[1] == 0:
+            weightTotal += sample[0]
+        else:
+            weightOfTrue += sample[0]
+            weightTotal += sample[0]
+        error = abs(error - float(weightOfTrue) / float(weightTotal))
+    return float(weightOfTrue) / float(weightTotal)
+
 def makeNodes(nodeFileName):
     nodeData = open(nodeFileName, 'r')
     nodeParents = []
@@ -75,11 +110,8 @@ makeNodes(sys.argv[1])
 processQuery(sys.argv[2])
 
 if sys.argv[3] == -1:
-
-
-
-    print "Rejection sampling: " ,rejectionSampling(int(sys.argv[3]))
-    print "Likelihood weighting:  ", likelihoodWeighting(int(sys.argv[3]))
+    print "Rejection sampling with convergence: " ,RSConverge(int(sys.argv[3]))
+    print "Likelihood weighting with convergence:  ", LWConverge(int(sys.argv[3]))
 else:
     print "Rejection sampling: " ,rejectionSampling(int(sys.argv[3]))
     print "Likelihood weighting:  ", likelihoodWeighting(int(sys.argv[3]))
