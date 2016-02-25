@@ -8,8 +8,8 @@ queryNode = -1
 def rejectionSampling(samples):
     global queryNode
     global nodeList
-    numOfTrue = 0
-    numTotal = 0
+    numOfTrue = 0.0
+    numTotal = 0.0
     for x in xrange(0, samples):
         sample = nodeList[queryNode].getTruthRS()
         if sample != -1:
@@ -21,8 +21,8 @@ def rejectionSampling(samples):
 def likelihoodWeighting(samples):
     global queryNode
     global nodeList
-    weightOfTrue = 0
-    weightTotal = 0
+    weightOfTrue = 0.0
+    weightTotal = 0.0
     for x in xrange(0, samples):
         sample = nodeList[queryNode].getTruthLW()
         if sample[1] == 0:
@@ -35,9 +35,9 @@ def likelihoodWeighting(samples):
 def RSConverge():
     global queryNode
     global nodeList
-    numOfTrue = 0
-    numTotal = 0
-    error = 0
+    numOfTrue = 0.0
+    numTotal = 0.0
+    error = 0.0
     doWhile = True
     while error > .01 or doWhile:
         doWhile = False
@@ -52,9 +52,9 @@ def RSConverge():
 def LWConverge():
     global queryNode
     global nodeList
-    weightOfTrue = 0
-    weightTotal = 0
-    error = 0
+    weightOfTrue = 0.0
+    weightTotal = 0.0
+    error = 0.0
     doWhile = True
     while error > .01 or doWhile:
         doWhile = False
