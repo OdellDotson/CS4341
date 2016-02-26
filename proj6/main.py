@@ -15,7 +15,11 @@ def rejectionSampling(samples):
         if sample != -1:
             numOfTrue += sample
             numTotal += 1
-    return float(numOfTrue) / float(numTotal)
+    if numTotal == 0:
+        print "Not enough samples to create a model!"
+        return ""
+    else:
+        return float(numOfTrue) / float(numTotal)
 
 
 def likelihoodWeighting(samples):
@@ -32,6 +36,7 @@ def likelihoodWeighting(samples):
             weightTotal += sample[0]
     return float(weightOfTrue) / float(weightTotal)
 
+
 def RSConverge():
     global queryNode
     global nodeList
@@ -39,13 +44,25 @@ def RSConverge():
     numTotal = 0.0
     error = 0.0
     doWhile = True
-    while error > .01 or doWhile:
+    currState = 1
+    prevState = 0
+
+    while error > .0001 or doWhile or error == 0:
         doWhile = False
         sample = nodeList[queryNode].getTruthRS()
+        while sample == -1:
+            sample = nodeList[queryNode].getTruthRS()
         if sample != -1:
             numOfTrue += sample
             numTotal += 1
-            error = abs(error - float(numOfTrue) / float(numTotal))
+
+            currState = float(numOfTrue) / float(numTotal)
+            error = abs(currState - prevState)
+            #print "Error: ", error
+            prevState = float(numOfTrue) / float(numTotal)
+
+    print "Runs for rejection sampling: ",  numTotal
+    print "Rejection sampling with convergence: ", float(numOfTrue) / float(numTotal)
     return float(numOfTrue) / float(numTotal)
 
 
@@ -56,7 +73,10 @@ def LWConverge():
     weightTotal = 0.0
     error = 0.0
     doWhile = True
-    while error > .01 or doWhile:
+    currState = 1
+    prevState = 0
+    runs = 0
+    while error > .0001 or doWhile or error == 0:
         doWhile = False
         sample = nodeList[queryNode].getTruthLW()
         if sample[1] == 0:
@@ -64,7 +84,16 @@ def LWConverge():
         else:
             weightOfTrue += sample[0]
             weightTotal += sample[0]
-        error = abs(error - float(weightOfTrue) / float(weightTotal))
+
+        currState = float(weightOfTrue) / float(weightTotal)
+
+        error = abs(currState - prevState)
+
+        prevState = currState
+        runs += 1
+
+    print "Runs for likelihood weighting: ", runs
+    print "Likelihood weighting with convergence:  ", float(weightOfTrue) / float(weightTotal)
     return float(weightOfTrue) / float(weightTotal)
 
 def makeNodes(nodeFileName):
@@ -109,9 +138,10 @@ def processQuery(queryFileName):
 makeNodes(sys.argv[1])
 processQuery(sys.argv[2])
 
-if sys.argv[3] == -1:
-    print "Rejection sampling with convergence: " ,RSConverge(int(sys.argv[3]))
-    print "Likelihood weighting with convergence:  ", LWConverge(int(sys.argv[3]))
+
+if int(sys.argv[3]) == -1:
+    RSConverge()
+    LWConverge()
 else:
     print "Rejection sampling: " ,rejectionSampling(int(sys.argv[3]))
     print "Likelihood weighting:  ", likelihoodWeighting(int(sys.argv[3]))
