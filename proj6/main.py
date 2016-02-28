@@ -47,6 +47,7 @@ def RSConverge():
     doWhile = True
     currState = 1
     prevState = 0
+    probs = []
 
     while error > .0001 or doWhile or error == 0:
         doWhile = False
@@ -58,9 +59,15 @@ def RSConverge():
             numTotal += 1
 
             currState = float(numOfTrue) / float(numTotal)
+            probs.append(currState)
             error = abs(currState - prevState)
-            #print "Error: ", error
             prevState = float(numOfTrue) / float(numTotal)
+        if numTotal % 200 == 0:
+            probTot = 0
+            for val in probs:
+                probTot += val
+            probVal = probTot / len(probs)
+            print "At run ,", numTotal, ", the average probability is: ,", probVal
 
     print "Runs for rejection sampling: ",  numTotal
     print "Rejection sampling with convergence: ", float(numOfTrue) / float(numTotal)
@@ -77,6 +84,8 @@ def LWConverge():
     currState = 1
     prevState = 0
     runs = 0
+    probs = []
+
     while error > .0001 or doWhile or error == 0:
         doWhile = False
         sample = nodeList[queryNode].getTruthLW()
@@ -87,11 +96,17 @@ def LWConverge():
             weightTotal += sample[0]
 
         currState = float(weightOfTrue) / float(weightTotal)
-
+        probs.append(currState)
         error = abs(currState - prevState)
 
         prevState = currState
         runs += 1
+        if runs % 200 == 0:
+            probTot = 0
+            for val in probs:
+                probTot += val
+            probVal = probTot / len(probs)
+            print "At run ,", runs, ", the average probability is: ,", probVal
 
     print "Runs for likelihood weighting: ", runs
     print "Likelihood weighting with convergence:  ", float(weightOfTrue) / float(weightTotal)
@@ -145,6 +160,7 @@ random.seed()
 if int(sys.argv[3]) == -1:
     RSConverge()
     LWConverge()
+
 elif int(sys.argv[3]) == -2:
     for i in xrange (0,5):
         probRej = []

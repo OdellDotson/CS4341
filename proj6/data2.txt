@@ -1,0 +1,96 @@
+Using self-generated query: t,f,f,t,f,?,-,f
+
+
+At run  200.0  the predicted probability is:  0.552911847871
+At run  400.0  the predicted probability is:  0.541111359828
+At run  600.0  the predicted probability is:  0.527916869914
+At run  800.0  the predicted probability is:  0.52091608002
+At run  1000.0  the predicted probability is:  0.516882003183
+At run  1200.0  the predicted probability is:  0.514238540717
+At run  1400.0  the predicted probability is:  0.512769064582
+At run  1600.0  the predicted probability is:  0.511822391388
+At run  1800.0  the predicted probability is:  0.51096469882
+At run  2000.0  the predicted probability is:  0.509893783234
+At run  2200.0  the predicted probability is:  0.509142375775
+At run  2400.0  the predicted probability is:  0.508714172023
+At run  2600.0  the predicted probability is:  0.50819744893
+At run  2800.0  the predicted probability is:  0.508026502688
+At run  3000.0  the predicted probability is:  0.507766737316
+At run  3200.0  the predicted probability is:  0.507564109597
+At run  3400.0  the predicted probability is:  0.507381646294
+At run  3600.0  the predicted probability is:  0.507088429427
+At run  3800.0  the predicted probability is:  0.506760576768
+At run  4000.0  the predicted probability is:  0.506388259777
+At run  4200.0  the predicted probability is:  0.506026169478
+At run  4400.0  the predicted probability is:  0.505679341217
+At run  4600.0  the predicted probability is:  0.505226191609
+At run  4800.0  the predicted probability is:  0.504717188966
+Runs for rejection sampling:  4902.0
+Rejection sampling with convergence:  0.490004079967
+At run  200  the predicted probability is:  0.477259795561
+At run  400  the predicted probability is:  0.482829298506
+At run  600  the predicted probability is:  0.49198664841
+At run  800  the predicted probability is:  0.493810677403
+At run  1000  the predicted probability is:  0.493244224471
+At run  1200  the predicted probability is:  0.49324216699
+At run  1400  the predicted probability is:  0.494488882703
+At run  1600  the predicted probability is:  0.495814954662
+At run  1800  the predicted probability is:  0.496813597704
+At run  2000  the predicted probability is:  0.497209353399
+At run  2200  the predicted probability is:  0.49784579995
+At run  2400  the predicted probability is:  0.499063227252
+At run  2600  the predicted probability is:  0.500072539433
+At run  2800  the predicted probability is:  0.500905478187
+At run  3000  the predicted probability is:  0.501775248032
+At run  3200  the predicted probability is:  0.502511996924
+Runs for likelihood weighting:  3260
+Likelihood weighting with convergence:   0.51449186141
+
+
+
+Using provided query 2:
+
+
+At run  200.0  the predicted probability is:  0.476302891724
+At run  400.0  the predicted probability is:  0.473035548629
+At run  600.0  the predicted probability is:  0.475948894498
+At run  800.0  the predicted probability is:  0.476427078294
+At run  1000.0  the predicted probability is:  0.475787120072
+At run  1200.0  the predicted probability is:  0.474554173465
+At run  1400.0  the predicted probability is:  0.472890199415
+At run  1600.0  the predicted probability is:  0.472252651383
+At run  1800.0  the predicted probability is:  0.472268371691
+At run  2000.0  the predicted probability is:  0.471914337993
+At run  2200.0  the predicted probability is:  0.470733311194
+At run  2400.0  the predicted probability is:  0.469512227561
+At run  2600.0  the predicted probability is:  0.468588877006
+At run  2800.0  the predicted probability is:  0.467995394339
+At run  3000.0  the predicted probability is:  0.467775183189
+At run  3200.0  the predicted probability is:  0.467701773916
+At run  3400.0  the predicted probability is:  0.467763070401
+At run  3600.0  the predicted probability is:  0.467898042937
+At run  3800.0  the predicted probability is:  0.467941920227
+At run  4000.0  the predicted probability is:  0.467956334786
+At run  4200.0  the predicted probability is:  0.468062723499
+At run  4400.0  the predicted probability is:  0.468143849063
+At run  4600.0  the predicted probability is:  0.468245887062
+Runs for rejection sampling:  4715.0
+Rejection sampling with convergence:  0.471261930011
+At run  200  the predicted probability is:  0.571196509786
+At run  400  the predicted probability is:  0.525813460473
+At run  600  the predicted probability is:  0.512017370063
+At run  800  the predicted probability is:  0.502683324699
+At run  1000  the predicted probability is:  0.497600808689
+At run  1200  the predicted probability is:  0.493656396172
+At run  1400  the predicted probability is:  0.491062723928
+At run  1600  the predicted probability is:  0.489717066666
+At run  1800  the predicted probability is:  0.48864775294
+At run  2000  the predicted probability is:  0.487872664921
+At run  2200  the predicted probability is:  0.487474818641
+At run  2400  the predicted probability is:  0.486968472026
+At run  2600  the predicted probability is:  0.486275460619
+At run  2800  the predicted probability is:  0.485616269982
+At run  3000  the predicted probability is:  0.485129940559
+At run  3200  the predicted probability is:  0.484851036398
+Runs for likelihood weighting:  3230
+Likelihood weighting with convergence:   0.483920512958
