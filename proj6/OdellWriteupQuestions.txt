@@ -15,3 +15,18 @@ If so, for each case, state which algorithm converged faster and explain why.
 
 
 The reason LW converged faster in both cases is the same for both cases. Rejection sampling will generate samples that are invalid, and then cast them off. These rejections are each also runs, because it is generating a feasible network, but that network does not fit our desired constraints. Likelihood weighting, on the other hand will only ever generate samples that are valid to our given constraints, and so it takes fewer runs to converge. 
+
+
+
+ Did either method converge to a probability? 
+
+They did not fully converge, but likelihood weighting had a much lower variance and was closer to converging. 
+
+ Was there any difference in the convergence rate? 
+
+Yes, likelihood weighting had a much higher convergence rate.
+
+
+If so, for each case, state which algorithm converged faster and explain why.
+
+Likelihood weighting had a much higher convergence rate because it was able to always ensure a generated sample would be useful, this preventing there from being runs where the data had to be thrown out.
