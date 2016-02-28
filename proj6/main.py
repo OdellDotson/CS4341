@@ -1,6 +1,7 @@
 #Odell Dotson and Ethan Prihar, ocdotson@wpi.edu ebprihar@wpi.edu, Intro to AI Project 6, Bayes nets
 from Node import Node
 import sys
+import random
 
 nodeList = []
 queryNode = -1
@@ -139,6 +140,8 @@ makeNodes(sys.argv[1])
 processQuery(sys.argv[2])
 
 
+random.seed()
+
 if int(sys.argv[3]) == -1:
     RSConverge()
     LWConverge()
@@ -147,16 +150,16 @@ elif int(sys.argv[3]) == -2:
         probRej = []
         probLik = []
         for j in xrange(0,10):
-            probRej.add(rejectionSampling(i * 200 + 200))
-            probLik.add(likelihoodWeighting(i * 200 + 200))
+            probRej.append(rejectionSampling(i * 200 + 200))
+            probLik.append(likelihoodWeighting(i * 200 + 200))
         meanRej = float(sum(probRej)) / float(len(probRej))
         meanLik = float(sum(probLik)) / float(len(probLik))
         diffRej = []
         diffLik = []
         for val in probRej:
-            diffRej.add((val - meanRej)*(val - meanRej))
+            diffRej.append((val - meanRej)*(val - meanRej))
         for val in probLik:
-            diffRej.add((val - meanLik)*(val - meanLik))
+            diffLik.append((val - meanLik)*(val - meanLik))
         varRej = float(sum(diffRej)) / float(len(diffRej))
         varLik = float(sum(diffLik)) / float(len(diffLik))
 
@@ -164,8 +167,8 @@ elif int(sys.argv[3]) == -2:
         print "mean: ", meanRej
         print "variance: ", varRej
         print "Likelihood weighting of ", i * 200 + 200, " samples:"
-        print "mean: ", meanRej
-        print "variance: ", varRej
+        print "mean: ", meanLik
+        print "variance: ", varLik
 else:
     print "Rejection sampling: " ,rejectionSampling(int(sys.argv[3]))
     print "Likelihood weighting:  ", likelihoodWeighting(int(sys.argv[3]))
