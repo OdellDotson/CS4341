@@ -1,3 +1,4 @@
+Query 1
 Rejection sampling of  200  samples:
 mean:  0.517137021475
 variance:  0.015415806629
@@ -29,7 +30,7 @@ Likelihood weighting of  1000  samples:
 mean:  0.4861
 variance:  0.00024249
 
-
+Query 2
 Rejection sampling of  200  samples:
 mean:  0.457981976351
 variance:  0.00417986314671
