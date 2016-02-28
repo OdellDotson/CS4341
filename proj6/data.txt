@@ -1,4 +1,36 @@
 Rejection sampling of  200  samples:
+mean:  0.517137021475
+variance:  0.015415806629
+Likelihood weighting of  200  samples:
+mean:  0.4845
+variance:  0.00102225
+Rejection sampling of  400  samples:
+mean:  0.466672036871
+variance:  0.00912647950859
+Likelihood weighting of  400  samples:
+mean:  0.46675
+variance:  0.0007875625
+Rejection sampling of  600  samples:
+mean:  0.486844519398
+variance:  0.00179631089235
+Likelihood weighting of  600  samples:
+mean:  0.479833333333
+variance:  0.000429138888889
+Rejection sampling of  800  samples:
+mean:  0.488629172313
+variance:  0.00444420283934
+Likelihood weighting of  800  samples:
+mean:  0.4805
+variance:  0.0001150625
+Rejection sampling of  1000  samples:
+mean:  0.480954777474
+variance:  0.00144444209012
+Likelihood weighting of  1000  samples:
+mean:  0.4861
+variance:  0.00024249
+
+
+Rejection sampling of  200  samples:
 mean:  0.457981976351
 variance:  0.00417986314671
 Likelihood weighting of  200  samples:
