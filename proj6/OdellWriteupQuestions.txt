@@ -1,0 +1,17 @@
+Did either method converge to a probability?  
+
+
+For the convergence tests, both methods did converge to a probability, both for query 2 and for our made up query of: t,f,f,t,f,?,-,f
+
+
+Was there any difference in the convergence rate? 
+
+
+Yes, there was a difference. For query 2, RS took 4715 runs, while LW took 3230 runs.
+For our own query, RS took 4902 runs and LW took 3260 runs.
+
+
+If so, for each case, state which algorithm converged faster and explain why.
+
+
+The reason LW converged faster in both cases is the same for both cases. Rejection sampling will generate samples that are invalid, and then cast them off. These rejections are each also runs, because it is generating a feasible network, but that network does not fit our desired constraints. Likelihood weighting, on the other hand will only ever generate samples that are valid to our given constraints, and so it takes fewer runs to converge. 
